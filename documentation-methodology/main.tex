@@ -13,10 +13,6 @@
 \newif\ifshowtoc
 \showtocfalse
 
-% Enable / disable bibliography
-\newif\ifshowbibliography
-\showbibliographyfalse
-
 % Document information
 \newcommand{\worktitle}{Documentation Methodology}
 \newcommand{\worksubtitle}{NAO Robot Exercise System}
@@ -64,6 +60,7 @@
 \usepackage{lmodern}
 
 \usepackage{graphicx}
+\graphicspath{{../assets/}{assets/}}
 \usepackage[table]{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -76,15 +73,6 @@
 \usepackage{tabularx}
 \usepackage{lipsum}
 \usepackage{csquotes}
-
-% Bibliography
-\usepackage[
-    backend=biber,
-    style=ieee,
-    sorting=none
-]{biblatex}
-
-\addbibresource{references.bib}
 
 % Hyperlinks
 \usepackage[hidelinks]{hyperref}
@@ -148,11 +136,6 @@
     justification=centering
 }
 
-% Bibliography title
-\DefineBibliographyStrings{english}{
-    bibliography = {References}
-}
-
 
 % ==================================================
 % 5. HEADER AND FOOTER
@@ -167,7 +150,7 @@
         width=4cm,
         height=1.15cm,
         keepaspectratio
-    ]{assets/horizontal.png}
+    ]{horizontal.png}
 }
 
 % Header information
@@ -205,7 +188,7 @@
             width=4cm,
             height=1.15cm,
             keepaspectratio
-        ]{assets/horizontal.png}
+        ]{horizontal.png}
     }
 
     \fancyhead[R]{
@@ -251,7 +234,7 @@
             width=6cm,
             height=5cm,
             keepaspectratio
-        ]{assets/vertical.png}
+        ]{vertical.png}
 
         \vspace{0.5cm}
 
@@ -621,14 +604,5 @@ remain in the appropriate restricted team workspace.
 
 The goal is to keep documentation current, searchable, and useful for future
 team members and project evaluation.
-
-% ==================================================
-% OPTIONAL REFERENCES
-% ==================================================
-
-\ifshowbibliography
-    \clearpage
-    \printbibliography[heading=bibintoc,title={References}]
-\fi
 
 \end{document}

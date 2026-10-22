@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Create standalone Overleaf ZIPs from the methodology sources."""
+"""Create standalone Overleaf ZIPs on demand from the document sources."""
 
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "output" / "overleaf"
+OUTPUT = ROOT / "build" / "overleaf"
 PROJECTS = {
     "technical-methodology": "naomi-technical-methodology.zip",
     "version-control-methodology": "naomi-version-control-methodology.zip",
@@ -30,11 +30,12 @@ def main() -> None:
         bibliography = project / "references.bib"
         if bibliography.is_file():
             files.append(bibliography)
-        files.extend(sorted((project / "assets").glob("*.png")))
         target = OUTPUT / filename
         with ZipFile(target, "w") as archive:
             for source in files:
                 add_file(archive, source, source.relative_to(project).as_posix())
+            for logo in sorted((ROOT / "assets").glob("*.png")):
+                add_file(archive, logo, f"assets/{logo.name}")
         print(target.relative_to(ROOT))
 
 
