@@ -6,7 +6,7 @@ Rules for creating, reviewing, and maintaining the NAO Robot Exercise System doc
 
 Click the button to create an editable copy of this document in Overleaf.
 
-[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-documents/SCRUM-32-overleaf-import/output/overleaf/naomi-documentation-methodology.zip)
+[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-documents/main/output/overleaf/naomi-documentation-methodology.zip)
 
 [Download source ZIP](../output/overleaf/naomi-documentation-methodology.zip)
 

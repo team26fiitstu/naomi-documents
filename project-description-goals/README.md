@@ -6,7 +6,7 @@ The NAOMI team's project scope, objectives, and expected outcomes for the NAO Ro
 
 Click the button to create an editable copy of this document in Overleaf.
 
-[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-documents/SCRUM-33-project-description-goals/output/overleaf/naomi-project-description-goals.zip)
+[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-documents/main/output/overleaf/naomi-project-description-goals.zip)
 
 [Download source ZIP](../output/overleaf/naomi-project-description-goals.zip)
 
