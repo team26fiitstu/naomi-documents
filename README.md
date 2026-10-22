@@ -30,7 +30,7 @@ Click a button below to create a separate editable Overleaf project for each met
 
 [Download source ZIP](output/overleaf/naomi-version-control-methodology.zip)
 
-The Overleaf project is an editable copy; it does not synchronize later GitHub changes automatically. After changing the LaTeX sources, run `python3 scripts/package_overleaf.py` and commit the regenerated ZIP files.
+These buttons load ZIP files from `main`, so new or updated ZIPs become available through them after the corresponding PR is merged. For a pre-merge preview, open a branch-specific ZIP URL with the same Overleaf API. An imported Overleaf project is an editable copy and does not synchronize later GitHub changes automatically. After changing the LaTeX sources, run `python3 scripts/package_overleaf.py` and commit the regenerated ZIP files.
 
 ## Build
 
