@@ -1,0 +1,655 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Enable / disable table of contents
+\newif\ifshowtoc
+\showtoctrue
+
+% Enable / disable bibliography
+\newif\ifshowbibliography
+\showbibliographyfalse
+
+% Document information
+\newcommand{\worktitle}{Definition of Done}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{ doc. Ing. Fedor Lehocki PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=48pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{csquotes}
+
+% Bibliography
+\usepackage[
+    backend=biber,
+    style=ieee,
+    sorting=none
+]{biblatex}
+
+\addbibresource{references.bib}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+% Ragged-right columns keep narrow table cells readable.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+% Section
+\titleformat{\section}
+    {\Large\bfseries\color{primary}}
+    {\thesection}
+    {0.8em}
+    {}
+
+% Subsection
+\titleformat{\subsection}
+    {\large\bfseries\color{primary}}
+    {\thesubsection}
+    {0.8em}
+    {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{primary}}
+    {\thesubsubsection}
+    {0.8em}
+    {}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+% Captions
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering
+}
+
+% Bibliography title
+\DefineBibliographyStrings{english}{
+    bibliography = {References}
+}
+
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header logo
+\fancyhead[L]{
+    \includegraphics[
+        width=4cm,
+        height=1.15cm,
+        keepaspectratio
+    ]{assets/horizontal.png}
+}
+
+% Header information
+\fancyhead[R]{
+    \begin{tabular}{r}
+        {\footnotesize\bfseries \worksubtitle}\\[3pt]
+        {\scriptsize Academic Year \academicyear}
+    \end{tabular}
+}
+
+% Header line
+\renewcommand{\headrulewidth}{0.7pt}
+
+% Footer left
+\fancyfoot[L]{
+    {\scriptsize
+    \teamname\enspace|\enspace\subject}
+}
+
+% Footer right
+\fancyfoot[R]{
+    {\scriptsize
+    \thepage\enspace/\enspace\pageref{LastPage}}
+}
+
+% Footer line
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Plain pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+
+    \fancyhead[L]{
+        \includegraphics[
+            width=4cm,
+            height=1.15cm,
+            keepaspectratio
+        ]{assets/horizontal.png}
+    }
+
+    \fancyhead[R]{
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}
+    }
+
+    \fancyfoot[L]{
+        {\scriptsize
+        \teamname\enspace|\enspace\subject}
+    }
+
+    \fancyfoot[R]{
+        {\scriptsize
+        \thepage\enspace/\enspace\pageref{LastPage}}
+    }
+
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % ==========================================
+        % UNIVERSITY LOGO
+        % ==========================================
+
+        \vspace*{0.3cm}
+
+        \includegraphics[
+            width=6cm,
+            height=5cm,
+            keepaspectratio
+        ]{assets/vertical.png}
+
+        \vspace{0.5cm}
+
+        {\large\bfseries
+        \university\par}
+
+        \vspace{0.2cm}
+
+        {\normalsize
+        \faculty\par}
+
+        % ==========================================
+        % PROJECT TITLE
+        % ==========================================
+
+        \vspace{1.7cm}
+
+        {\small\MakeUppercase{\worksubtitle}\par}
+
+        \vspace{0.5cm}
+
+        \begin{minipage}{0.95\textwidth}
+            \centering
+
+            {\fontsize{25}{32}\selectfont\bfseries
+            \worktitle\par}
+        \end{minipage}
+
+        % ==========================================
+        % TEAM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % ==========================================
+        % BOTTOM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        {\small
+        \location\enspace\textbullet\enspace\academicyear\par}
+
+    \end{titlepage}
+}
+
+% ==================================================
+% 7. IMAGE PLACEHOLDER
+% ==================================================
+
+% Usage:
+% \imageplaceholder{Text}{Caption}
+
+\newcommand{\imageplaceholder}[2]{
+
+    \begin{figure}[H]
+        \centering
+
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+
+                \centering
+
+                {\Large\bfseries IMAGE}
+
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+
+            \end{minipage}
+        }
+
+        \endgroup
+
+        \caption{#2}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. REAL IMAGE COMMAND
+% ==================================================
+
+% Usage:
+% \documentimage{path}{caption}{label}
+
+\newcommand{\documentimage}[3]{
+
+    \begin{figure}[htbp]
+        \centering
+
+        \includegraphics[
+            width=0.85\textwidth,
+            keepaspectratio
+        ]{#1}
+
+        \caption{#2}
+        \label{#3}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 9. TABLES
+% ==================================================
+
+% Usage:
+% \begin{naomitable}{Caption}{label}
+%     \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+%         \rowcolor{naomiTableHeader}
+%         \textcolor{white}{\bfseries Name} & ... \\
+%         ...
+%         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+%     \end{tabularx}
+% \end{naomitable}
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[htbp]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{7pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+% Usage:
+% \tableplaceholder{Caption}{label}
+
+\newcommand{\tableplaceholder}[2]{
+    \begin{naomitable}{#1}{#2}
+        \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+            \rowcolor{naomiTableHeader}
+            \textcolor{white}{\bfseries Name} &
+            \textcolor{white}{\bfseries Description} &
+            \textcolor{white}{\bfseries Status} \\
+            Item A & Sample description & Completed \\
+            Item B & Sample description & In Progress \\
+            Item C & Sample description & Planned \\
+            \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+        \end{tabularx}
+    \end{naomitable}
+}
+
+
+% ==================================================
+% 10. DOCUMENT
+% ==================================================
+
+\begin{document}
+
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+
+\ifshowtoc
+    \tableofcontents
+    \clearpage
+\fi
+
+% ==================================================
+% 1. PURPOSE
+% ==================================================
+
+\section{Purpose of the Document}
+
+This document defines the \textbf{Definition of Done (DoD)} for the NAOMI team.
+It establishes a common understanding of when work can be considered complete
+within the NAO Robot Exercise System project. The DoD helps the team maintain
+consistent quality, track progress in Jira, and avoid marking unfinished work as
+completed.
+
+NAOMI follows a Scrumban approach. Issues are managed on a Jira board using
+five states: \textbf{To Do, In Progress, In Review, Testing, and Done}.
+The DoD describes the conditions that must be met before an issue is moved
+to the final state.
+
+% ==================================================
+% 2. SCOPE
+% ==================================================
+
+\section{Scope and Responsibilities}
+
+The DoD applies to development tasks, bug fixes, documentation, research,
+experiments, and other deliverables tracked in Jira. Not every technical
+criterion applies to every task: for example, a documentation-only task does
+not require new source code. However, every completed task must meet its
+acceptance criteria and provide a verifiable result.
+
+The \textbf{assignee} is responsible for completing the work, keeping Jira
+up to date, and providing evidence of completion. The \textbf{reviewers}
+check the result independently. The team confirms that the necessary reviews
+and tests have been completed before closing the issue.
+
+% ==================================================
+% 3. GENERAL CRITERIA
+% ==================================================
+
+\section{General Definition of Done}
+
+A Jira issue can be moved to \textbf{Done} only when all applicable criteria
+below have been satisfied:
+
+\begin{itemize}
+    \item The intended result is complete and meets the issue's acceptance
+          criteria.
+    \item The output can be reviewed or verified by another team member.
+    \item Relevant changes, decisions, and results are recorded in Jira or
+          linked documentation.
+    \item Required reviews have been completed and important comments
+          have been resolved.
+    \item Appropriate testing or validation has been performed, with no
+          known unresolved critical defects caused by the change.
+    \item Documentation has been created or updated when necessary.
+    \item The Jira issue contains a link to the final result, such as a
+          pull request, document, experiment report, or demonstration.
+    \item The issue status accurately reflects the actual progress.
+\end{itemize}
+
+If a requirement cannot be satisfied, the issue must not be marked Done
+without an explicit team decision and a documented follow-up.
+% ==================================================
+% 4. DEVELOPMENT WORK
+% ==================================================
+
+\section{Definition of Done for Development Tasks}
+
+For tasks involving source code, the following criteria apply:
+
+\begin{itemize}
+    \item The implementation meets the agreed requirements
+          and follows the project's coding conventions.
+    \item The code is committed to a GitHub branch linked
+          to the corresponding Jira issue.
+    \item Necessary tests have been completed successfully.
+    \item Relevant documentation has been updated
+          where required.
+    \item All required automated checks pass, if available.
+    \item The changes have been merged into the appropriate
+          target branch following the review process
+          described below.
+\end{itemize}
+
+\subsection{Pull Request Review and Approval}
+
+All code changes must be submitted through a Pull Request
+before being merged into the main branch.
+
+The approval requirements depend on the PR author:
+
+\begin{itemize}
+    \item \textbf{Repository Owners and Maintainers:}
+          Members responsible for the repository may merge
+          their own Pull Requests without additional approvals.
+
+    \item \textbf{Other Team Members:}
+          Pull Requests require two approvals:
+          one from a repository owner or maintainer
+          and one from another assigned reviewer.
+\end{itemize}
+
+Before merging, all requested changes must be addressed
+and blocking review comments resolved. Reviewers should
+verify correctness, code quality, and compliance with
+project requirements.
+
+Repository owners and maintainers remain responsible
+for the quality of changes they merge without
+additional review.
+
+% ==================================================
+% 5. REVIEW AND TESTING
+% ==================================================
+
+\section{Review and Testing Process}
+
+The \textbf{In Review} and \textbf{Testing} states represent two different
+checks. Review focuses on implementation quality and completeness; testing
+focuses on whether the result behaves as expected.
+
+\begin{naomitable}{Verification stages before completion}{tab:dod-stages}
+    \begin{tabularx}{\textwidth}{L{2.4cm} Y Y}
+        \rowcolor{naomiTableHeader}
+        \textcolor{white}{\bfseries Jira status} &
+        \textcolor{white}{\bfseries Main activity} &
+        \textcolor{white}{\bfseries Exit condition} \\
+        In Review &
+        Review the implementation or deliverable and provide feedback. &
+        Required reviews are completed and blocking comments resolved. \\
+        Testing &
+        Execute relevant functional, integration, or manual checks. &
+        Expected behaviour is verified and significant defects are resolved. \\
+        Done &
+        Confirm the issue meets the applicable DoD criteria. &
+        Evidence is linked and the final result is ready to use. \\
+        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+    \end{tabularx}
+\end{naomitable}
+
+For the NAO robot project, testing may include verifying motion sequences,
+robot behaviour, input processing, or communication between components,
+depending on the task. 
+
+If testing reveals a defect, the issue should return to an appropriate
+working state or a related bug issue should be created. Moving an issue
+to Done does not replace the need to record unresolved problems.
+
+% ==================================================
+% 6. NON-CODE WORK
+% ==================================================
+
+\section{Definition of Done for Non-Code Tasks}
+
+\subsection{Documentation}
+
+A documentation task is complete when its content is accurate, readable,
+consistent with the current implementation, and stored in the agreed
+team location. The relevant team member has reviewed it, and any essential
+corrections have been applied. Meeting notes are considered complete once
+the main decisions, action items, responsible people, and relevant Jira
+links have been recorded and shared with the team.
+
+\subsection{Research and Experiments}
+
+Research or experiment tasks are complete when the objective, method,
+results, and conclusions are documented. The result must be accessible to
+other team members, including any limitations or remaining uncertainties.
+A negative or inconclusive result can still be Done if the agreed work was
+carried out and its outcome is documented.
+
+% ==================================================
+% 7. JIRA CHECKLIST
+% ==================================================
+
+\section{Completion Checklist in Jira}
+
+Before moving a task to Done, the assignee should verify the following
+short checklist. Items that do not apply should be marked as not applicable
+rather than silently ignored.
+
+\begin{itemize}
+    \item[$\square$] Acceptance criteria are met.
+    \item[$\square$] The result is linked in Jira.
+    \item[$\square$] Review and required approvals are complete.
+    \item[$\square$] Relevant tests or validation have passed.
+    \item[$\square$] Documentation is up to date.
+    \item[$\square$] There are no unresolved blocking problems.
+    \item[$\square$] The final status in Jira is correct.
+\end{itemize}
+
+\section{Maintaining the Definition of Done}
+
+The team may update this definition during retrospectives or when the
+project's tools and workflow change. Any change should be discussed with
+the team, documented, and applied consistently to future work. The DoD
+should remain practical: its purpose is to support reliable delivery, not
+to create unnecessary administrative steps.
+
+\ifshowbibliography
+    \clearpage
+    \printbibliography[heading=bibintoc,title={References}]
+\fi
+
+\end{document}
