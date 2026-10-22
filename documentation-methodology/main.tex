@@ -1,0 +1,634 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Enable / disable table of contents
+\newif\ifshowtoc
+\showtocfalse
+
+% Enable / disable bibliography
+\newif\ifshowbibliography
+\showbibliographyfalse
+
+% Document information
+\newcommand{\worktitle}{Documentation Methodology}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{ doc. Ing. Fedor Lehocki PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{csquotes}
+
+% Bibliography
+\usepackage[
+    backend=biber,
+    style=ieee,
+    sorting=none
+]{biblatex}
+
+\addbibresource{references.bib}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+% Ragged-right columns keep narrow table cells readable.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+% Section
+\titleformat{\section}
+    {\Large\bfseries\color{primary}}
+    {\thesection}
+    {0.8em}
+    {}
+
+% Subsection
+\titleformat{\subsection}
+    {\large\bfseries\color{primary}}
+    {\thesubsection}
+    {0.8em}
+    {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{primary}}
+    {\thesubsubsection}
+    {0.8em}
+    {}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+% Captions
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering
+}
+
+% Bibliography title
+\DefineBibliographyStrings{english}{
+    bibliography = {References}
+}
+
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header logo
+\fancyhead[L]{
+    \includegraphics[
+        width=4cm,
+        height=1.15cm,
+        keepaspectratio
+    ]{assets/horizontal.png}
+}
+
+% Header information
+\fancyhead[R]{
+    \begin{tabular}{r}
+        {\footnotesize\bfseries \worksubtitle}\\[3pt]
+        {\scriptsize Academic Year \academicyear}
+    \end{tabular}
+}
+
+% Header line
+\renewcommand{\headrulewidth}{0.7pt}
+
+% Footer left
+\fancyfoot[L]{
+    {\scriptsize
+    \teamname\enspace|\enspace\subject}
+}
+
+% Footer right
+\fancyfoot[R]{
+    {\scriptsize
+    \thepage\enspace/\enspace\pageref{LastPage}}
+}
+
+% Footer line
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Plain pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+
+    \fancyhead[L]{
+        \includegraphics[
+            width=4cm,
+            height=1.15cm,
+            keepaspectratio
+        ]{assets/horizontal.png}
+    }
+
+    \fancyhead[R]{
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}
+    }
+
+    \fancyfoot[L]{
+        {\scriptsize
+        \teamname\enspace|\enspace\subject}
+    }
+
+    \fancyfoot[R]{
+        {\scriptsize
+        \thepage\enspace/\enspace\pageref{LastPage}}
+    }
+
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % ==========================================
+        % UNIVERSITY LOGO
+        % ==========================================
+
+        \vspace*{0.3cm}
+
+        \includegraphics[
+            width=6cm,
+            height=5cm,
+            keepaspectratio
+        ]{assets/vertical.png}
+
+        \vspace{0.5cm}
+
+        {\large\bfseries
+        \university\par}
+
+        \vspace{0.2cm}
+
+        {\normalsize
+        \faculty\par}
+
+        % ==========================================
+        % PROJECT TITLE
+        % ==========================================
+
+        \vspace{1.7cm}
+
+        {\small\MakeUppercase{\worksubtitle}\par}
+
+        \vspace{0.5cm}
+
+        \begin{minipage}{0.95\textwidth}
+            \centering
+
+            {\fontsize{25}{32}\selectfont\bfseries
+            \worktitle\par}
+        \end{minipage}
+
+        % ==========================================
+        % TEAM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % ==========================================
+        % BOTTOM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        {\small
+        \location\enspace\textbullet\enspace\academicyear\par}
+
+    \end{titlepage}
+}
+
+% ==================================================
+% 7. IMAGE PLACEHOLDER
+% ==================================================
+
+% Usage:
+% \imageplaceholder{Text}{Caption}
+
+\newcommand{\imageplaceholder}[2]{
+
+    \begin{figure}[H]
+        \centering
+
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+
+                \centering
+
+                {\Large\bfseries IMAGE}
+
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+
+            \end{minipage}
+        }
+
+        \endgroup
+
+        \caption{#2}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. REAL IMAGE COMMAND
+% ==================================================
+
+% Usage:
+% \documentimage{path}{caption}{label}
+
+\newcommand{\documentimage}[3]{
+
+    \begin{figure}[htbp]
+        \centering
+
+        \includegraphics[
+            width=0.85\textwidth,
+            keepaspectratio
+        ]{#1}
+
+        \caption{#2}
+        \label{#3}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 9. TABLES
+% ==================================================
+
+% Usage:
+% \begin{naomitable}{Caption}{label}
+%     \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+%         \rowcolor{naomiTableHeader}
+%         \textcolor{white}{\bfseries Name} & ... \\
+%         ...
+%         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+%     \end{tabularx}
+% \end{naomitable}
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[htbp]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{7pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+% Usage:
+% \tableplaceholder{Caption}{label}
+
+\newcommand{\tableplaceholder}[2]{
+    \begin{naomitable}{#1}{#2}
+        \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+            \rowcolor{naomiTableHeader}
+            \textcolor{white}{\bfseries Name} &
+            \textcolor{white}{\bfseries Description} &
+            \textcolor{white}{\bfseries Status} \\
+            Item A & Sample description & Completed \\
+            Item B & Sample description & In Progress \\
+            Item C & Sample description & Planned \\
+            \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+        \end{tabularx}
+    \end{naomitable}
+}
+
+
+% ==================================================
+% 10. DOCUMENT
+% ==================================================
+
+\begin{document}
+
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+
+\ifshowtoc
+    \tableofcontents
+    \clearpage
+\fi
+
+% ==================================================
+% 1. PURPOSE OF THE DOCUMENT
+% ==================================================
+
+\section{Purpose of the Document}
+
+This document defines how the NAOMI team creates, reviews, stores, and
+maintains project documentation. Its purpose is to keep technical information,
+meeting outcomes, and sprint records understandable and accessible to all
+team members throughout the development of the team project.
+
+Documentation should explain not only what was implemented, but also important
+decisions, known limitations, and instructions needed to continue the work.
+It should be concise enough to remain useful and detailed enough that another
+team member can understand the documented activity without additional
+explanations from its author.
+
+% ==================================================
+% 2. SCOPE AND RESPONSIBILITIES
+% ==================================================
+
+\section{Scope and Responsibilities}
+
+The methodology applies to documentation produced within the NAOMI team
+project, including technical documentation, meeting notes, sprint
+retrospectives, internal methodologies, and supporting guides.
+
+The team member responsible for a task is normally responsible for keeping
+its related documentation accurate. Documentation may also be prepared by
+another member, provided that the person familiar with the implementation
+reviews the technical details. All team members are encouraged to report
+missing or outdated information.
+
+The documentation is intended primarily for the team, project supervisors,
+and other readers who need to understand the project's progress and results.
+
+% ==================================================
+% 3. TECHNICAL DOCUMENTATION
+% ==================================================
+
+\section{Technical Documentation}
+
+Technical documentation describes the parts of the system developed by the
+team, their purpose, and how they work together. Depending on the task,
+it may cover system architecture, interfaces, data structures, APIs,
+configuration, installation, or testing procedures.
+
+When a feature is implemented or significantly changed, the responsible team
+member should update the relevant documentation. The description should
+include the goal of the feature, its main components, dependencies, and any
+important assumptions or restrictions. Diagrams, screenshots, and short code
+examples can be used when they make the explanation easier to follow.
+
+Before the documentation is considered complete, the developer familiar with
+the corresponding code should check it for technical accuracy. Relevant
+documentation should also be considered during code review so that the
+written description does not contradict the implementation.
+
+Where the project contains several independent components, each component
+may have its own documentation. A higher-level overview should explain how
+these components fit together.
+
+
+% ==================================================
+% 4. MEETING RECORDS
+% ==================================================
+
+\section{Meeting Records}
+
+During each team meeting, one team member is
+responsible for taking written notes. 
+
+The meeting notes should include the main topics
+discussed, identified problems, important decisions,
+and tasks assigned to individual team members.
+
+Each meeting record should contain:
+\begin{itemize}
+    \item Date of the meeting and list of participants.
+    \item Main topics discussed during the meeting.
+    \item Decisions made by the team.
+    \item Identified problems or potential risks.
+    \item Action items, responsible members,
+          and expected deadlines.
+\end{itemize}
+
+After the meeting, the notes are made available
+to all team members. Any new tasks resulting
+from the discussion should be added to Jira
+or linked to existing issues.
+
+Meeting notes are stored with the team's
+project documentation so that members can
+review previous discussions and decisions
+when needed.
+
+% ==================================================
+% 5. INTERNAL METHODOLOGIES
+% ==================================================
+
+\section{Internal Methodologies}
+
+In addition to technical descriptions, the NAOMI team maintains short
+methodology documents for recurring activities. These documents help team
+members follow a consistent approach without introducing unnecessary
+administrative work.
+
+Examples include backlog management in Jira, the Scrumban workflow,
+code review, testing, version control, and documentation itself.
+Each methodology should clearly describe its purpose, scope, main steps,
+and responsibilities. It should be revised when the team's working
+practices change.
+
+The current version of a methodology should be easy to find in the team's
+shared documentation and, where appropriate, linked from the team website.
+
+% ==================================================
+% 6. SPRINT RETROSPECTIVE DOCUMENTATION
+% ==================================================
+
+\section{Sprint Retrospective Documentation}
+
+At the end of a sprint, the team reflects on its work and discusses possible
+improvements. Although NAOMI uses Scrumban, regular retrospectives help the
+team evaluate both sprint outcomes and the flow of tasks across the Jira
+board.
+
+The discussion should cover the following questions:
+
+\begin{itemize}
+    \item What went well during the sprint?
+    \item Which planned activities were not completed, and why?
+    \item What problems or blockers did the team encounter?
+    \item What should be improved in the next sprint?
+\end{itemize}
+
+One participant should record the most important observations and decisions.
+The retrospective does not need to reproduce every statement verbatim;
+it should summarise common findings and concrete improvement proposals.
+
+\subsection{Retrospective Outcomes}
+
+The final record should distinguish between observations and agreed actions.
+Where an improvement requires follow-up work, it should have a responsible
+person and, if appropriate, a related Jira issue. At the next retrospective,
+the team can check whether previously agreed changes were useful.
+
+Team members who could not attend should have access to the summary and an
+opportunity to provide additional comments.
+
+% ==================================================
+% 7. OTHER DOCUMENTS AND STORAGE
+% ==================================================
+
+\section{Other Documents and Storage}
+
+Additional materials may be created during the project, such as setup guides,
+user instructions, research notes, test reports, diagrams, or demonstrations.
+These materials should be stored alongside the relevant project documentation
+rather than remaining only in private messages or on individual computers.
+
+Files should use descriptive names and be organised by topic. When an updated
+version replaces an older one, the team should avoid keeping several
+unlabelled copies that could cause confusion. Documents referenced in Jira
+should be linked from the corresponding issues whenever this is useful.
+
+Project documentation intended for broader access should also be linked or
+published through the NAOMI team website, according to the team's agreed
+sharing rules. Internal notes or information that should not be public should
+remain in the appropriate restricted team workspace.
+
+The goal is to keep documentation current, searchable, and useful for future
+team members and project evaluation.
+
+% ==================================================
+% OPTIONAL REFERENCES
+% ==================================================
+
+\ifshowbibliography
+    \clearpage
+    \printbibliography[heading=bibintoc,title={References}]
+\fi
+
+\end{document}
