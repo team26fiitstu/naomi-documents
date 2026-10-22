@@ -1,25 +1,12 @@
 # NAOMI Methodologies
 
-LaTeX sources for the NAOMI team's NAO Robot Exercise System methodologies. The documents use the team's [LaTeX template](https://github.com/team26fiitstu/naomi-latex-template).
+LaTeX sources for the NAOMI team's NAO Robot Exercise System methodologies. All documents use the team's NAOMI LaTeX template.
 
-## Documents
-
-- `technical-methodology/` - coding conventions, version control, code review, and verification levels.
-- `version-control-methodology/` - branch workflow, commits, pull requests, versions, and release tags.
-
-Each directory is self-contained and includes `main.tex`, `references.bib`, and the required logo assets.
+The methodologies cover technical practices, version control, documentation, and backlog management for the project.
 
 ## Compiled PDFs
 
 - [Technical methodology](output/pdf/naomi-technical-methodology.pdf)
 - [Version control methodology](output/pdf/naomi-version-control-methodology.pdf)
-
-## Build
-
-Install a LaTeX distribution with `latexmk` and `biber`. From either document directory, run:
-
-```sh
-latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
-```
-
-The generated `main.pdf` is ignored. Copy final builds to `output/pdf/` to update the PDFs committed to this repository. To remove LaTeX build files, run `latexmk -C` in that directory.
+- [Documentation methodology](output/pdf/naomi_documentation_methodology.pdf)
+- [Backlog management methodology](output/pdf/naomi_backlog_management_methodology.pdf)
