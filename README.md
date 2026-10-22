@@ -20,17 +20,17 @@ Click a button below to create a separate editable Overleaf project for each met
 
 ### Technical methodology
 
-[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-methodologies/main/output/overleaf/naomi-technical-methodology.zip)
+[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-methodologies/SCRUM-32-overleaf-import/output/overleaf/naomi-technical-methodology.zip)
 
 [Download source ZIP](output/overleaf/naomi-technical-methodology.zip)
 
 ### Version control methodology
 
-[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-methodologies/main/output/overleaf/naomi-version-control-methodology.zip)
+[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-methodologies/SCRUM-32-overleaf-import/output/overleaf/naomi-version-control-methodology.zip)
 
 [Download source ZIP](output/overleaf/naomi-version-control-methodology.zip)
 
-These buttons load ZIP files from `main`, so new or updated ZIPs become available through them after the corresponding PR is merged. For a pre-merge preview, open a branch-specific ZIP URL with the same Overleaf API. An imported Overleaf project is an editable copy and does not synchronize later GitHub changes automatically. After changing the LaTeX sources, run `python3 scripts/package_overleaf.py` and commit the regenerated ZIP files.
+These buttons currently load ZIP files from the `SCRUM-32-overleaf-import` branch for pre-merge review. After merging the PR, change the URLs to `main` before deleting the branch. An imported Overleaf project is an editable copy and does not synchronize later GitHub changes automatically. After changing the LaTeX sources, run `python3 scripts/package_overleaf.py` and commit the regenerated ZIP files.
 
 ## Build
 
