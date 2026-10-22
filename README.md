@@ -9,6 +9,11 @@ LaTeX sources for the NAOMI team's NAO Robot Exercise System methodologies. The 
 
 Each directory is self-contained and includes `main.tex`, `references.bib`, and the required logo assets.
 
+## Compiled PDFs
+
+- [Technical methodology](output/pdf/naomi-technical-methodology.pdf)
+- [Version control methodology](output/pdf/naomi-version-control-methodology.pdf)
+
 ## Build
 
 Install a LaTeX distribution with `latexmk` and `biber`. From either document directory, run:
@@ -17,4 +22,4 @@ Install a LaTeX distribution with `latexmk` and `biber`. From either document di
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The generated `main.pdf` is a local build artifact and is not committed. To remove LaTeX build files, run `latexmk -C` in that directory.
+The generated `main.pdf` is ignored. Copy final builds to `output/pdf/` to update the PDFs committed to this repository. To remove LaTeX build files, run `latexmk -C` in that directory.
