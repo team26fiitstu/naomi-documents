@@ -9,6 +9,8 @@ OUTPUT = ROOT / "output" / "overleaf"
 PROJECTS = {
     "technical-methodology": "naomi-technical-methodology.zip",
     "version-control-methodology": "naomi-version-control-methodology.zip",
+    "documentation-methodology": "naomi-documentation-methodology.zip",
+    "backlog-management-methodology": "naomi-backlog-management-methodology.zip",
 }
 
 
