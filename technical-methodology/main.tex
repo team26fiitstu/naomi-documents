@@ -1,0 +1,598 @@
+
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Enable / disable bibliography
+\newif\ifshowbibliography
+\showbibliographytrue
+
+% Document information
+\newcommand{\worktitle}{Technical Methodology}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{ doc. Ing. Fedor Lehocki PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{csquotes}
+
+% Bibliography
+\usepackage[
+    backend=biber,
+    style=ieee,
+    sorting=none
+]{biblatex}
+
+\addbibresource{references.bib}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+% Ragged-right columns keep narrow table cells readable.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+\emergencystretch=5em
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+% Section
+\titleformat{\section}
+    {\Large\bfseries\color{primary}}
+    {\thesection}
+    {0.8em}
+    {}
+
+% Subsection
+\titleformat{\subsection}
+    {\large\bfseries\color{primary}}
+    {\thesubsection}
+    {0.8em}
+    {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{primary}}
+    {\thesubsubsection}
+    {0.8em}
+    {}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+% Captions
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering
+}
+
+% Bibliography title
+\DefineBibliographyStrings{english}{
+    bibliography = {References}
+}
+
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header logo
+\fancyhead[L]{
+    \includegraphics[
+        width=4cm,
+        height=1.15cm,
+        keepaspectratio
+    ]{assets/horizontal.png}
+}
+
+% Header information
+\fancyhead[R]{
+    \begin{tabular}{r}
+        {\footnotesize\bfseries \worksubtitle}\\[3pt]
+        {\scriptsize Academic Year \academicyear}
+    \end{tabular}
+}
+
+% Header line
+\renewcommand{\headrulewidth}{0.7pt}
+
+% Footer left
+\fancyfoot[L]{
+    {\scriptsize
+    \teamname\enspace|\enspace\subject}
+}
+
+% Footer right
+\fancyfoot[R]{
+    {\scriptsize
+    \thepage\enspace/\enspace\pageref{LastPage}}
+}
+
+% Footer line
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Plain pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+
+    \fancyhead[L]{
+        \includegraphics[
+            width=4cm,
+            height=1.15cm,
+            keepaspectratio
+        ]{assets/horizontal.png}
+    }
+
+    \fancyhead[R]{
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}
+    }
+
+    \fancyfoot[L]{
+        {\scriptsize
+        \teamname\enspace|\enspace\subject}
+    }
+
+    \fancyfoot[R]{
+        {\scriptsize
+        \thepage\enspace/\enspace\pageref{LastPage}}
+    }
+
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % ==========================================
+        % UNIVERSITY LOGO
+        % ==========================================
+
+        \vspace*{0.3cm}
+
+        \includegraphics[
+            width=6cm,
+            height=5cm,
+            keepaspectratio
+        ]{assets/vertical.png}
+
+        \vspace{0.5cm}
+
+        {\large\bfseries
+        \university\par}
+
+        \vspace{0.2cm}
+
+        {\normalsize
+        \faculty\par}
+
+        % ==========================================
+        % PROJECT TITLE
+        % ==========================================
+
+        \vspace{1.7cm}
+
+        {\small\MakeUppercase{\worksubtitle}\par}
+
+        \vspace{0.5cm}
+
+        \begin{minipage}{0.95\textwidth}
+            \centering
+
+            {\fontsize{25}{32}\selectfont\bfseries
+            \worktitle\par}
+        \end{minipage}
+
+        % ==========================================
+        % TEAM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % ==========================================
+        % BOTTOM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        {\small
+        \location\enspace\textbullet\enspace\academicyear\par}
+
+    \end{titlepage}
+}
+
+% ==================================================
+% 7. IMAGE PLACEHOLDER
+% ==================================================
+
+% Usage:
+% \imageplaceholder{Text}{Caption}
+
+\newcommand{\imageplaceholder}[2]{
+
+    \begin{figure}[H]
+        \centering
+
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+
+                \centering
+
+                {\Large\bfseries IMAGE}
+
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+
+            \end{minipage}
+        }
+
+        \endgroup
+
+        \caption{#2}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. REAL IMAGE COMMAND
+% ==================================================
+
+% Usage:
+% \documentimage{path}{caption}{label}
+
+\newcommand{\documentimage}[3]{
+
+    \begin{figure}[htbp]
+        \centering
+
+        \includegraphics[
+            width=0.85\textwidth,
+            keepaspectratio
+        ]{#1}
+
+        \caption{#2}
+        \label{#3}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 9. TABLES
+% ==================================================
+
+% Usage:
+% \begin{naomitable}{Caption}{label}
+%     \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+%         \rowcolor{naomiTableHeader}
+%         \textcolor{white}{\bfseries Name} & ... \\
+%         ...
+%         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+%     \end{tabularx}
+% \end{naomitable}
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[htbp]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{7pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+% Usage:
+% \tableplaceholder{Caption}{label}
+
+\newcommand{\tableplaceholder}[2]{
+    \begin{naomitable}{#1}{#2}
+        \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+            \rowcolor{naomiTableHeader}
+            \textcolor{white}{\bfseries Name} &
+            \textcolor{white}{\bfseries Description} &
+            \textcolor{white}{\bfseries Status} \\
+            Item A & Sample description & Completed \\
+            Item B & Sample description & In Progress \\
+            Item C & Sample description & Planned \\
+            \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+        \end{tabularx}
+    \end{naomitable}
+}
+
+
+% ==================================================
+% 10. DOCUMENT
+% ==================================================
+
+\begin{document}
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+\tableofcontents
+\newpage
+\textbf{Project:} NAO Robot Exercise System
+
+\textbf{Scope:} Source code, configuration, documentation, and changes to robot behaviour.
+
+This methodology applies to every contributor to the NAO system. The repository contains Python services, a TypeScript web application, Docker configuration, and a legacy Python 2 service that communicates with NAO. The rules below define how changes are written, tracked, reviewed, and merged.
+
+\section{Coding conventions}
+
+\subsection{General rules}
+
+\begin{enumerate}
+
+\item Make each change as small as the task allows. Keep unrelated refactoring in a separate issue and pull request (PR).
+
+\item Use descriptive English names for files, functions, variables, API fields, and commits. Prefer names that express a unit or purpose, such as \texttt{duration\_seconds} instead of \texttt{duration}.
+
+\item Keep modules focused. Separate robot control, video processing, HTTP routes, and data storage so each can be tested independently.
+
+\item Do not commit passwords, API keys, \texttt{.env} files, local paths, generated media, caches, virtual environments, or build artifacts. Add required settings to an example configuration with safe placeholder values.
+
+\item Keep URLs, IP addresses, ports, camera paths, and exercise storage paths configurable. Do not introduce a developer's machine-specific settings into shared code.
+
+\item When changing an API request, response, or stored exercise format, update its consumers and document the change in the same PR. Preserve compatibility where practical; otherwise describe the migration.
+
+\item Write comments for non-obvious constraints and decisions. Prefer clear code over comments that merely repeat what a line does.
+
+\end{enumerate}
+
+\subsection{Python services}
+
+\begin{itemize}
+
+\item Follow PEP 8 style: four-space indentation, \texttt{snake\_case} for functions and variables, \texttt{PascalCase} for classes, and explicit imports.
+
+\item Keep new Python 3 code compatible with the version declared by its service. Do not assume that all services use the same Python version.
+
+\item Isolate Python 2 and NAOqi-specific code in the NAO adapter/service. New Python 3 modules must not import Python 2-only packages directly.
+
+\item Catch specific exceptions at service boundaries. Log enough context to diagnose a failure without logging secrets or unnecessary user video/audio data.
+
+\item Add or update automated tests for changed behaviour. Use a fake NAO interface for routine tests; physical movement is tested separately on the robot.
+
+\end{itemize}
+
+\subsection{Web application and configuration}
+
+\begin{itemize}
+
+\item Use the repository's TypeScript and ESLint configuration. Resolve lint and type-check errors introduced by the change before requesting review.
+
+\item Keep UI components focused and use explicit types for data crossing API boundaries.
+
+\item Validate Compose and deployment configuration after edits. Do not use mutable image tags such as \texttt{latest} for a reproducible release.
+
+\item Keep example configuration and run instructions usable on Windows, macOS, and Linux. Document any platform-specific exception.
+
+\end{itemize}
+
+\section{Version control}
+
+\begin{enumerate}
+
+\item \texttt{master} is the integration branch. Create a short-lived branch from the current \texttt{master} for each Jira task. Name it \texttt{\textless{}jira-key\textgreater{}-short-description}, for example \texttt{NAO-42-video-trimming}. If the team changes its integration branch, update this document.
+
+\item Link every code change to a Jira issue. The issue states the goal and acceptance criteria before implementation begins.
+
+\item Commit coherent changes with a subject in the form \texttt{\textless{}type\textgreater{}(\textless{}scope\textgreater{}): \textless{}summary\textgreater{}}, for example \texttt{fix(translator): reject invalid pose data}. Use \texttt{feat}, \texttt{fix}, \texttt{test}, \texttt{docs}, \texttt{refactor}, \texttt{build}, or \texttt{chore} as the type. Put the Jira key in the PR title or description.
+
+\item Do not commit directly to \texttt{master}. Open a PR for the task, keep it focused, and synchronize it with \texttt{master} before merge if conflicts arise.
+
+\item Do not force-push or rewrite shared branch history. On a personal task branch, rebasing is allowed while nobody else depends on it; tell reviewers when a rebase invalidates their previous review.
+
+\item Merge only after the acceptance criteria are met, required checks pass, and review is approved. Prefer squash merge to keep one traceable commit per PR; the PR remains the record of intermediate discussion.
+
+\item Tag versions used for demonstrations or NAO experiments. Record the tag or commit SHA with the experiment results so the software state can be reproduced.
+
+\end{enumerate}
+
+\section{Pull request and code review}
+
+\subsection{Before requesting review}
+
+The author shall:
+
+\begin{itemize}
+
+\item Review their own diff for accidental files, secrets, unrelated changes, debug code, consistent indentation, descriptive names, and unhandled failure paths.
+
+\item Link the Jira issue and explain \textbf{what changed}, \textbf{why}, \textbf{how it was tested}, and any remaining limitation.
+
+\item Include test output or clear manual verification steps. State explicitly when a change could not be tested on NAO.
+
+\item Add a screenshot or short recording for a visible UI change when that makes review easier.
+
+\item Describe any change to robot motion, safety limits, actuator use, camera handling, or service interfaces prominently in the PR.
+
+\item Request review from a team member familiar with the affected component. Move the Jira issue to \textbf{In review} when the PR is ready.
+
+\end{itemize}
+
+\subsection{Reviewer responsibilities}
+
+At least one team member other than the author reviews every PR. The reviewer must understand the change well enough to assess it; pairing during implementation is welcome, but the final diff still receives an independent review. A change that can move the robot or alter safety-related behaviour also requires review by a team member responsible for robot testing. Reviewers check:
+
+\begin{enumerate}
+
+\item Does the implementation satisfy the Jira acceptance criteria without unrelated scope?
+
+\item Are service boundaries and API/data contracts clear and compatible with consumers?
+
+\item Are failure paths handled, logged, and testable without physical hardware?
+
+\item Do tests cover the changed behaviour, and are manual steps sufficient where automation is impossible?
+
+\item Are configuration, dependency, privacy, and robot-safety implications documented?
+
+\item Do representative valid and invalid inputs behave as expected? When practical, reproduce at least one relevant path locally rather than relying only on reading the diff.
+
+\end{enumerate}
+
+Review comments should identify the issue and a suggested direction. The reviewer records findings in the PR, requests changes when necessary, and tells the author when the review is complete. The author responds to every blocking comment with a fix or an explanation; the reviewer checks the revised code again before resolving the comment. Share the outcome with the team through the PR and Jira issue. Do not approve a PR solely because automated checks passed.
+
+\subsection{Merge gate}
+
+A PR may be merged when it has an independent approval, all blocking comments are resolved, required automated checks pass, and the PR description records the relevant test result. Only then is the Jira issue moved to \textbf{Done}. If review finds a blocking problem, return the issue to \textbf{In progress}, fix it, and request another review. If the work cannot be completed within the sprint, move the unfinished issue to the next sprint instead of marking it Done.
+
+Code that requires physical NAO testing may merge after offline verification \textbf{only if} the PR and Jira issue mark the robot test as pending and the change is not enabled for a live session until that test passes. Any safety-related change must be tested on the robot before being used in a demonstration.
+
+\section{Verification levels}
+
+\begin{naomitable}{Verification levels}{tab:verification-levels}
+\begin{tabularx}{\textwidth}{L{2.6cm} L{3.5cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Level} &
+\textcolor{white}{\bfseries When} &
+\textcolor{white}{\bfseries Evidence} \\
+Static checks & Every PR & Lint, type checks where available, and configuration validation \\
+Unit tests & Behaviour changes & Automated test result with external services and NAO mocked \\
+Service integration & Changes across services & Repeatable test with sample data and fake NAO responses \\
+Physical NAO test & Movement, balance, temperature, or hardware integration changes & Date, operator, robot state, software commit/tag, scenario, result, and incident notes \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+Automated CI must never issue movement commands to a physical NAO. Schedule hardware tests in advance because robot access is intermittent. The team member responsible for the robot defines safe movement limits and stop procedures; this methodology does not replace those procedures.
+
+\section{Maintaining this methodology}
+
+Changes to these rules are made through a PR and reviewed by the team. Review the document at least once per semester and after a serious integration or robot-test incident. Record the decision in the PR so contributors can see why a rule changed.
+
+\ifshowbibliography
+    \nocite{*}
+    \clearpage
+    \printbibliography[heading=bibintoc,title={References}]
+\fi
+\end{document}
