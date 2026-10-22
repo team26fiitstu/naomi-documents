@@ -11,6 +11,7 @@ PROJECTS = {
     "version-control-methodology": "naomi-version-control-methodology.zip",
     "documentation-methodology": "naomi-documentation-methodology.zip",
     "backlog-management-methodology": "naomi-backlog-management-methodology.zip",
+    "project-description-goals": "naomi-project-description-goals.zip",
 }
 
 
@@ -25,7 +26,10 @@ def main() -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     for directory, filename in PROJECTS.items():
         project = ROOT / directory
-        files = [project / "main.tex", project / "references.bib"]
+        files = [project / "main.tex"]
+        bibliography = project / "references.bib"
+        if bibliography.is_file():
+            files.append(bibliography)
         files.extend(sorted((project / "assets").glob("*.png")))
         target = OUTPUT / filename
         with ZipFile(target, "w") as archive:

@@ -6,7 +6,7 @@ Coding conventions, version control, code review, and verification rules for the
 
 Click the button to create an editable copy of this document in Overleaf.
 
-[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-documents/SCRUM-32-overleaf-import/output/overleaf/naomi-technical-methodology.zip)
+[![Open in Overleaf](https://img.shields.io/badge/Open_in-Overleaf-47A141?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/team26fiitstu/naomi-documents/main/output/overleaf/naomi-technical-methodology.zip)
 
 [Download source ZIP](../output/overleaf/naomi-technical-methodology.zip)
 

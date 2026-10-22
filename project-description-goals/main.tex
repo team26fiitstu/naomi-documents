@@ -1,0 +1,467 @@
+
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Document information
+\newcommand{\worktitle}{Project Description and Goals}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{ doc. Ing. Fedor Lehocki PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{csquotes}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+% Ragged-right columns keep narrow table cells readable.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+% Section
+\titleformat{\section}
+    {\Large\bfseries\color{primary}}
+    {\thesection}
+    {0.8em}
+    {}
+
+% Subsection
+\titleformat{\subsection}
+    {\large\bfseries\color{primary}}
+    {\thesubsection}
+    {0.8em}
+    {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{primary}}
+    {\thesubsubsection}
+    {0.8em}
+    {}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+% Captions
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering
+}
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header logo
+\fancyhead[L]{
+    \includegraphics[
+        width=4cm,
+        height=1.15cm,
+        keepaspectratio
+    ]{assets/horizontal.png}
+}
+
+% Header information
+\fancyhead[R]{
+    \begin{tabular}{r}
+        {\footnotesize\bfseries \worksubtitle}\\[3pt]
+        {\scriptsize Academic Year \academicyear}
+    \end{tabular}
+}
+
+% Header line
+\renewcommand{\headrulewidth}{0.7pt}
+
+% Footer left
+\fancyfoot[L]{
+    {\scriptsize
+    \teamname\enspace|\enspace\subject}
+}
+
+% Footer right
+\fancyfoot[R]{
+    {\scriptsize
+    \thepage\enspace/\enspace\pageref{LastPage}}
+}
+
+% Footer line
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Plain pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+
+    \fancyhead[L]{
+        \includegraphics[
+            width=4cm,
+            height=1.15cm,
+            keepaspectratio
+        ]{assets/horizontal.png}
+    }
+
+    \fancyhead[R]{
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}
+    }
+
+    \fancyfoot[L]{
+        {\scriptsize
+        \teamname\enspace|\enspace\subject}
+    }
+
+    \fancyfoot[R]{
+        {\scriptsize
+        \thepage\enspace/\enspace\pageref{LastPage}}
+    }
+
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % ==========================================
+        % UNIVERSITY LOGO
+        % ==========================================
+
+        \vspace*{0.3cm}
+
+        \includegraphics[
+            width=6cm,
+            height=5cm,
+            keepaspectratio
+        ]{assets/vertical.png}
+
+        \vspace{0.5cm}
+
+        {\large\bfseries
+        \university\par}
+
+        \vspace{0.2cm}
+
+        {\normalsize
+        \faculty\par}
+
+        % ==========================================
+        % PROJECT TITLE
+        % ==========================================
+
+        \vspace{1.7cm}
+
+        {\small\MakeUppercase{\worksubtitle}\par}
+
+        \vspace{0.5cm}
+
+        \begin{minipage}{0.95\textwidth}
+            \centering
+
+            {\fontsize{25}{32}\selectfont\bfseries
+            \worktitle\par}
+        \end{minipage}
+
+        % ==========================================
+        % TEAM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % ==========================================
+        % BOTTOM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        {\small
+        \location\enspace\textbullet\enspace\academicyear\par}
+
+    \end{titlepage}
+}
+
+% ==================================================
+% 7. IMAGE PLACEHOLDER
+% ==================================================
+
+% Usage:
+% \imageplaceholder{Text}{Caption}
+
+\newcommand{\imageplaceholder}[2]{
+
+    \begin{figure}[H]
+        \centering
+
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+
+                \centering
+
+                {\Large\bfseries IMAGE}
+
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+
+            \end{minipage}
+        }
+
+        \endgroup
+
+        \caption{#2}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. REAL IMAGE COMMAND
+% ==================================================
+
+% Usage:
+% \documentimage{path}{caption}{label}
+
+\newcommand{\documentimage}[3]{
+
+    \begin{figure}[htbp]
+        \centering
+
+        \includegraphics[
+            width=0.85\textwidth,
+            keepaspectratio
+        ]{#1}
+
+        \caption{#2}
+        \label{#3}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 9. TABLES
+% ==================================================
+
+% Usage:
+% \begin{naomitable}{Caption}{label}
+%     \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+%         \rowcolor{naomiTableHeader}
+%         \textcolor{white}{\bfseries Name} & ... \\
+%         ...
+%         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+%     \end{tabularx}
+% \end{naomitable}
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[htbp]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{7pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+% Usage:
+% \tableplaceholder{Caption}{label}
+
+\newcommand{\tableplaceholder}[2]{
+    \begin{naomitable}{#1}{#2}
+        \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+            \rowcolor{naomiTableHeader}
+            \textcolor{white}{\bfseries Name} &
+            \textcolor{white}{\bfseries Description} &
+            \textcolor{white}{\bfseries Status} \\
+            Item A & Sample description & Completed \\
+            Item B & Sample description & In Progress \\
+            Item C & Sample description & Planned \\
+            \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+        \end{tabularx}
+    \end{naomitable}
+}
+
+
+% ==================================================
+% 10. DOCUMENT
+% ==================================================
+
+\begin{document}
+
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+
+\tableofcontents
+\newpage
+
+\section{Project Description}
+
+The NAO Robot Exercise System is an existing platform for guided physical exercise, especially for older adults. NAO demonstrates movements, visual pose processing observes the participant, and the system provides feedback. A trainer-facing interface prepares and manages exercises. The components communicate as services.
+
+The NAOMI team will extend this platform rather than build a new one. Work focuses on video-based choreography, movement stability, thermal limits, and service reliability. The NAOqi interface requires Python 2 alongside newer components. Because robot access is intermittent, changes must be testable without hardware and checked on the robot when available.
+
+The team will document implemented improvements, test evidence, and remaining limits.
+
+\section{Overall Goal}
+
+Improve the existing NAO exercise system so that a trainer can prepare and run exercise sessions more reliably, while robot movement remains within experimentally established safety and hardware limits.
+
+\section{Project Objectives}
+
+\subsection{Video-based choreography}
+
+Support the preparation of a choreography from multiple videos. A trainer should be able to select videos, trim relevant segments, arrange them into one exercise sequence, and preview the resulting movements before they are sent to the robot. The delivered workflow and its limitations will be demonstrated with representative source videos.
+
+\subsection{Robot stability and fall prevention}
+
+Investigate when NAO loses balance during exercise. Test movement amplitudes and transitions when the robot is available, then use the findings to constrain generated movements. Document repeatable scenarios, failures, and observed safe ranges.
+
+\subsection{Actuator and posture constraints}
+
+Study the effect of sustained postures and repeated movements on actuator temperature. Identify exercise patterns that may create excessive thermal load and document practical limits or safeguards for choreography design. Findings will be based on recorded robot measurements where feasible.
+
+\subsection{Service architecture and maintainability}
+
+Review how the system's services exchange data and commands. Reduce avoidable dependencies, make service boundaries and failures clearer, and keep the NAOqi-dependent Python 2 component isolated from services that use newer Python environments. Document the revised interfaces and verify affected service interactions with repeatable tests.
+
+\subsection{Interaction and sensing reliability}
+
+Evaluate the limitations of pose and emotion recognition in the current workflow, including the system's dependence on the Intel RealSense depth camera. Improve handling of unreliable or unavailable sensor input where feasible, and document which interaction scenarios are supported and which remain limited.
+
+\section{Expected Outcomes}
+
+The project will deliver an enhanced version of the existing exercise system, including the implemented choreography and service improvements. It will also produce documented findings on robot balance, movement limits, actuator temperature, and sensing reliability.
+
+The team will record software test results and, when NAO access permits, each hardware scenario and outcome. Final documentation will describe reproducible workflows, verified behaviour, and remaining limits.
+
+\end{document}
