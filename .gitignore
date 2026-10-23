@@ -12,3 +12,4 @@
 *.toc
 main.pdf
 /build/
+/output/overleaf/
