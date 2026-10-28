@@ -61,7 +61,7 @@
 \usepackage{lmodern}
 
 \usepackage{graphicx}
-\graphicspath{{../assets/}{assets/}}
+\graphicspath{{../../assets/}{assets/}}
 \usepackage[table]{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -586,6 +586,14 @@ Physical NAO test & Movement, balance, temperature, or hardware integration chan
 \end{naomitable}
 
 Automated CI must never issue movement commands to a physical NAO. Schedule hardware tests in advance because robot access is intermittent. The team member responsible for the robot defines safe movement limits and stop procedures; this methodology does not replace those procedures.
+
+\section{Publishing team documents}
+
+The \texttt{naomi-documents} GitHub repository is the source for PDF files published on the team website. Put each document in a directory under its document type: \texttt{zapisnice} for meeting minutes, \texttt{retrospektivy} for retrospectives, \texttt{progres} for progress reports, \texttt{metodiky} for methodologies, \texttt{prirucky} for handbooks, or \texttt{vystupy} for project deliverables. Each document directory contains \texttt{main.tex} and \texttt{document.json}. The metadata file supplies the English and Slovak names and may specify an ISO date; otherwise the publication date comes from the last Git change to the document or shared assets.
+
+When editing in Overleaf, download the project's source ZIP, replace the source files in the corresponding GitHub directory, and push through a normal pull request. This manual source transfer works with the repository's multiple document projects. Overleaf's direct GitHub synchronization is a premium, manually triggered feature that links one project to one repository; a separate mirror per project may be configured later. Do not upload a generated PDF to the website by hand.
+
+On each pull request, GitHub Actions compiles every categorized \LaTeX{} project and produces a review artifact containing the PDFs and \texttt{documents.json}. It places these outputs into a temporary website checkout, checks the links, and builds the website. A failed compilation or site build blocks publication. After the reviewed change reaches \texttt{main}, the workflow updates the website's PDFs and index with a repository-scoped publication token. The website's own workflow then deploys the new version. Verify the PDF artifact during review and check the published links after the first rollout. A bad publication can be rolled back by reverting the generated website commit.
 
 \section{Maintaining this methodology}
 

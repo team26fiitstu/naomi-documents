@@ -10,8 +10,12 @@
 \showtitlepagetrue
 % \showtitlepagefalse
 
+% Enable / disable bibliography
+\newif\ifshowbibliography
+\showbibliographytrue
+
 % Document information
-\newcommand{\worktitle}{Project Description and Goals}
+\newcommand{\worktitle}{Version Control Methodology}
 \newcommand{\worksubtitle}{NAO Robot Exercise System}
 \newcommand{\teamname}{NAOMI}
 \newcommand{\subject}{NAO Robot Exercise System}
@@ -57,7 +61,7 @@
 \usepackage{lmodern}
 
 \usepackage{graphicx}
-\graphicspath{{../assets/}{assets/}}
+\graphicspath{{../../assets/}{assets/}}
 \usepackage[table]{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -68,8 +72,16 @@
 \usepackage{caption}
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{lipsum}
 \usepackage{csquotes}
+
+% Bibliography
+\usepackage[
+    backend=biber,
+    style=ieee,
+    sorting=none
+]{biblatex}
+
+\addbibresource{references.bib}
 
 % Hyperlinks
 \usepackage[hidelinks]{hyperref}
@@ -97,6 +109,7 @@
 % ==================================================
 
 \setstretch{1.2}
+\emergencystretch=5em
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{7pt}
@@ -132,6 +145,12 @@
     labelfont=bf,
     justification=centering
 }
+
+% Bibliography title
+\DefineBibliographyStrings{english}{
+    bibliography = {References}
+}
+
 
 % ==================================================
 % 5. HEADER AND FOOTER
@@ -417,52 +436,74 @@
 % ==================================================
 
 \begin{document}
-
 \ifshowtitlepage
     \makemytitlepage
 \fi
-
 \tableofcontents
 \newpage
+\textbf{Project:} NAO Robot Exercise System
 
-\section{Project Description}
+\textbf{Scope:} Source code, configuration, tests, and project documentation in the NAO repositories.
 
-The NAO Robot Exercise System is an existing platform for guided physical exercise, especially for older adults. NAO demonstrates movements, visual pose processing observes the participant, and the system provides feedback. A trainer-facing interface prepares and manages exercises. The components communicate as services.
+This document defines how the team records, reviews, integrates, and identifies changes. It expands the version control rules in the \emph{Technical Methodology}. GitHub is the source of truth for code and pull requests (PRs); Jira links the change to a task and its acceptance criteria.
 
-The NAOMI team will extend this platform rather than build a new one. Work focuses on video-based choreography, movement stability, thermal limits, and service reliability. The NAOqi interface requires Python 2 alongside newer components. Because robot access is intermittent, changes must be testable without hardware and checked on the robot when available.
+\section{Repository and branch rules}
 
-The team will document implemented improvements, test evidence, and remaining limits.
+\begin{enumerate}
 
-\section{Overall Goal}
+\item The \texttt{master} branch is the integration branch of \texttt{naoMicroservices}. Apply the same workflow to any additional NAO repository, using its agreed integration branch.
 
-Improve the existing NAO exercise system so that a trainer can prepare and run exercise sessions more reliably, while robot movement remains within experimentally established safety and hardware limits.
+\item Do not commit or push directly to the integration branch. A change reaches it through a reviewed PR. Configure GitHub branch protection or a ruleset to require a PR, at least one approval, and the applicable checks where repository permissions allow.
 
-\section{Project Objectives}
+\item Create one short-lived branch per Jira task from the latest integration branch. Name it \texttt{\textless{}jira-key\textgreater{}-short-description}, for example \texttt{NAO-42-video-trimming}. Use the real Jira key; the example is illustrative.
 
-\subsection{Video-based choreography}
+\item Keep branches and PRs focused on one deliverable. If a task needs independent components, split it into linked Jira subtasks and PRs. Avoid long-running shared development branches.
 
-Support the preparation of a choreography from multiple videos. A trainer should be able to select videos, trim relevant segments, arrange them into one exercise sequence, and preview the resulting movements before they are sent to the robot. The delivered workflow and its limitations will be demonstrated with representative source videos.
+\item A developer may rebase their own branch before review. Do not rewrite a branch another person uses. Never force-push the integration branch or move a published release tag.
 
-\subsection{Robot stability and fall prevention}
+\end{enumerate}
 
-Investigate when NAO loses balance during exercise. Test movement amplitudes and transitions when the robot is available, then use the findings to constrain generated movements. Document repeatable scenarios, failures, and observed safe ranges.
+\section{Changes and commits}
 
-\subsection{Actuator and posture constraints}
+\begin{enumerate}
 
-Study the effect of sustained postures and repeated movements on actuator temperature. Identify exercise patterns that may create excessive thermal load and document practical limits or safeguards for choreography design. Findings will be based on recorded robot measurements where feasible.
+\item Pull the current integration branch before starting a task. Commit coherent steps that leave the branch understandable and, where practical, buildable.
 
-\subsection{Service architecture and maintainability}
+\item Write commit subjects as \texttt{\textless{}type\textgreater{}(\textless{}scope\textgreater{}): \textless{}summary\textgreater{}}, for example \texttt{fix(translator): reject invalid pose data}. Allowed types are \texttt{feat}, \texttt{fix}, \texttt{test}, \texttt{docs}, \texttt{refactor}, \texttt{build}, and \texttt{chore}. Use an imperative, specific summary. Put the Jira key in the PR title or description.
 
-Review how the system's services exchange data and commands. Reduce avoidable dependencies, make service boundaries and failures clearer, and keep the NAOqi-dependent Python 2 component isolated from services that use newer Python environments. Document the revised interfaces and verify affected service interactions with repeatable tests.
+\item Do not commit secrets, local \texttt{.env} files, virtual environments, caches, generated video or audio, compiled output, or machine-specific paths. Commit safe example configuration and documented setup steps instead.
 
-\subsection{Interaction and sensing reliability}
+\item Update tests, API contracts, configuration examples, and documentation in the same PR as the behavior they describe. Record migrations when a service interface or stored exercise format changes.
 
-Evaluate the limitations of pose and emotion recognition in the current workflow, including the system's dependence on the Intel RealSense depth camera. Improve handling of unreliable or unavailable sensor input where feasible, and document which interaction scenarios are supported and which remain limited.
+\item Inspect \texttt{git status} and the staged diff before each push. If a secret is exposed, stop using the credential, rotate it, and coordinate removal from repository history; deleting it in a later commit is insufficient.
 
-\section{Expected Outcomes}
+\end{enumerate}
 
-The project will deliver an enhanced version of the existing exercise system, including the implemented choreography and service improvements. It will also produce documented findings on robot balance, movement limits, actuator temperature, and sensing reliability.
+\section{Pull request and integration}
 
-The team will record software test results and, when NAO access permits, each hardware scenario and outcome. Final documentation will describe reproducible workflows, verified behaviour, and remaining limits.
+The author links the Jira issue and states the change, reason, test evidence, and limitations. For changes involving motion, safety limits, NAOqi, or camera access, state the hardware impact and the planned robot test. Mark tests as pending when access to NAO is unavailable. Open a draft PR when early feedback is useful; request review only when the change is ready.
 
+At least one teammate other than the author reviews the final diff. A robot behavior or safety change also needs review by a teammate responsible for NAO testing. Resolve blocking comments and rerun relevant checks after changes. The author does not approve their own PR. Follow the review and test gates in the \emph{Technical Methodology}.
+
+Merge with \textbf{Squash and merge} after approval, passing checks, and documented verification. The squash commit should retain a descriptive subject and the Jira key. Delete the merged task branch. Update the Jira issue with the PR and result; mark it Done only after the methodology's merge gate is satisfied. If a robot test remains pending, keep that fact visible in Jira and do not enable the change for a live demonstration until the test passes.
+
+\section{Version numbers and release tags}
+
+Use \texttt{MAJOR.MINOR.PATCH} and prefix Git tags with \texttt{v}, for example \texttt{v0.3.1}. During development use \texttt{0.y.z}: increment \texttt{MINOR} for a new feature or an incompatible change, and \texttt{PATCH} for a compatible fix. The first agreed stable public interface can be \texttt{v1.0.0}. After \texttt{1.0.0}, increment \texttt{MAJOR} for incompatible interface changes, \texttt{MINOR} for compatible functionality, and \texttt{PATCH} for compatible fixes. Reset lower components to zero when a higher component changes. This follows \href{https://semver.org/}{Semantic Versioning} while giving the team a simple policy for the \texttt{0.y.z} phase.
+
+Create a release tag only from a reviewed commit on the integration branch. Use an annotated tag with a short message, for example \texttt{git tag -a v0.3.1 -m "NAO exercise demo"}, then push the tag. Do not retarget or reuse a published tag; create a new patch or minor version for corrections. A tag identifies the entire repository state, including service code and Compose configuration. If services live in separate repositories, record each repository's tag or commit SHA in the release notes.
+
+For every demo or physical NAO test, record the tag or full commit SHA, date, operator, robot state, configuration profile, test scenario, and result in the Jira issue or test record. Never record credentials there. If no tag exists yet, use the exact commit SHA. Keep release notes concise: included Jira issues, relevant interface/configuration changes, required migration, and known limitations.
+
+\section{Hotfixes, rollback, and exceptions}
+
+For an urgent defect, create a task branch from the relevant integration or release commit, link a Jira issue, and use the same review and verification gate. When a live demo must return to a known-good state, redeploy the last verified tag or commit and record the action and reason. Do not solve a failed release by rewriting Git history or moving its tag.
+
+If GitHub checks are unavailable, record the equivalent local commands and results in the PR. Lack of physical NAO access is not a reason to skip offline tests; schedule the hardware test and keep it pending visibly. Any exception to this workflow must be documented in the PR and agreed by the team before merge.
+
+\ifshowbibliography
+    \nocite{*}
+    \clearpage
+    \printbibliography[heading=bibintoc,title={References}]
+\fi
 \end{document}

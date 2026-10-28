@@ -1,0 +1,100 @@
+name: Build and publish documents
+
+on:
+  pull_request:
+  push:
+    paths:
+      - '**/*.tex'
+      - '**/*.bib'
+      - '**/document.json'
+      - 'assets/**'
+      - 'scripts/build_documents.py'
+      - 'scripts/sync_site.py'
+      - '.github/workflows/publish-methodologies.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: document-pdfs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+            latexmk biber texlive-latex-extra texlive-bibtex-extra \
+            texlive-fonts-recommended texlive-lang-english
+      - name: Compile documents and generate index
+        run: python3 scripts/build_documents.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: documents-and-index
+          path: build/site/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Check out website for integration test
+        run: git clone --depth=1 --branch main https://github.com/team26fiitstu/team26fiitstu.github.io.git website
+      - name: Synchronize PDFs and index into test checkout
+        run: python3 scripts/sync_site.py website
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: website/.nvmrc
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - name: Install website dependencies
+        working-directory: website
+        run: npm ci
+      - name: Check website document links
+        working-directory: website
+        run: npm run check:documents
+      - name: Build website with generated documents
+        working-directory: website
+        run: npm run build
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+      - name: Check published assets
+        run: |
+          cmp build/site/documents.json website/dist/documents.json
+          for pdf in build/site/docs/*.pdf; do
+            cmp "$pdf" "website/dist/docs/$(basename "$pdf")"
+          done
+
+      - name: Check publication token
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          SITE_REPO_TOKEN: ${{ secrets.SITE_REPO_TOKEN }}
+        run: test -n "$SITE_REPO_TOKEN"
+      - name: Check out website for publication
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          repository: team26fiitstu/team26fiitstu.github.io
+          ref: main
+          path: website-publish
+          token: ${{ secrets.SITE_REPO_TOKEN }}
+      - name: Publish changed documents
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          python3 scripts/sync_site.py website-publish
+          git -C website-publish add -A -- public/documents.json public/docs/
+          if git -C website-publish diff --cached --quiet; then
+            echo 'Website documents are already current.'
+            exit 0
+          fi
+          git -C website-publish config user.name 'github-actions[bot]'
+          git -C website-publish config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C website-publish commit -m "Update documents from ${GITHUB_SHA}"
+          git -C website-publish pull --rebase origin main
+          git -C website-publish push origin HEAD:main

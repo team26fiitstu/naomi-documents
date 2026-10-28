@@ -7,11 +7,12 @@ from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "build" / "overleaf"
 PROJECTS = {
-    "technical-methodology": "naomi-technical-methodology.zip",
-    "version-control-methodology": "naomi-version-control-methodology.zip",
-    "documentation-methodology": "naomi-documentation-methodology.zip",
-    "backlog-management-methodology": "naomi-backlog-management-methodology.zip",
-    "project-description-goals": "naomi-project-description-goals.zip",
+    "metodiky/technical-methodology": "naomi-technical-methodology.zip",
+    "metodiky/version-control-methodology": "naomi-version-control-methodology.zip",
+    "metodiky/documentation-methodology": "naomi-documentation-methodology.zip",
+    "metodiky/backlog-management-methodology": "naomi-backlog-management-methodology.zip",
+    "metodiky/definition-of-done": "naomi-definition-of-done.zip",
+    "vystupy/project-description-goals": "naomi-project-description-goals.zip",
 }
 
 
