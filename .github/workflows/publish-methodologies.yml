@@ -4,12 +4,14 @@ on:
   pull_request:
   push:
     paths:
-      - '**/*.tex'
-      - '**/*.bib'
-      - '**/document.json'
+      - 'zapisnice/**'
+      - 'retrospektivy/**'
+      - 'progres/**'
+      - 'metodiky/**'
+      - 'prirucky/**'
+      - 'vystupy/**'
       - 'assets/**'
-      - 'scripts/build_documents.py'
-      - 'scripts/sync_site.py'
+      - 'scripts/**'
       - '.github/workflows/publish-methodologies.yml'
   workflow_dispatch:
 
@@ -33,7 +35,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y \
-            latexmk biber texlive-latex-extra texlive-bibtex-extra \
+            latexmk biber lmodern texlive-latex-extra texlive-bibtex-extra \
             texlive-fonts-recommended texlive-lang-english
       - name: Compile documents and generate index
         run: python3 scripts/build_documents.py
