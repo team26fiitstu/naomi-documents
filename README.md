@@ -45,7 +45,7 @@ For the existing documents, `python3 scripts/package_overleaf.py` creates standa
 
 ## PDF pipeline
 
-Run `python3 scripts/build_documents.py` locally after installing `latexmk`, `biber`, and the TeX packages. It compiles every categorized document into `build/site/docs/` and writes `build/site/documents.json` with name, type, date, and PDF link. The checked-in PDFs under `output/pdf/` are historical snapshots; the pipeline builds from LaTeX sources.
+Run `python3 scripts/build_documents.py` locally after installing `latexmk`, `biber`, `lmodern`, and the TeX packages. It compiles every categorized document into `build/site/docs/` and writes `build/site/documents.json` with name, type, date, and PDF link. The checked-in PDFs under `output/pdf/` are historical snapshots; the pipeline builds from LaTeX sources.
 
 `.github/workflows/publish-methodologies.yml` runs on pull requests and on every push that changes a LaTeX source, bibliography, metadata, shared asset, or pipeline script. It uploads the generated files as a review artifact, synchronizes them into a temporary website checkout, checks links, and builds the website. A successful `main` run commits changed PDFs and the index to the website repository, which then deploys through its normal Pages workflow. Removed documents are removed from the website only if they were listed in the previous generated index; website-managed PDFs are preserved.
 
