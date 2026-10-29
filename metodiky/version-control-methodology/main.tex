@@ -15,7 +15,7 @@
 \showbibliographytrue
 
 % Document information
-\newcommand{\worktitle}{Technical Methodology}
+\newcommand{\worktitle}{Version Control Methodology}
 \newcommand{\worksubtitle}{NAO Robot Exercise System}
 \newcommand{\teamname}{NAOMI}
 \newcommand{\subject}{NAO Robot Exercise System}
@@ -61,7 +61,7 @@
 \usepackage{lmodern}
 
 \usepackage{graphicx}
-\graphicspath{{../assets/}{assets/}}
+\graphicspath{{../../assets/}{assets/}}
 \usepackage[table]{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -443,153 +443,63 @@
 \newpage
 \textbf{Project:} NAO Robot Exercise System
 
-\textbf{Scope:} Source code, configuration, documentation, and changes to robot behaviour.
+\textbf{Scope:} Source code, configuration, tests, and project documentation in the NAO repositories.
 
-This methodology applies to every contributor to the NAO system. The repository contains Python services, a TypeScript web application, Docker configuration, and a legacy Python 2 service that communicates with NAO. The rules below define how changes are written, tracked, reviewed, and merged.
+This document defines how the team records, reviews, integrates, and identifies changes. It expands the version control rules in the \emph{Technical Methodology}. GitHub is the source of truth for code and pull requests (PRs); Jira links the change to a task and its acceptance criteria.
 
-\section{Coding conventions}
-
-\subsection{General rules}
+\section{Repository and branch rules}
 
 \begin{enumerate}
 
-\item Make each change as small as the task allows. Keep unrelated refactoring in a separate issue and pull request (PR).
+\item The \texttt{master} branch is the integration branch of \texttt{naoMicroservices}. Apply the same workflow to any additional NAO repository, using its agreed integration branch.
 
-\item Use descriptive English names for files, functions, variables, API fields, and commits. Prefer names that express a unit or purpose, such as \texttt{duration\_seconds} instead of \texttt{duration}.
+\item Do not commit or push directly to the integration branch. A change reaches it through a reviewed PR. Configure GitHub branch protection or a ruleset to require a PR, at least one approval, and the applicable checks where repository permissions allow.
 
-\item Keep modules focused. Separate robot control, video processing, HTTP routes, and data storage so each can be tested independently.
+\item Create one short-lived branch per Jira task from the latest integration branch. Name it \texttt{\textless{}jira-key\textgreater{}-short-description}, for example \texttt{NAO-42-video-trimming}. Use the real Jira key; the example is illustrative.
 
-\item Do not commit passwords, API keys, \texttt{.env} files, local paths, generated media, caches, virtual environments, or build artifacts. Add required settings to an example configuration with safe placeholder values.
+\item Keep branches and PRs focused on one deliverable. If a task needs independent components, split it into linked Jira subtasks and PRs. Avoid long-running shared development branches.
 
-\item Keep URLs, IP addresses, ports, camera paths, and exercise storage paths configurable. Do not introduce a developer's machine-specific settings into shared code.
-
-\item When changing an API request, response, or stored exercise format, update its consumers and document the change in the same PR. Preserve compatibility where practical; otherwise describe the migration.
-
-\item Write comments for non-obvious constraints and decisions. Prefer clear code over comments that merely repeat what a line does.
+\item A developer may rebase their own branch before review. Do not rewrite a branch another person uses. Never force-push the integration branch or move a published release tag.
 
 \end{enumerate}
 
-\subsection{Python services}
-
-\begin{itemize}
-
-\item Follow PEP 8 style: four-space indentation, \texttt{snake\_case} for functions and variables, \texttt{PascalCase} for classes, and explicit imports.
-
-\item Keep new Python 3 code compatible with the version declared by its service. Do not assume that all services use the same Python version.
-
-\item Isolate Python 2 and NAOqi-specific code in the NAO adapter/service. New Python 3 modules must not import Python 2-only packages directly.
-
-\item Catch specific exceptions at service boundaries. Log enough context to diagnose a failure without logging secrets or unnecessary user video/audio data.
-
-\item Add or update automated tests for changed behaviour. Use a fake NAO interface for routine tests; physical movement is tested separately on the robot.
-
-\end{itemize}
-
-\subsection{Web application and configuration}
-
-\begin{itemize}
-
-\item Use the repository's TypeScript and ESLint configuration. Resolve lint and type-check errors introduced by the change before requesting review.
-
-\item Keep UI components focused and use explicit types for data crossing API boundaries.
-
-\item Validate Compose and deployment configuration after edits. Do not use mutable image tags such as \texttt{latest} for a reproducible release.
-
-\item Keep example configuration and run instructions usable on Windows, macOS, and Linux. Document any platform-specific exception.
-
-\end{itemize}
-
-\section{Version control}
+\section{Changes and commits}
 
 \begin{enumerate}
 
-\item \texttt{master} is the integration branch. Create a short-lived branch from the current \texttt{master} for each Jira task. Name it \texttt{\textless{}jira-key\textgreater{}-short-description}, for example \texttt{NAO-42-video-trimming}. If the team changes its integration branch, update this document.
+\item Pull the current integration branch before starting a task. Commit coherent steps that leave the branch understandable and, where practical, buildable.
 
-\item Link every code change to a Jira issue. The issue states the goal and acceptance criteria before implementation begins.
+\item Write commit subjects as \texttt{\textless{}type\textgreater{}(\textless{}scope\textgreater{}): \textless{}summary\textgreater{}}, for example \texttt{fix(translator): reject invalid pose data}. Allowed types are \texttt{feat}, \texttt{fix}, \texttt{test}, \texttt{docs}, \texttt{refactor}, \texttt{build}, and \texttt{chore}. Use an imperative, specific summary. Put the Jira key in the PR title or description.
 
-\item Commit coherent changes with a subject in the form \texttt{\textless{}type\textgreater{}(\textless{}scope\textgreater{}): \textless{}summary\textgreater{}}, for example \texttt{fix(translator): reject invalid pose data}. Use \texttt{feat}, \texttt{fix}, \texttt{test}, \texttt{docs}, \texttt{refactor}, \texttt{build}, or \texttt{chore} as the type. Put the Jira key in the PR title or description.
+\item Do not commit secrets, local \texttt{.env} files, virtual environments, caches, generated video or audio, compiled output, or machine-specific paths. Commit safe example configuration and documented setup steps instead.
 
-\item Do not commit directly to \texttt{master}. Open a PR for the task, keep it focused, and synchronize it with \texttt{master} before merge if conflicts arise.
+\item Update tests, API contracts, configuration examples, and documentation in the same PR as the behavior they describe. Record migrations when a service interface or stored exercise format changes.
 
-\item Do not force-push or rewrite shared branch history. On a personal task branch, rebasing is allowed while nobody else depends on it; tell reviewers when a rebase invalidates their previous review.
-
-\item Merge only after the acceptance criteria are met, required checks pass, and review is approved. Prefer squash merge to keep one traceable commit per PR; the PR remains the record of intermediate discussion.
-
-\item Tag versions used for demonstrations or NAO experiments. Record the tag or commit SHA with the experiment results so the software state can be reproduced.
+\item Inspect \texttt{git status} and the staged diff before each push. If a secret is exposed, stop using the credential, rotate it, and coordinate removal from repository history; deleting it in a later commit is insufficient.
 
 \end{enumerate}
 
-\section{Pull request and code review}
+\section{Pull request and integration}
 
-\subsection{Before requesting review}
+The author links the Jira issue and states the change, reason, test evidence, and limitations. For changes involving motion, safety limits, NAOqi, or camera access, state the hardware impact and the planned robot test. Mark tests as pending when access to NAO is unavailable. Open a draft PR when early feedback is useful; request review only when the change is ready.
 
-The author shall:
+At least one teammate other than the author reviews the final diff. A robot behavior or safety change also needs review by a teammate responsible for NAO testing. Resolve blocking comments and rerun relevant checks after changes. The author does not approve their own PR. Follow the review and test gates in the \emph{Technical Methodology}.
 
-\begin{itemize}
+Merge with \textbf{Squash and merge} after approval, passing checks, and documented verification. The squash commit should retain a descriptive subject and the Jira key. Delete the merged task branch. Update the Jira issue with the PR and result; mark it Done only after the methodology's merge gate is satisfied. If a robot test remains pending, keep that fact visible in Jira and do not enable the change for a live demonstration until the test passes.
 
-\item Review their own diff for accidental files, secrets, unrelated changes, debug code, consistent indentation, descriptive names, and unhandled failure paths.
+\section{Version numbers and release tags}
 
-\item Link the Jira issue and explain \textbf{what changed}, \textbf{why}, \textbf{how it was tested}, and any remaining limitation.
+Use \texttt{MAJOR.MINOR.PATCH} and prefix Git tags with \texttt{v}, for example \texttt{v0.3.1}. During development use \texttt{0.y.z}: increment \texttt{MINOR} for a new feature or an incompatible change, and \texttt{PATCH} for a compatible fix. The first agreed stable public interface can be \texttt{v1.0.0}. After \texttt{1.0.0}, increment \texttt{MAJOR} for incompatible interface changes, \texttt{MINOR} for compatible functionality, and \texttt{PATCH} for compatible fixes. Reset lower components to zero when a higher component changes. This follows \href{https://semver.org/}{Semantic Versioning} while giving the team a simple policy for the \texttt{0.y.z} phase.
 
-\item Include test output or clear manual verification steps. State explicitly when a change could not be tested on NAO.
+Create a release tag only from a reviewed commit on the integration branch. Use an annotated tag with a short message, for example \texttt{git tag -a v0.3.1 -m "NAO exercise demo"}, then push the tag. Do not retarget or reuse a published tag; create a new patch or minor version for corrections. A tag identifies the entire repository state, including service code and Compose configuration. If services live in separate repositories, record each repository's tag or commit SHA in the release notes.
 
-\item Add a screenshot or short recording for a visible UI change when that makes review easier.
+For every demo or physical NAO test, record the tag or full commit SHA, date, operator, robot state, configuration profile, test scenario, and result in the Jira issue or test record. Never record credentials there. If no tag exists yet, use the exact commit SHA. Keep release notes concise: included Jira issues, relevant interface/configuration changes, required migration, and known limitations.
 
-\item Describe any change to robot motion, safety limits, actuator use, camera handling, or service interfaces prominently in the PR.
+\section{Hotfixes, rollback, and exceptions}
 
-\item Request review from a team member familiar with the affected component. Move the Jira issue to \textbf{In review} when the PR is ready.
+For an urgent defect, create a task branch from the relevant integration or release commit, link a Jira issue, and use the same review and verification gate. When a live demo must return to a known-good state, redeploy the last verified tag or commit and record the action and reason. Do not solve a failed release by rewriting Git history or moving its tag.
 
-\end{itemize}
-
-\subsection{Reviewer responsibilities}
-
-At least one team member other than the author reviews every PR. The reviewer must understand the change well enough to assess it; pairing during implementation is welcome, but the final diff still receives an independent review. A change that can move the robot or alter safety-related behaviour also requires review by a team member responsible for robot testing. Reviewers check:
-
-\begin{enumerate}
-
-\item Does the implementation satisfy the Jira acceptance criteria without unrelated scope?
-
-\item Are service boundaries and API/data contracts clear and compatible with consumers?
-
-\item Are failure paths handled, logged, and testable without physical hardware?
-
-\item Do tests cover the changed behaviour, and are manual steps sufficient where automation is impossible?
-
-\item Are configuration, dependency, privacy, and robot-safety implications documented?
-
-\item Do representative valid and invalid inputs behave as expected? When practical, reproduce at least one relevant path locally rather than relying only on reading the diff.
-
-\end{enumerate}
-
-Review comments should identify the issue and a suggested direction. The reviewer records findings in the PR, requests changes when necessary, and tells the author when the review is complete. The author responds to every blocking comment with a fix or an explanation; the reviewer checks the revised code again before resolving the comment. Share the outcome with the team through the PR and Jira issue. Do not approve a PR solely because automated checks passed.
-
-\subsection{Merge gate}
-
-A PR may be merged when it has an independent approval, all blocking comments are resolved, required automated checks pass, and the PR description records the relevant test result. Only then is the Jira issue moved to \textbf{Done}. If review finds a blocking problem, return the issue to \textbf{In progress}, fix it, and request another review. If the work cannot be completed within the sprint, move the unfinished issue to the next sprint instead of marking it Done.
-
-Code that requires physical NAO testing may merge after offline verification \textbf{only if} the PR and Jira issue mark the robot test as pending and the change is not enabled for a live session until that test passes. Any safety-related change must be tested on the robot before being used in a demonstration.
-
-\section{Verification levels}
-
-\begin{naomitable}{Verification levels}{tab:verification-levels}
-\begin{tabularx}{\textwidth}{L{2.6cm} L{3.5cm} Y}
-\rowcolor{naomiTableHeader}
-\textcolor{white}{\bfseries Level} &
-\textcolor{white}{\bfseries When} &
-\textcolor{white}{\bfseries Evidence} \\
-Static checks & Every PR & Lint, type checks where available, and configuration validation \\
-Unit tests & Behaviour changes & Automated test result with external services and NAO mocked \\
-Service integration & Changes across services & Repeatable test with sample data and fake NAO responses \\
-Physical NAO test & Movement, balance, temperature, or hardware integration changes & Date, operator, robot state, software commit/tag, scenario, result, and incident notes \\
-\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
-\end{tabularx}
-\end{naomitable}
-
-Automated CI must never issue movement commands to a physical NAO. Schedule hardware tests in advance because robot access is intermittent. The team member responsible for the robot defines safe movement limits and stop procedures; this methodology does not replace those procedures.
-
-\section{Maintaining this methodology}
-
-Changes to these rules are made through a PR and reviewed by the team. Review the document at least once per semester and after a serious integration or robot-test incident. Record the decision in the PR so contributors can see why a rule changed.
+If GitHub checks are unavailable, record the equivalent local commands and results in the PR. Lack of physical NAO access is not a reason to skip offline tests; schedule the hardware test and keep it pending visibly. Any exception to this workflow must be documented in the PR and agreed by the team before merge.
 
 \ifshowbibliography
     \nocite{*}

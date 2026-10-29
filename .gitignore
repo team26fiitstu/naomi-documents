@@ -12,4 +12,5 @@
 *.toc
 main.pdf
 /build/
-/output/overleaf/
+__pycache__/
+*.pyc

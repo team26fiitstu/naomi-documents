@@ -14,7 +14,7 @@
 \showtocfalse
 
 % Document information
-\newcommand{\worktitle}{Backlog Management Methodology}
+\newcommand{\worktitle}{Documentation Methodology}
 \newcommand{\worksubtitle}{NAO Robot Exercise System}
 \newcommand{\teamname}{NAOMI}
 \newcommand{\subject}{NAO Robot Exercise System}
@@ -28,7 +28,7 @@
 
 % Team leaders
 \newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
-\newcommand{\leadertwo}{doc. Ing. Fedor Lehocki, PhD.}
+\newcommand{\leadertwo}{ doc. Ing. Fedor Lehocki PhD.}
 
 % Team members
 \newcommand{\memberone}{Bc. Akhmadinurov Amal}
@@ -60,7 +60,7 @@
 \usepackage{lmodern}
 
 \usepackage{graphicx}
-\graphicspath{{../assets/}{assets/}}
+\graphicspath{{../../assets/}{assets/}}
 \usepackage[table]{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -432,214 +432,177 @@
 \fi
 
 % ==================================================
-% 1. PURPOSE
+% 1. PURPOSE OF THE DOCUMENT
 % ==================================================
 
 \section{Purpose of the Document}
 
-This document describes how the NAOMI team manages its project backlog
-using Jira and a Scrumban approach. The aim is to make planned work
-visible, keep responsibilities clear, and support regular delivery of
-results throughout the academic year.
+This document defines how the NAOMI team creates, reviews, stores, and
+maintains project documentation. Its purpose is to keep technical information,
+meeting outcomes, and sprint records understandable and accessible to all
+team members throughout the development of the team project.
 
-Scrumban combines sprint-based planning and review with the visual
-workflow of a Kanban board. For NAOMI, this means agreeing on short-term
-goals while allowing the team to monitor work in progress, identify
-blockers, and adjust priorities when necessary.
+Documentation should explain not only what was implemented, but also important
+decisions, known limitations, and instructions needed to continue the work.
+It should be concise enough to remain useful and detailed enough that another
+team member can understand the documented activity without additional
+explanations from its author.
 
 % ==================================================
-% 2. SCOPE
+% 2. SCOPE AND RESPONSIBILITIES
 % ==================================================
 
 \section{Scope and Responsibilities}
 
-The methodology applies to all NAOMI team members working on analysis,
-robot-control software, motion processing, testing, documentation, and
-other project activities. Jira serves as the central place for recording
-and following the status of these activities.
+The methodology applies to documentation produced within the NAOMI team
+project, including technical documentation, meeting notes, sprint
+retrospectives, internal methodologies, and supporting guides.
 
-Every member is expected to keep their assigned issues up to date.
-The team jointly reviews priorities, dependencies, and progress.
-Coordination responsibilities are assigned to a team leader.
+The team member responsible for a task is normally responsible for keeping
+its related documentation accurate. Documentation may also be prepared by
+another member, provided that the person familiar with the implementation
+reviews the technical details. All team members are encouraged to report
+missing or outdated information.
 
-% ==================================================
-% 3. BACKLOG STRUCTURE
-% ==================================================
-
-\section{Backlog Organisation in Jira}
-
-\subsection{Product Backlog}
-
-The product backlog contains the features, improvements, research tasks,
-experiments, and technical work that may be needed to reach the project's
-goals. Items should have a concise title and a description of the expected
-outcome. Larger activities may be represented as Epics and divided into
-smaller Stories or Tasks, using the issue types available in the team's
-Jira project.
-
-The backlog is reviewed and reordered when requirements change or new
-information becomes available. Higher-priority items should be
-sufficiently clear before the team starts working on them.
-
-\subsection{Sprint Backlog}
-
-At the beginning of each sprint, the team selects a realistic set of
-issues from the product backlog, taking into account available capacity,
-priorities, and dependencies. The selected work is visible on the Jira
-board. Unfinished issues are discussed during the sprint review or next
-planning session and are not automatically treated as completed.
-
+The documentation is intended primarily for the team, project supervisors,
+and other readers who need to understand the project's progress and results.
 
 % ==================================================
-% 4. SCRUMBAN WORKFLOW
+% 3. TECHNICAL DOCUMENTATION
 % ==================================================
 
-\section{Scrumban Workflow}
+\section{Technical Documentation}
 
-The NAOMI team uses a Jira board to manage tasks and
-track their progress throughout the development process.
-Our workflow consists of five stages, allowing team
-members to monitor the current state of each issue.
+Technical documentation describes the parts of the system developed by the
+team, their purpose, and how they work together. Depending on the task,
+it may cover system architecture, interfaces, data structures, APIs,
+configuration, installation, or testing procedures.
 
-\begin{naomitable}{Scrumban workflow states}{tab:workflow}
-    \begin{tabularx}{\textwidth}{L{2.8cm} Y}
-        \rowcolor{naomiTableHeader}
-        \textcolor{white}{\bfseries Status} &
-        \textcolor{white}{\bfseries Description} \\
-        To Do & The task is planned but work has not started. \\
-        In Progress & A team member is actively working on the task. \\
-        In Review & The implementation is completed and waiting
-        for review or feedback from other team members. \\
-        Testing & The task has passed the review stage and is being tested
-        to verify that it works correctly and meets the requirements. \\
-        Done & The task has been reviewed, tested, and successfully completed. \\
-        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
-    \end{tabularx}
-\end{naomitable}
+When a feature is implemented or significantly changed, the responsible team
+member should update the relevant documentation. The description should
+include the goal of the feature, its main components, dependencies, and any
+important assumptions or restrictions. Diagrams, screenshots, and short code
+examples can be used when they make the explanation easier to follow.
 
-Team members are responsible for keeping the status
-of their assigned issues up to date in Jira.
-Tasks should be moved between columns as soon as
-their status changes, rather than only at the end
-of a sprint.
+Before the documentation is considered complete, the developer familiar with
+the corresponding code should check it for technical accuracy. Relevant
+documentation should also be considered during code review so that the
+written description does not contradict the implementation.
 
-If a task cannot be completed due to a blocker,
-the responsible team member should document the
-problem in Jira and inform the rest of the team.
-
-Following the Scrumban approach, the team focuses
-on completing tasks already in progress before
-starting new ones. This helps avoid unnecessary
-multitasking and improves the overall workflow.
+Where the project contains several independent components, each component
+may have its own documentation. A higher-level overview should explain how
+these components fit together.
 
 
 % ==================================================
-% 5. REGULAR REVIEW
+% 4. MEETING RECORDS
 % ==================================================
 
-\section{Reviewing Progress and Identifying Blockers}
+\section{Meeting Records}
 
-The Jira board is checked during regular team meetings and whenever an
-assignee makes meaningful progress. During a review, the team considers
-whether the current sprint goal is still achievable and whether work is
-moving through the board as expected.
+During each team meeting, one team member is
+responsible for taking written notes. 
 
+The meeting notes should include the main topics
+discussed, identified problems, important decisions,
+and tasks assigned to individual team members.
+
+Each meeting record should contain:
 \begin{itemize}
-    \item \textbf{Priorities:} Are we working on the most important issues?
-    Have new requirements changed the plan?
-    \item \textbf{Progress:} Which issues have remained In Progress for too
-    long? Is anything blocked or waiting for a decision?
-    \item \textbf{Ownership:} Does each active issue have a clear assignee?
-    Are issue descriptions and next steps understandable?
-    \item \textbf{Delivery:} Are completed results tested, documented, and
-    ready to demonstrate or integrate?
+    \item Date of the meeting and list of participants.
+    \item Main topics discussed during the meeting.
+    \item Decisions made by the team.
+    \item Identified problems or potential risks.
+    \item Action items, responsible members,
+          and expected deadlines.
 \end{itemize}
 
-Issues that need support should be raised at the next team meeting or
-communicated earlier through the team's agreed communication channel.
-Critical blockers should not be left unresolved until the sprint ends.
+After the meeting, the notes are made available
+to all team members. Any new tasks resulting
+from the discussion should be added to Jira
+or linked to existing issues.
+
+Meeting notes are stored with the team's
+project documentation so that members can
+review previous discussions and decisions
+when needed.
 
 % ==================================================
-% 6. ISSUE RULES
+% 5. INTERNAL METHODOLOGIES
 % ==================================================
 
-\section{Rules for Managing Jira Issues}
+\section{Internal Methodologies}
 
-\subsection{Creating and Updating Issues}
+In addition to technical descriptions, the NAOMI team maintains short
+methodology documents for recurring activities. These documents help team
+members follow a consistent approach without introducing unnecessary
+administrative work.
 
-An issue should describe a specific activity or expected result. It
-should normally include a title, a short description, an assignee when
-assigned, and relevant acceptance criteria. Links to code, designs,
-experiments, or documentation may be attached where useful.
+Examples include backlog management in Jira, the Scrumban workflow,
+code review, testing, version control, and documentation itself.
+Each methodology should clearly describe its purpose, scope, main steps,
+and responsibilities. It should be revised when the team's working
+practices change.
 
-Each member updates the status of their issues and records important
-findings or blockers in Jira. If an issue is too broad or cannot be
-completed within a reasonable period, it should be divided into smaller
-pieces of work.
-
-\subsection{Changes During a Sprint}
-
-Scrumban allows the team to react to new information without losing
-visibility of its commitments. Urgent work may be added during a sprint
-after discussion with the team, particularly if it affects the sprint
-goal or another member's progress. The reason for a significant change
-should be documented in the related Jira issue.
-
-\subsection{Finishing Work}
-
-An issue is moved to Done only when its agreed acceptance criteria are
-satisfied. Depending on the type of work, this may involve a code review,
-a successful test, an updated document, or a demonstration of the result.
-The team should use its Definition of Done, once agreed, as the common
-reference for deciding whether an item is finished.
+The current version of a methodology should be easy to find in the team's
+shared documentation and, where appropriate, linked from the team website.
 
 % ==================================================
-% 7. PLANNING AND ESTIMATION
+% 6. SPRINT RETROSPECTIVE DOCUMENTATION
 % ==================================================
 
-\section{Planning and Estimation}
+\section{Sprint Retrospective Documentation}
 
-The team estimates work when an estimate is useful for sprint planning
-and prioritisation. Story points may be used to express relative effort,
-complexity, and uncertainty. An issue type does not determine a fixed
-number of story points: for example, different Tasks or Stories can
-require very different amounts of work.
+At the end of a sprint, the team reflects on its work and discusses possible
+improvements. Although NAOMI uses Scrumban, regular retrospectives help the
+team evaluate both sprint outcomes and the flow of tasks across the Jira
+board.
 
-\begin{naomitable}{Illustrative relative effort scale for discussion}{tab:estimates}
-    \begin{tabularx}{\textwidth}{L{2.4cm} Y}
-        \rowcolor{naomiTableHeader}
-        \textcolor{white}{\bfseries Points} &
-        \textcolor{white}{\bfseries Interpretation} \\
-        1 & Very small, well-understood task \\
-        2 & Small task with limited uncertainty \\
-        3 & Moderate task requiring several steps \\
-        5 & Larger task involving more effort or uncertainty \\
-        8 & Complex activity that may need to be split \\
-        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
-    \end{tabularx}
-\end{naomitable}
+The discussion should cover the following questions:
 
-This scale is a \textbf{proposal}, not an already approved NAOMI rule.
-The team can adopt or change it after discussing a few example issues.
-Capacity estimates should also account for university deadlines and the
-availability of individual members. At the end of a sprint, completed
-work, carried-over tasks, and blockers can be used to improve the next
-planning session.
+\begin{itemize}
+    \item What went well during the sprint?
+    \item Which planned activities were not completed, and why?
+    \item What problems or blockers did the team encounter?
+    \item What should be improved in the next sprint?
+\end{itemize}
+
+One participant should record the most important observations and decisions.
+The retrospective does not need to reproduce every statement verbatim;
+it should summarise common findings and concrete improvement proposals.
+
+\subsection{Retrospective Outcomes}
+
+The final record should distinguish between observations and agreed actions.
+Where an improvement requires follow-up work, it should have a responsible
+person and, if appropriate, a related Jira issue. At the next retrospective,
+the team can check whether previously agreed changes were useful.
+
+Team members who could not attend should have access to the summary and an
+opportunity to provide additional comments.
 
 % ==================================================
-% 8. CONTINUOUS IMPROVEMENT
+% 7. OTHER DOCUMENTS AND STORAGE
 % ==================================================
 
-\section{Continuous Improvement}
+\section{Other Documents and Storage}
 
-At the end of each sprint, the team briefly reviews what worked well,
-what slowed progress, and which changes would help in the next sprint.
-Possible improvements include clearer Jira issue descriptions, more
-consistent board updates, smaller tasks, and adjustments to meeting or
-review practices.
+Additional materials may be created during the project, such as setup guides,
+user instructions, research notes, test reports, diagrams, or demonstrations.
+These materials should be stored alongside the relevant project documentation
+rather than remaining only in private messages or on individual computers.
 
-The purpose of this methodology is not to introduce unnecessary
-administration. Jira should give the team a reliable overview of its
-work while leaving enough time for actual development and experimentation.
+Files should use descriptive names and be organised by topic. When an updated
+version replaces an older one, the team should avoid keeping several
+unlabelled copies that could cause confusion. Documents referenced in Jira
+should be linked from the corresponding issues whenever this is useful.
+
+Project documentation intended for broader access should also be linked or
+published through the NAOMI team website, according to the team's agreed
+sharing rules. Internal notes or information that should not be public should
+remain in the appropriate restricted team workspace.
+
+The goal is to keep documentation current, searchable, and useful for future
+team members and project evaluation.
 
 \end{document}
