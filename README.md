@@ -37,12 +37,6 @@ Create a kebab-case directory under the appropriate type with `main.tex` and `do
 
 When `date` is omitted, the index uses the date of the latest Git change to the document or shared `assets/`. The slug must be unique across all types. Bibliography files stay beside `main.tex`; the team logos are shared under `assets/`.
 
-## Overleaf and GitHub
-
-GitHub is the publication source. This repository contains several independent LaTeX projects, while Overleaf's direct GitHub synchronization links one Overleaf project to one repository. It is a premium feature, the push from Overleaf is manual, and an existing Overleaf project cannot be directly linked to an existing GitHub repository. For this repository, use the reliable manual path: download the Overleaf source ZIP, copy its `.tex`, bibliography, and local assets into the matching document directory, then commit and push through a pull request. Keep `document.json` in the GitHub directory. A separate mirror repository per Overleaf project is possible if the team later adopts premium Git integration.
-
-For the existing documents, `python3 scripts/package_overleaf.py` creates standalone imports in `build/overleaf/`. These ZIPs are generated locally and are not committed.
-
 ## PDF pipeline
 
 Run `python3 scripts/build_documents.py` locally after installing `latexmk`, `biber`, `lmodern`, and the TeX packages. It compiles every categorized document into `build/site/docs/` and writes `build/site/documents.json` with name, type, date, and PDF link. The checked-in PDFs under `output/pdf/` are historical snapshots; the pipeline builds from LaTeX sources.
