@@ -1,21 +1,17 @@
 # NAOMI Documents
 
-LaTeX sources for the NAOMI team's NAO Robot Exercise System documents. All documents use the team's NAOMI LaTeX template.
+## PDFs
 
-The documents cover the project description and goals, technical practices, version control, documentation, and backlog management.
-
-## Compiled PDFs
-
-- [Technical methodology](output/pdf/naomi-technical-methodology.pdf)
-- [Version control methodology](output/pdf/naomi-version-control-methodology.pdf)
-- [Documentation methodology](output/pdf/naomi-documentation-methodology.pdf)
-- [Backlog management methodology](output/pdf/naomi-backlog-management-methodology.pdf)
-- [Project description and goals](output/pdf/naomi-project-description-goals.pdf)
-- [Definition of done](output/pdf/naomi_definition_of_done.pdf)
+- [Technical methodology](https://team26fiitstu.github.io/docs/technical-methodology.pdf)
+- [Version control methodology](https://team26fiitstu.github.io/docs/version-control-methodology.pdf)
+- [Documentation methodology](https://team26fiitstu.github.io/docs/documentation-methodology.pdf)
+- [Backlog management methodology](https://team26fiitstu.github.io/docs/backlog-management-methodology.pdf)
+- [Definition of done](https://team26fiitstu.github.io/docs/definition-of-done.pdf)
+- [Project description and goals](https://team26fiitstu.github.io/docs/project-description-goals.pdf)
 
 ## Sources and naming
 
-Document type is determined by the top-level folder:
+The top-level folder determines where a document appears on the website:
 
 | Folder | Website section |
 |---|---|
@@ -26,29 +22,19 @@ Document type is determined by the top-level folder:
 | `prirucky/` | Handbooks |
 | `vystupy/` | Deliverables |
 
-Create a kebab-case directory under the appropriate type with `main.tex` and `document.json`. The metadata contains localized names and may set the document date:
+Each document lives in a uniquely named kebab-case directory, for example `metodiky/new-methodology/`. It needs `main.tex` and `document.json`. Bibliography files stay beside `main.tex`; shared logos are in `assets/`.
+
+`document.json` provides the English and Slovak website titles. The date is optional; without it, the website uses the date of the latest Git change to the document or shared assets.
 
 ```json
 {
-  "name": { "en": "Sprint 01 minutes", "sk": "Zápisnica zo šprintu 01" },
+  "name": { "en": "New methodology", "sk": "Nová metodika" },
   "date": "2026-11-10"
 }
 ```
 
-When `date` is omitted, the index uses the date of the latest Git change to the document or shared `assets/`. The slug must be unique across all types. Bibliography files stay beside `main.tex`; the team logos are shared under `assets/`.
+## Create or update a document
 
-## PDF pipeline
-
-Run `python3 scripts/build_documents.py` locally after installing `latexmk`, `biber`, `lmodern`, and the TeX packages. It compiles every categorized document into `build/site/docs/` and writes `build/site/documents.json` with name, type, date, and PDF link. The checked-in PDFs under `output/pdf/` are historical snapshots; the pipeline builds from LaTeX sources.
-
-`.github/workflows/publish-methodologies.yml` runs on pull requests and on every push that changes a LaTeX source, bibliography, metadata, shared asset, or pipeline script. It uploads the generated files as a review artifact, synchronizes them into a temporary website checkout, checks links, and builds the website. A successful `main` run commits changed PDFs and the index to the website repository, which then deploys through its normal Pages workflow. Removed documents are removed from the website only if they were listed in the previous generated index; website-managed PDFs are preserved.
-
-### One-time rollout
-
-1. Merge the website changes that read `public/documents.json` and validate its PDF links.
-2. Register a GitHub App owned by `team26fiitstu` for document publication. Give it only **Contents: Read and write**, disable unused webhooks, and install it on **only** `team26fiitstu.github.io`.
-3. In the website repository's `Main Branch Protection` ruleset, add only this GitHub App to the bypass list with **Always allow**. The ruleset requires pull requests for other actors, so publication cannot push to `main` without this narrowly scoped bypass.
-4. In `team26fiitstu/naomi-documents`, store the app's Client ID as the Actions variable `SITE_APP_CLIENT_ID` and its PEM private key as the Actions secret `SITE_APP_PRIVATE_KEY`. Do not commit the private key or paste it into an issue or PR.
-5. Merge this workflow to `main`, then use **Run workflow** once. Verify the generated website commit, Pages deployment, and PDF links for both languages. After successful publication, remove the old `SITE_REPO_TOKEN` secret and revoke its personal access token.
-
-The built-in `GITHUB_TOKEN` cannot write to the website repository. The workflow instead creates a short-lived GitHub App installation token scoped to the website repository and `contents:write`; its push triggers the website's Pages workflow.
+1. For a new document, choose a folder from the table, create a directory with a unique kebab-case name, and add `main.tex` and `document.json`. Use an existing document as a LaTeX example. To update a document, edit its `.tex`, bibliography, metadata, or assets.
+2. If LaTeX is installed locally, run `python3 scripts/build_documents.py` to compile all documents and check the generated PDFs in `build/site/docs/`.
+3. Commit the source changes and open a pull request. CI compiles the PDFs and checks the website. After the pull request is merged into `main`, the PDFs and document index are published to the website automatically. Edit the LaTeX sources rather than the generated PDFs.
