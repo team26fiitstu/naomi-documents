@@ -73,11 +73,24 @@ jobs:
             cmp "$pdf" "website/dist/docs/$(basename "$pdf")"
           done
 
-      - name: Check publication token
+      - name: Check GitHub App configuration
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:
-          SITE_REPO_TOKEN: ${{ secrets.SITE_REPO_TOKEN }}
-        run: test -n "$SITE_REPO_TOKEN"
+          SITE_APP_CLIENT_ID: ${{ vars.SITE_APP_CLIENT_ID }}
+          SITE_APP_PRIVATE_KEY: ${{ secrets.SITE_APP_PRIVATE_KEY }}
+        run: |
+          test -n "$SITE_APP_CLIENT_ID"
+          test -n "$SITE_APP_PRIVATE_KEY"
+      - name: Create website publisher token
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        id: site-app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.SITE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SITE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: team26fiitstu.github.io
+          permission-contents: write
       - name: Check out website for publication
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/checkout@v4
@@ -85,7 +98,7 @@ jobs:
           repository: team26fiitstu/team26fiitstu.github.io
           ref: main
           path: website-publish
-          token: ${{ secrets.SITE_REPO_TOKEN }}
+          token: ${{ steps.site-app-token.outputs.token }}
       - name: Publish changed documents
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
@@ -95,8 +108,8 @@ jobs:
             echo 'Website documents are already current.'
             exit 0
           fi
-          git -C website-publish config user.name 'github-actions[bot]'
-          git -C website-publish config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C website-publish config user.name '${{ steps.site-app-token.outputs.app-slug }}[bot]'
+          git -C website-publish config user.email '${{ steps.site-app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
           git -C website-publish commit -m "Update documents from ${GITHUB_SHA}"
           git -C website-publish pull --rebase origin main
           git -C website-publish push origin HEAD:main

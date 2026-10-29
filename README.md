@@ -46,7 +46,9 @@ Run `python3 scripts/build_documents.py` locally after installing `latexmk`, `bi
 ### One-time rollout
 
 1. Merge the website changes that read `public/documents.json` and validate its PDF links.
-2. Create a fine-grained personal access token limited to `team26fiitstu/team26fiitstu.github.io` with **Contents: Read and write**. Its owner must be allowed to push to the website's `main` branch. Store it as the Actions secret `SITE_REPO_TOKEN` in `team26fiitstu/naomi-documents`.
-3. Merge this workflow to `main`, then use **Run workflow** once. Verify the generated website commit, Pages deployment, and PDF links for both languages.
+2. Register a GitHub App owned by `team26fiitstu` for document publication. Give it only **Contents: Read and write**, disable unused webhooks, and install it on **only** `team26fiitstu.github.io`.
+3. In the website repository's `Main Branch Protection` ruleset, add only this GitHub App to the bypass list with **Always allow**. The ruleset requires pull requests for other actors, so publication cannot push to `main` without this narrowly scoped bypass.
+4. In `team26fiitstu/naomi-documents`, store the app's Client ID as the Actions variable `SITE_APP_CLIENT_ID` and its PEM private key as the Actions secret `SITE_APP_PRIVATE_KEY`. Do not commit the private key or paste it into an issue or PR.
+5. Merge this workflow to `main`, then use **Run workflow** once. Verify the generated website commit, Pages deployment, and PDF links for both languages. After successful publication, remove the old `SITE_REPO_TOKEN` secret and revoke its personal access token.
 
-The default `GITHUB_TOKEN` cannot write to the website repository and its commits would not trigger the website's push workflow. A GitHub App installation token is a better team-owned replacement for the personal token once available.
+The built-in `GITHUB_TOKEN` cannot write to the website repository. The workflow instead creates a short-lived GitHub App installation token scoped to the website repository and `contents:write`; its push triggers the website's Pages workflow.
