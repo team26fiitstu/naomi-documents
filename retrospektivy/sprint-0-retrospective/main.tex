@@ -1,0 +1,389 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Document information
+\newcommand{\worktitle}{Sprint 0 Retrospective}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{doc. Ing. Fedor Lehocki, PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+% Sprint and meeting information -- CHECK BEFORE MERGE
+\newcommand{\sprintname}{Sprint 0}
+\newcommand{\sprintperiod}{15 October -- 25 October 2026}
+\newcommand{\meetingdate}{Monday, 26 October 2026}
+\newcommand{\meetingtime}{16:00}
+\newcommand{\meetingplace}{NAO robot laboratory, FIIT STU}
+\newcommand{\participants}{All team members: A. Akhmadinurov, D. Danilov, A. Dmitriev, R. Gainetdinov, T. Kuzin, A. Tikhoblazhenko, A. Zimnitski}
+\newcommand{\reportauthor}{Bc. Gainetdinov Ruslan}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{assets/}}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{csquotes}
+
+% No bibliography in progress reports, so biblatex is not loaded.
+
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary}}{\thesubsubsection}{0.8em}{}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+\captionsetup{font=small, labelfont=bf, justification=centering}
+
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\newcommand{\naomiheaderfooter}{%
+    \fancyhf{}
+    \fancyhead[L]{\includegraphics[width=4cm,height=1.15cm,keepaspectratio]{horizontal.png}}
+    \fancyhead[R]{%
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}}
+    \fancyfoot[L]{{\scriptsize \teamname\enspace|\enspace\subject}}
+    \fancyfoot[R]{{\scriptsize \thepage\enspace/\enspace\pageref{LastPage}}}
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}%
+}
+
+\pagestyle{fancy}
+\naomiheaderfooter
+\fancypagestyle{plain}{\naomiheaderfooter}
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % University logo
+        \vspace*{0.3cm}
+        \includegraphics[width=6cm,height=5cm,keepaspectratio]{vertical.png}
+
+        \vspace{0.5cm}
+        {\large\bfseries \university\par}
+        \vspace{0.2cm}
+        {\normalsize \faculty\par}
+
+        % Project and document title
+        \vspace{1.7cm}
+        {\small\MakeUppercase{\worksubtitle}\par}
+        \vspace{0.5cm}
+        \begin{minipage}{0.95\textwidth}
+            \centering
+            {\fontsize{25}{32}\selectfont\bfseries \worktitle\par}
+        \end{minipage}
+
+        % Sprint period and author
+        \vspace{0.6cm}
+        {\normalsize \sprintperiod\par}
+
+        % Team information
+        \vfill
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % Bottom information
+        \vfill
+        {\small \location\enspace\textbullet\enspace\academicyear\par}
+    \end{titlepage}
+}
+
+
+% ==================================================
+% 7. IMAGES
+% ==================================================
+
+% \imageplaceholder{Text}{Caption} -- until the screenshot is added
+\newcommand{\imageplaceholder}[2]{
+    \begin{figure}[H]
+        \centering
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+                \centering
+                {\Large\bfseries IMAGE}
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+            \end{minipage}
+        }
+        \endgroup
+        \caption{#2}
+    \end{figure}
+}
+
+% \documentimage{path}{caption}{label}
+\newcommand{\documentimage}[3]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.85\textwidth,keepaspectratio]{#1}
+        \caption{#2}
+        \label{#3}
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. TABLES
+% ==================================================
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[H]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{6pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+
+% ==================================================
+% 9. DOCUMENT
+% ==================================================
+
+\begin{document}
+
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+
+
+% ==================================================
+% MEETING DETAILS
+% ==================================================
+
+\section{Meeting Details}
+
+At the end of \sprintname{}, the \teamname{} team met to evaluate the sprint
+in a Scrum retrospective. \sprintname{} was a preparatory sprint focused on
+organizing the team and understanding the project.
+
+\begin{naomitable}{Retrospective meeting}{tab:meeting}
+    \begin{tabularx}{\textwidth}{L{4.5cm} Y}
+        \rowcolor{naomiTableHeader}
+        \textcolor{white}{\bfseries Item} &
+        \textcolor{white}{\bfseries Details} \\
+        Date and time & \meetingdate, \meetingtime \\
+        Place & \meetingplace \\
+        Retrospective for & \sprintname{} (\sprintperiod) \\
+        Participants & \participants \\
+        Prepared by & \reportauthor \\
+        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+    \end{tabularx}
+\end{naomitable}
+
+
+% ==================================================
+% SPRINT OUTCOME
+% ==================================================
+
+\section{Sprint Outcome}
+
+The team completed 16 of 17 tasks of \sprintname{}. One task was not
+completed: \textbf{SCRUM-28 Request and secure faculty server}.
+The faculty assigned the server to the team, but connecting to it and
+securing it took more time than expected, so the task was moved to Sprint~1.
+
+\documentimage
+    {board.png}
+    {Board of \sprintname{} at sprint closure}
+    {fig:board}
+
+The main results of the sprint were the team's working environment
+(Jira project, GitHub organization, fork of the existing repository,
+documentation repository with automatic publishing), the first team
+methodologies and the project description and goals.
+
+
+% ==================================================
+% TEAM MEETINGS
+% ==================================================
+
+\section{Team Meetings in the Sprint}
+
+\textbf{13 October 2026 (Microsoft Teams) -- sprint planning.}
+The team defined the first tasks: organizing the team and its tools,
+analyzing the existing project to understand what needs to be done,
+and preparing questions to clarify with the supervisor.
+
+\textbf{19 October 2026 (Microsoft Teams).}
+The team went through the topics discussed with the supervisor on
+16 October 2026, turned them into concrete tasks and assigned at least one
+task to each team member. Topics that were still unclear were recorded as
+questions for the next supervisor meeting.
+
+
+% ==================================================
+% COURSE OF THE MEETING
+% ==================================================
+
+\section{Course of the Meeting}
+
+The meeting took place in the laboratory with the NAO robot. It started
+with a short summary of \sprintname{}: the team went through the completed
+tasks and discussed the one task that was not completed (SCRUM-28) and the
+reason for the delay.
+
+The team agreed that from Sprint~1 all work will follow the methodologies
+created in \sprintname{}. In particular, every task planned into a sprint
+will be estimated in story points according to the backlog management
+methodology, so that the team velocity can be tracked in the following
+sprints.
+
+In the second part of the meeting, the team tried to connect to the real
+NAO robot with the existing solution. The connection did not work out of
+the box: the services had missing dependencies, and the robot address and
+port could not be configured without editing the Docker Compose files.
+These problems were turned into Sprint~1 tasks (SCRUM-51, SCRUM-52 and
+SCRUM-57).
+
+% Optional, as in the supervisor's example: what each member said
+% (what went well, what was a problem, what they would like to change).
+
+
+% ==================================================
+% IMPROVEMENTS
+% ==================================================
+
+\section{Changes for Sprint 1}
+
+Based on the retrospective, the team introduced the following changes
+from Sprint~1:
+
+\begin{itemize}
+    \item Every task in a sprint has an epic, an assignee, a story point
+          estimate and a priority. Estimates follow the scale in the
+          backlog management methodology.
+    \item Changes to code and documents are merged only through pull
+          requests with a description (Changes, Reason, Verification) and
+          approvals from other team members.
+    \item New tasks are created right after supervisor meetings, so that
+          the backlog reflects the agreed scope.
+\end{itemize}
+
+\end{document}
