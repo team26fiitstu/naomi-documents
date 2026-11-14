@@ -429,7 +429,7 @@
 
 The NAO Robot Exercise System is an existing platform for guided physical exercise, especially for older adults. NAO demonstrates movements, visual pose processing observes the participant, and the system provides feedback. A trainer-facing interface prepares and manages exercises. The components communicate as services.
 
-The NAOMI team will extend this platform rather than build a new one. Work focuses on video-based choreography, movement stability, thermal limits, and service reliability. The NAOqi interface requires Python 2 alongside newer components. Because robot access is intermittent, changes must be testable without hardware and checked on the robot when available.
+The NAOMI team will extend this platform rather than build a new one. Work focuses on multi-state choreographies prepared from videos, movement stability, thermal limits, and service reliability. The NAOqi interface requires Python 2 alongside newer components. Because robot access is intermittent, changes must be testable without hardware and checked on the robot when available.
 
 The team will document implemented improvements, test evidence, and remaining limits.
 
@@ -439,9 +439,9 @@ Improve the existing NAO exercise system so that a trainer can prepare and run e
 
 \section{Project Objectives}
 
-\subsection{Video-based choreography}
+\subsection{Multi-state choreography from videos}
 
-Support the preparation of a choreography from multiple videos. A trainer should be able to select videos, trim relevant segments, arrange them into one exercise sequence, and preview the resulting movements before they are sent to the robot. The delivered workflow and its limitations will be demonstrated with representative source videos.
+Support exercises defined as a set of states with transitions between them. Each state has its own content: a movement sequence obtained from one or more videos, or only a voice line or a robot command. The robot performs the content of the current state and waits for a transition that is activated through the API, e.g. by the trainer or by a key press. Transitions can lead to the next movement, to a correction of the previous one, or repeat a part of the exercise a given number of times. A trainer should be able to create states, add videos to them, trim and join video segments, connect the states with transitions, and see the resulting state graph. The delivered workflow and its limitations will be demonstrated with representative source videos.
 
 \subsection{Robot stability and fall prevention}
 
@@ -461,7 +461,7 @@ Evaluate the limitations of pose and emotion recognition in the current workflow
 
 \section{Expected Outcomes}
 
-The project will deliver an enhanced version of the existing exercise system, including the implemented choreography and service improvements. It will also produce documented findings on robot balance, movement limits, actuator temperature, and sensing reliability.
+The project will deliver an enhanced version of the existing exercise system, including multi-state choreographies prepared from videos and the service improvements. It will also produce documented findings on robot balance, movement limits, actuator temperature, and sensing reliability.
 
 The team will record software test results and, when NAO access permits, each hardware scenario and outcome. Final documentation will describe reproducible workflows, verified behaviour, and remaining limits.
 
