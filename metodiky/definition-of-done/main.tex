@@ -481,7 +481,7 @@ acceptance criteria and provide a verifiable result.
 The \textbf{assignee} is responsible for completing the work, keeping Jira
 up to date, and providing evidence of completion. The \textbf{reviewers}
 check the result independently. The team confirms that the necessary reviews
-and tests have been completed before closing the issue.
+and applicable validation have been completed before closing the issue.
 
 % ==================================================
 % 3. GENERAL CRITERIA
@@ -523,7 +523,7 @@ For tasks involving source code, the following criteria apply:
           and follows the project's coding conventions.
     \item The code is committed to a GitHub branch linked
           to the corresponding Jira issue.
-    \item Necessary tests have been completed successfully.
+    \item Necessary tests have been completed successfully before merge.
     \item Relevant documentation has been updated
           where required.
     \item All required automated checks pass, if available.
@@ -534,8 +534,9 @@ For tasks involving source code, the following criteria apply:
 
 \subsection{Pull Request Review and Approval}
 
-All code changes must be submitted through a Pull Request
-before being merged into the main branch.
+All code changes must be submitted through a Pull Request before being
+merged into the repository's integration branch: \texttt{master} for
+\texttt{naoMicroservices} and \texttt{main} for \texttt{naomi-documents}.
 
 The approval requirements depend on the PR author:
 
@@ -565,9 +566,11 @@ additional review.
 
 \section{Review and Testing Process}
 
-The \textbf{In Review} and \textbf{Testing} states represent two different
-checks. Review focuses on implementation quality and completeness; testing
-focuses on whether the result behaves as expected.
+For code tasks, \textbf{In Review} checks implementation quality and
+completeness. \textbf{Testing} then verifies behaviour before merge.
+After testing and merge, the issue can move to \textbf{Done}. Non-code
+tasks move directly from \textbf{In Review} to \textbf{Done} after review
+and appropriate validation; they do not enter \textbf{Testing}.
 
 \begin{naomitable}{Verification stages before completion}{tab:dod-stages}
     \begin{tabularx}{\textwidth}{L{2.4cm} Y Y}
@@ -578,8 +581,8 @@ focuses on whether the result behaves as expected.
         In Review &
         Review the implementation or deliverable and provide feedback. &
         Required reviews are completed and blocking comments resolved. \\
-        Testing &
-        Execute relevant functional, integration, or manual checks. &
+        Testing (code) &
+        Execute relevant functional, integration, or manual checks before merge. &
         Expected behaviour is verified and significant defects are resolved. \\
         Done &
         Confirm the issue meets the applicable DoD criteria. &
@@ -601,6 +604,9 @@ to Done does not replace the need to record unresolved problems.
 % ==================================================
 
 \section{Definition of Done for Non-Code Tasks}
+
+After review and appropriate validation, non-code tasks move directly
+from \textbf{In Review} to \textbf{Done}, skipping \textbf{Testing}.
 
 \subsection{Documentation}
 

@@ -510,12 +510,16 @@ members to monitor the current state of each issue.
         In Progress & A team member is actively working on the task. \\
         In Review & The implementation is completed and waiting
         for review or feedback from other team members. \\
-        Testing & The task has passed the review stage and is being tested
-        to verify that it works correctly and meets the requirements. \\
-        Done & The task has been reviewed, tested, and successfully completed. \\
+        Testing & A code task has passed review and is being tested before merge. \\
+        Done & Applicable review and validation are complete; code changes have been merged. \\
         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
     \end{tabularx}
 \end{naomitable}
+
+Non-code tasks move directly from \textbf{In Review} to \textbf{Done}
+after review and appropriate validation. Code tasks move from
+\textbf{In Review} to \textbf{Testing}; testing is completed before the
+pull request is merged. They move to \textbf{Done} after the merge.
 
 Team members are responsible for keeping the status
 of their assigned issues up to date in Jira.
