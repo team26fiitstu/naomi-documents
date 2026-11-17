@@ -471,6 +471,8 @@ This methodology applies to every contributor to the NAO system. The repository 
 
 \subsection{Python services}
 
+Following the supervisor's decision, the robot service that communicates with NAO remains on \textbf{Python 2.7}. Changes to this service must preserve Python 2.7 compatibility. Other Python services use their declared Python versions.
+
 \begin{itemize}
 
 \item Follow PEP 8 style: four-space indentation, \texttt{snake\_case} for functions and variables, \texttt{PascalCase} for classes, and explicit imports.
@@ -503,17 +505,17 @@ This methodology applies to every contributor to the NAO system. The repository 
 
 \begin{enumerate}
 
-\item \texttt{master} is the integration branch. Create a short-lived branch from the current \texttt{master} for each Jira task. Name it \texttt{\textless{}jira-key\textgreater{}-short-description}, for example \texttt{NAO-42-video-trimming}. If the team changes its integration branch, update this document.
+\item The integration branch of \texttt{naoMicroservices} is \texttt{master}. Other repositories use their agreed integration branch. Create a short-lived branch from the current integration branch for each Jira task. Name it \texttt{\textless{}jira-key\textgreater{}-short-description}, for example \texttt{NAO-42-video-trimming}.
 
 \item Link every code change to a Jira issue. The issue states the goal and acceptance criteria before implementation begins.
 
 \item Commit coherent changes with a subject in the form \texttt{\textless{}type\textgreater{}(\textless{}scope\textgreater{}): \textless{}summary\textgreater{}}, for example \texttt{fix(translator): reject invalid pose data}. Use \texttt{feat}, \texttt{fix}, \texttt{test}, \texttt{docs}, \texttt{refactor}, \texttt{build}, or \texttt{chore} as the type. Put the Jira key in the PR title or description.
 
-\item Do not commit directly to \texttt{master}. Open a PR for the task, keep it focused, and synchronize it with \texttt{master} before merge if conflicts arise.
+\item Every change, including source code, configuration, tests, and documentation, must go through a Pull Request. Direct pushes to the integration branch are blocked. Keep each PR focused and resolve merge conflicts before merging.
 
 \item Do not force-push or rewrite shared branch history. On a personal task branch, rebasing is allowed while nobody else depends on it; tell reviewers when a rebase invalidates their previous review.
 
-\item Merge only after the acceptance criteria are met, required checks pass, and review is approved. Prefer squash merge to keep one traceable commit per PR; the PR remains the record of intermediate discussion.
+\item The PR author merges the PR using \textbf{Squash and merge} after the acceptance criteria are met, all required approvals are received, and all required checks pass. The approval requirements and urgent-fix exception are defined in Section~3.3.
 
 \item Tag versions used for demonstrations or NAO experiments. Record the tag or commit SHA with the experiment results so the software state can be reproduced.
 
@@ -543,8 +545,13 @@ The author shall:
 
 \subsection{Reviewer responsibilities}
 
-At least one team member other than the author reviews every PR. The reviewer must understand the change well enough to assess it; pairing during implementation is welcome, but the final diff still receives an independent review. A change that can move the robot or alter safety-related behaviour also requires review by a team member responsible for robot testing. Reviewers check:
+Each PR normally requires two approvals from two distinct reviewers other than the author, including at least one code owner of the repository. These requirements apply equally to all team members, including code owners.
 
+Reviewers must understand the change well enough to assess it. Pairing during implementation is welcome, but the final diff still receives independent review.
+
+A change that can move the robot or alter safety-related behaviour also requires review by a team member responsible for robot testing. This reviewer may be one of the two required approvers.
+
+Reviewers check:
 \begin{enumerate}
 
 \item Does the implementation satisfy the Jira acceptance criteria without unrelated scope?
@@ -565,9 +572,24 @@ Review comments should identify the issue and a suggested direction. The reviewe
 
 \subsection{Merge gate}
 
-A PR may be merged when it has an independent approval, all blocking comments are resolved, required automated checks pass, and the PR description records the relevant test result. Only then is the Jira issue moved to \textbf{Done}. If review finds a blocking problem, return the issue to \textbf{In progress}, fix it, and request another review. If the work cannot be completed within the sprint, move the unfinished issue to the next sprint instead of marking it Done.
+Every change must go through a PR. Direct pushes to the integration branch are blocked.
 
-Code that requires physical NAO testing may merge after offline verification \textbf{only if} the PR and Jira issue mark the robot test as pending and the change is not enabled for a live session until that test passes. Any safety-related change must be tested on the robot before being used in a demonstration.
+Each PR requires \textbf{two approvals from two distinct reviewers}, including \textbf{at least one code owner of the repository}. The team lead, deputy team lead, and designated repository owner are code owners. Approval from any one of these code owners is sufficient to meet the code-owner approval requirement; approval from all code owners is not required.
+
+The PR author must not approve their own PR. Holding multiple roles does not count as multiple approvals. These requirements apply equally to all team members, including code owners.
+
+The team lead is \textbf{Ruslan Gainetdinov}. The deputy team lead is \textbf{Alena Tikhoblazhenko}. Both are code owners of all project repositories. The repository owners and complete code-owner list are recorded in the \emph{Version Control Methodology}, under \emph{Repository code owners}.
+
+Before merging, all required checks must pass, all requested changes must be addressed, blocking review comments must be resolved, and the PR must record relevant test results.
+
+Once these conditions and the approval requirements are met, \textbf{the PR author merges the PR}.
+
+\textbf{Urgent-fix exception:}
+For an urgent fix, such as restoring a broken integration branch or resolving an issue needed for a demo, the team lead or deputy team lead may merge the PR with \textbf{one approval from a reviewer other than the author}. The reason for using this exception must be stated in the PR. This exception does not permit direct pushes or self-approval and does not waive required checks.
+
+After merging, move the Jira issue to \textbf{Done} only when all applicable Definition of Done criteria are satisfied. If review finds a blocking problem, return the issue to \textbf{In Progress}, fix it, and request another review. Unfinished work must not be marked Done.
+
+Code that requires physical NAO testing may merge after offline verification only if the PR and Jira issue mark the robot test as pending and the change is not enabled for a live session until that test passes. The issue remains open if that test is required by its acceptance criteria. Any safety-related change must be tested on the robot before being used in a demonstration.
 
 \section{Verification levels}
 
@@ -593,7 +615,13 @@ The \texttt{naomi-documents} GitHub repository is the source for PDF files publi
 
 Edit the LaTeX source files in the corresponding GitHub directory and submit changes through a pull request. Do not upload a generated PDF to the website by hand.
 
-On each pull request, GitHub Actions compiles every categorized \LaTeX{} project and produces a review artifact containing the PDFs and \texttt{documents.json}. It places these outputs into a temporary website checkout, checks the links, and builds the website. A failed compilation or site build blocks publication. After the reviewed change reaches \texttt{main}, the workflow updates the website's PDFs and index with a short-lived GitHub App installation token scoped to the website repository. The app has a narrow bypass in the website's protected \texttt{main} ruleset so this automated publication can push directly; other contributors still require a pull request. The website's own workflow then deploys the new version. Verify the PDF artifact during review and check the published links after the first rollout. A bad publication can be rolled back by reverting the generated website commit.
+On each pull request, GitHub Actions compiles every categorized \LaTeX{} project and produces a review artifact containing the PDFs and \texttt{documents.json}. It places these outputs into a temporary website checkout, checks the links, and builds the website. A failed compilation or site build blocks publication.
+
+After the reviewed change reaches the integration branch of \texttt{naomi-documents}, the publication workflow must prepare the generated PDFs and index on a separate branch in the website repository and open or update a PR.
+
+Generated publication changes follow the same approval requirements as other changes. The publication app must not bypass branch protection or push directly to the website's integration branch. For an app-authored PR, the team lead or deputy team lead performs the merge on behalf of the app after all required approvals and checks are complete.
+
+After the publication PR is merged, the website's workflow deploys the new version. Verify the PDF artifact during review and check the published links after deployment. A bad publication can be rolled back through a revert PR.
 
 \section{Maintaining this methodology}
 
