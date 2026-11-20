@@ -1,0 +1,423 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Document information
+\newcommand{\worktitle}{Sprint 1 Retrospective}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{doc. Ing. Fedor Lehocki, PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+% Sprint and meeting information -- CHECK BEFORE MERGE
+\newcommand{\sprintname}{Sprint 1}
+\newcommand{\sprintperiod}{26 October -- 9 November 2026}
+\newcommand{\meetingdate}{27 October 2026, 3 November 2026}
+\newcommand{\meetingtime}{16:00}
+\newcommand{\meetingplace}{NAO robot laboratory, FIIT STU}
+\newcommand{\participants}{All team members: A. Akhmadinurov, D. Danilov, A. Dmitriev, R. Gainetdinov, T. Kuzin, A. Tikhoblazhenko, A. Zimnitski}
+\newcommand{\reportauthor}{Bc. Gainetdinov Ruslan}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{assets/}}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{csquotes}
+
+% No bibliography in progress reports, so biblatex is not loaded.
+
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary}}{\thesubsubsection}{0.8em}{}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+\captionsetup{font=small, labelfont=bf, justification=centering}
+
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\newcommand{\naomiheaderfooter}{%
+    \fancyhf{}
+    \fancyhead[L]{\includegraphics[width=4cm,height=1.15cm,keepaspectratio]{horizontal.png}}
+    \fancyhead[R]{%
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}}
+    \fancyfoot[L]{{\scriptsize \teamname\enspace|\enspace\subject}}
+    \fancyfoot[R]{{\scriptsize \thepage\enspace/\enspace\pageref{LastPage}}}
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}%
+}
+
+\pagestyle{fancy}
+\naomiheaderfooter
+\fancypagestyle{plain}{\naomiheaderfooter}
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % University logo
+        \vspace*{0.3cm}
+        \includegraphics[width=6cm,height=5cm,keepaspectratio]{vertical.png}
+
+        \vspace{0.5cm}
+        {\large\bfseries \university\par}
+        \vspace{0.2cm}
+        {\normalsize \faculty\par}
+
+        % Project and document title
+        \vspace{1.7cm}
+        {\small\MakeUppercase{\worksubtitle}\par}
+        \vspace{0.5cm}
+        \begin{minipage}{0.95\textwidth}
+            \centering
+            {\fontsize{25}{32}\selectfont\bfseries \worktitle\par}
+        \end{minipage}
+
+        % Sprint period and author
+        \vspace{0.6cm}
+        {\normalsize \sprintperiod\par}
+
+        % Team information
+        \vfill
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % Bottom information
+        \vfill
+        {\small \location\enspace\textbullet\enspace\academicyear\par}
+    \end{titlepage}
+}
+
+
+% ==================================================
+% 7. IMAGES
+% ==================================================
+
+% \imageplaceholder{Text}{Caption} -- until the screenshot is added
+\newcommand{\imageplaceholder}[2]{
+    \begin{figure}[H]
+        \centering
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+                \centering
+                {\Large\bfseries IMAGE}
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+            \end{minipage}
+        }
+        \endgroup
+        \caption{#2}
+    \end{figure}
+}
+
+% \documentimage{path}{caption}{label}
+\newcommand{\documentimage}[3]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.85\textwidth,keepaspectratio]{#1}
+        \caption{#2}
+        \label{#3}
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. TABLES
+% ==================================================
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[H]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{6pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+
+% ==================================================
+% 9. DOCUMENT
+% ==================================================
+
+\begin{document}
+
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+
+
+% ==================================================
+% MEETING DETAILS
+% ==================================================
+
+\section{Meeting Details}
+
+At the end of \sprintname{}, the \teamname{} team met to evaluate the sprint
+in a Scrum retrospective. \sprintname{} was the first sprint in which the
+team worked on the existing solution: it focused on the development
+environment and on refactoring the project.
+
+\begin{naomitable}{Retrospective meeting}{tab:meeting}
+    \begin{tabularx}{\textwidth}{L{4.5cm} Y}
+        \rowcolor{naomiTableHeader}
+        \textcolor{white}{\bfseries Item} &
+        \textcolor{white}{\bfseries Details} \\
+        Date and time & \meetingdate, \meetingtime \\
+        Place & \meetingplace \\
+        Retrospective for & \sprintname{} (\sprintperiod) \\
+        Participants & \participants \\
+        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+    \end{tabularx}
+\end{naomitable}
+
+
+% ==================================================
+% SPRINT OUTCOME
+% ==================================================
+
+\section{Sprint Outcome}
+
+The team completed 12 of 14 tasks (36 of 44 story points). Two tasks were
+not completed: \textbf{SCRUM-55 Set up CI pipeline to build and push Docker
+images} and \textbf{SCRUM-58 Simplify and document environment
+configuration}. Their implementation was finished, but the pull requests
+were approved only on the day after the sprint ended, so both tasks were
+moved to Sprint~2.
+
+The main results of the sprint were working Docker images of all services,
+smaller images, a clearer repository layout, the robot address and port
+configurable through environment variables, a protected \texttt{master}
+branch, automatic building and publishing of team documents, access to the
+faculty server and the analysis of robot falls. The details are in the
+\sprintname{} progress report.
+
+
+% ==================================================
+% MEETINGS IN THE SPRINT
+% ==================================================
+
+\section{Meetings in the Sprint}
+
+
+
+\textbf{30 october 2026 -- supervisor meeting.}
+The team presented the state of the existing solution. The team and the
+supervisor agreed to refactor and optimize the project first and to start
+the multi-state choreography epic only afterwards. Tasks SCRUM-58, 59 and 60
+were added to the sprint after this decision.
+
+\textbf{27 October 2026 -- team meeting.}
+The team discussed why two pull requests from Sprint~0 were not reviewed
+before the sprint ended: they were waiting over the weekend and nobody
+checked them. The team agreed that open review requests must not be left
+without attention at the end of a sprint. The rest of the meeting was used
+to distribute the tasks of \sprintname{}.
+
+\textbf{3 November 2026 -- team meeting.}
+Each team member started the microservices and Choregraphe on their own
+computer. Several members had problems connecting to the services or to the
+robot. The team identified what had to be fixed so that the environment
+works the same way for everyone.
+
+
+% ==================================================
+% COURSE OF THE MEETING
+% ==================================================
+
+\section{Course of the Meeting}
+
+The meeting started with a short summary of \sprintname{}: the team went
+through the completed tasks and the two tasks that were not completed.
+
+\subsection{What Went Well}
+
+\begin{itemize}
+    \item The problems found when connecting to the robot in the Sprint~0
+          retrospective (missing dependencies, hard-coded robot address)
+          were fixed early in the sprint.
+    \item Every change went through a pull request with a description and
+          a review, as agreed in the Sprint~0 retrospective.
+    \item Work on the services was split into small tasks, so several team
+          members could work on the repository in parallel.
+\end{itemize}
+
+\subsection{What Was a Problem}
+
+\begin{itemize}
+    \item \textbf{Late estimation.} Tasks were estimated in story points only
+          on 30 October, four days after the sprint started. Jira therefore
+          shows a commitment of 0 and the burndown chart is not usable for
+          the first days of the sprint.
+    \item \textbf{Scope changes during the sprint.} Ten of the fourteen tasks
+          were added after the sprint had started, most of them after the
+          analysis of the existing solution and the supervisor meeting.
+    \item \textbf{Slow reviews at the end of the sprint.} Two finished tasks
+          missed the sprint because their pull requests were approved one
+          day late.
+    \item \textbf{Inconsistent methodologies.} The pull request approval rule
+          is described differently in the Version Control Methodology, the
+          Technical Methodology and the Definition of Done, and the use of
+          the Testing status differs between the documents and practice.
+    \item \textbf{Pull requests opened against the original repository.}
+          Opening a pull request from the link printed by \texttt{git push}
+          targets the supervisor's original repository instead of the team's
+          fork; this happened several times.
+\end{itemize}
+
+% Optional: what each member said (what went well, what was a problem,
+% what they would like to change).
+
+
+% ==================================================
+% IMPROVEMENTS
+% ==================================================
+
+\section{Changes for Sprint 2}
+
+Based on the retrospective, the team introduced the following changes
+from Sprint~2:
+
+\begin{itemize}
+    \item Tasks are estimated in story points during sprint planning,
+          before the sprint starts.
+    \item Pull requests are reviewed within two working days. In the last
+          two days of the sprint, team members check open review requests
+          every day.
+    \item Tasks that arise during the sprint are added to the backlog first;
+          they are added to the running sprint only if they block the sprint
+          goal.
+    \item The methodologies are aligned with the agreed rules (SCRUM-81 for
+          pull request approvals, SCRUM-83 for the Testing status).
+    \item Pull requests in \texttt{naoMicroservices} are opened through the
+          compare page of the team's fork
+          (\texttt{team26fiitstu/naoMicroservices}).
+\end{itemize}
+
+\end{document}
