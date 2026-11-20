@@ -8,6 +8,7 @@
 - [Backlog management methodology](https://team26fiitstu.github.io/docs/backlog-management-methodology.pdf)
 - [Definition of done](https://team26fiitstu.github.io/docs/definition-of-done.pdf)
 - [Project description and goals](https://team26fiitstu.github.io/docs/project-description-goals.pdf)
+- [Robot lab safety and test record handbook](https://team26fiitstu.github.io/docs/robot-lab-safety-handbook.pdf)
 
 ## Sources and naming
 
