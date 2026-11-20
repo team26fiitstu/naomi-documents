@@ -1,0 +1,416 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Document information
+\newcommand{\worktitle}{Sprint 1 Progress Report}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{doc. Ing. Fedor Lehocki, PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+% Sprint information -- FILL IN
+\newcommand{\sprintname}{Sprint 1}
+\newcommand{\sprintperiod}{26 October -- 9 November 2026}
+\newcommand{\statusdate}{9 November 2026}  % sprint end; statuses refer to this date
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{assets/}}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{csquotes}
+
+% No bibliography in progress reports, so biblatex is not loaded.
+
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary}}{\thesubsubsection}{0.8em}{}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+\captionsetup{font=small, labelfont=bf, justification=centering}
+
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\newcommand{\naomiheaderfooter}{%
+    \fancyhf{}
+    \fancyhead[L]{\includegraphics[width=4cm,height=1.15cm,keepaspectratio]{horizontal.png}}
+    \fancyhead[R]{%
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}}
+    \fancyfoot[L]{{\scriptsize \teamname\enspace|\enspace\subject}}
+    \fancyfoot[R]{{\scriptsize \thepage\enspace/\enspace\pageref{LastPage}}}
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}%
+}
+
+\pagestyle{fancy}
+\naomiheaderfooter
+\fancypagestyle{plain}{\naomiheaderfooter}
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % University logo
+        \vspace*{0.3cm}
+        \includegraphics[width=6cm,height=5cm,keepaspectratio]{vertical.png}
+
+        \vspace{0.5cm}
+        {\large\bfseries \university\par}
+        \vspace{0.2cm}
+        {\normalsize \faculty\par}
+
+        % Project and document title
+        \vspace{1.7cm}
+        {\small\MakeUppercase{\worksubtitle}\par}
+        \vspace{0.5cm}
+        \begin{minipage}{0.95\textwidth}
+            \centering
+            {\fontsize{25}{32}\selectfont\bfseries \worktitle\par}
+        \end{minipage}
+
+        % Sprint period and author
+        \vspace{0.6cm}
+        {\normalsize \sprintperiod\par}
+
+        % Team information
+        \vfill
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % Bottom information
+        \vfill
+        {\small \location\enspace\textbullet\enspace\academicyear\par}
+    \end{titlepage}
+}
+
+
+% ==================================================
+% 7. IMAGES
+% ==================================================
+
+% \imageplaceholder{Text}{Caption} -- until the screenshot is added
+\newcommand{\imageplaceholder}[2]{
+    \begin{figure}[H]
+        \centering
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+                \centering
+                {\Large\bfseries IMAGE}
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+            \end{minipage}
+        }
+        \endgroup
+        \caption{#2}
+    \end{figure}
+}
+
+% \documentimage{path}{caption}{label}
+\newcommand{\documentimage}[3]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.85\textwidth,keepaspectratio]{#1}
+        \caption{#2}
+        \label{#3}
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. TABLES
+% ==================================================
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[H]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{6pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+
+% ==================================================
+% 9. DOCUMENT
+% ==================================================
+
+\begin{document}
+
+% Title page; without it, a short heading is shown instead
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+
+
+% ==================================================
+% SUMMARY
+% ==================================================
+
+\section{Summary}
+
+During \sprintname{} (\sprintperiod), the \teamname{} team completed
+\textbf{12 of 14 tasks} with \textbf{36 of 44 story points}. The two
+remaining tasks (SCRUM-55 and SCRUM-58, 8 story points) were finished in
+code, but their pull requests were approved only on the day after the sprint
+ended, so they moved to Sprint~2 and were closed there.
+
+After the preparatory Sprint~0, \sprintname{} focused on the existing
+solution. In the meetings with the supervisor, the team agreed to refactor
+and optimize the project before starting the multi-state choreography epic.
+The sprint therefore concentrated on the development environment and the
+architecture: fixing the Docker images of the services, reducing their size,
+restructuring the repository, configuring the robot connection through
+environment variables, protecting the \texttt{master} branch and preparing a
+CI pipeline that builds and publishes Docker images. Team documents are now
+built from LaTeX and published to the team website automatically.
+The team also analysed the causes of robot falls (SCRUM-54) and received
+access to the faculty server (SCRUM-28).
+
+During the sprint the team found inconsistencies between its methodologies:
+the pull request approval rule is described differently in the Version
+Control Methodology, the Technical Methodology and the Definition of Done,
+and the use of the Testing status differs between the documents and
+practice. These inconsistencies are being resolved in Sprint~2
+(SCRUM-81 and SCRUM-83).
+
+The tasks belonged to four epics: \emph{Development Environment Setup},
+\emph{Architecture Improvement}, \emph{Project Management} and
+\emph{Robot Stability and Fall Prevention}.
+
+
+% ==================================================
+% TASK OVERVIEW
+% ==================================================
+
+\section{Task Overview}
+
+% Source: Jira sprint report of SCRUM Sprint 1.
+
+\begin{naomitable}{Tasks of \sprintname{} (status as of \statusdate)}{tab:tasks}
+    \footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\mbox\bgroup}p{1.75cm}<{\egroup} Y L{2.9cm} L{1.75cm} L{0.5cm} L{1.15cm}}
+        \rowcolor{naomiTableHeader}
+        \textcolor{white}{\bfseries Key} &
+        \textcolor{white}{\bfseries Task} &
+        \textcolor{white}{\bfseries Assignee} &
+        \textcolor{white}{\bfseries Status} &
+        \textcolor{white}{\bfseries SP} &
+        \textcolor{white}{\bfseries Sprint} \\
+        SCRUM-27 & Update team website & A. Dmitriev & Done & 3 & 1 \\
+        SCRUM-28 & Request and secure faculty server & T. Kuzin & Done & 3 & 0, 1 \\
+        SCRUM-30 & Write Sprint 0 progress report and retrospective & R. Gainetdinov & Done & 3 & 1 \\
+        SCRUM-36 & Automate LaTeX document build and publishing to team website & A. Zimnitski & Done & 5 & 1 \\
+        SCRUM-43 & Install RobotSettings and Choregraphe & A. Dmitriev & Done & 2 & 1 \\
+        SCRUM-51 & Fix missing dependency in voicecommandapi & D. Danilov & Done & 1 & 1 \\
+        SCRUM-52 & Fix naorobotapi Docker image build & D. Danilov & Done & 2 & 1 \\
+        SCRUM-54 & Analyze robot falls and existing fall detection in NAOqi & A. Akhmadinurov & Done & 5 & 1 \\
+        SCRUM-55 & Set up CI pipeline to build and push Docker images & R. Gainetdinov & In Review & 5 & 1, 2 \\
+        SCRUM-56 & Reduce Docker image sizes of microservices & A. Dmitriev & Done & 5 & 1 \\
+        SCRUM-57 & Configure robot IP and port via environment variables & A. Dmitriev & Done & 2 & 1 \\
+        SCRUM-58 & Simplify and document environment configuration & A. Zimnitski & In Review & 3 & 1, 2 \\
+        SCRUM-59 & Protect master branch in naoMicroservices repository & A. Tikhoblazhenko & Done & 2 & 1 \\
+        SCRUM-60 & Restructure naoMicroservices repository layout & D. Danilov & Done & 3 & 1 \\
+        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+    \end{tabularx}
+\end{naomitable}
+
+\subsection{Scope Changes}
+
+The sprint started on 26 October with four tasks (SCRUM-27, 28, 30, 36).
+After the supervisor meeting and the analysis of the existing solution, the
+team added SCRUM-43 on 29 October and SCRUM-51, 52, 54, 55, 56 and 57 on
+30 October. On the same day all tasks were estimated in story points.
+SCRUM-58, 59 and 60 were added on 2 November, after the decision to
+refactor the project before the multi-state choreography epic.
+
+
+% ==================================================
+% TEAM PERFORMANCE
+% ==================================================
+
+\section{Team Performance}
+
+\sprintname{} is the first sprint in which the team used story points.
+The team completed \textbf{36 story points}.
+
+\documentimage
+    {velocity.png}
+    {Velocity report after \sprintname{}}
+    {fig:velocity}
+
+The velocity report shows a commitment of 0 for \sprintname{}, because the
+tasks were estimated only on 30 October, after the sprint had started.
+Jira counts the commitment at the sprint start, so the real planned scope
+(44 story points) is not visible in the chart. From Sprint~2 on, tasks are
+estimated before the sprint starts. One sprint is not enough to determine
+the team's velocity; it will become meaningful after several sprints.
+
+\documentimage
+    {burndown.png}
+    {Sprint burndown chart of \sprintname{} (story points)}
+    {fig:burndown}
+
+For the same reason, the burndown chart stays at zero until 30 October and
+then jumps to about 31 story points. The remaining work fell to 18 story
+points by 1 November. On 2 November it rose to 26 story points when SCRUM-58,
+59 and 60 were added, and it went back to 18 story points by 3 November.
+The last tasks were closed on 8--9 November. The sprint ended with
+8 story points remaining: SCRUM-55 and SCRUM-58, which were waiting for
+pull request approval.
+
+
+% ==================================================
+% CUMULATIVE FLOW
+% ==================================================
+
+\section{Cumulative Flow}
+
+The cumulative flow diagram covers \sprintname{} (26 October -- 9 November).
+It counts all work items of the project, including epics.
+
+\documentimage
+    {cumulative-flow.png}
+    {Cumulative flow diagram for \sprintname{}}
+    {fig:cfd}
+
+The green area (Done) grew from about 20 to about 43 work items during the
+sprint. The purple area (To Do) grew on 30 October, 31 October and
+2--3 November, when new tasks were created after the analysis of the
+existing solution and the decision to refactor it. The large jump at the end
+of the chart (9 November) corresponds to the planning of Sprint~2.
+The bands for In Progress (cyan) and In Review (blue) stay narrow, so work
+moved to Done without a bottleneck. At the end of the sprint the In Review
+band widens slightly: these are the two tasks waiting for pull request
+approval. The Testing status (yellow) was almost unused; how tasks without
+code pass through Testing is being clarified in Sprint~2 (SCRUM-83).
+
+
+\end{document}
