@@ -1,0 +1,577 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Document information
+\newcommand{\worktitle}{Robot Lab Safety and Test Record Handbook}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{ doc. Ing. Fedor Lehocki PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+% Team member responsible for robot testing
+\newcommand{\robotresponsible}{Denis Danilov}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{assets/}}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{csquotes}
+\usepackage{amssymb}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+% Ragged-right columns keep narrow table cells readable.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+\emergencystretch=5em
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+% Section
+\titleformat{\section}
+    {\Large\bfseries\color{primary}}
+    {\thesection}
+    {0.8em}
+    {}
+
+% Subsection
+\titleformat{\subsection}
+    {\large\bfseries\color{primary}}
+    {\thesubsection}
+    {0.8em}
+    {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{primary}}
+    {\thesubsubsection}
+    {0.8em}
+    {}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+% Captions
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering
+}
+
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header logo
+\fancyhead[L]{
+    \includegraphics[
+        width=4cm,
+        height=1.15cm,
+        keepaspectratio
+    ]{horizontal.png}
+}
+
+% Header information
+\fancyhead[R]{
+    \begin{tabular}{r}
+        {\footnotesize\bfseries \worksubtitle}\\[3pt]
+        {\scriptsize Academic Year \academicyear}
+    \end{tabular}
+}
+
+% Header line
+\renewcommand{\headrulewidth}{0.7pt}
+
+% Footer left
+\fancyfoot[L]{
+    {\scriptsize
+    \teamname\enspace|\enspace\subject}
+}
+
+% Footer right
+\fancyfoot[R]{
+    {\scriptsize
+    \thepage\enspace/\enspace\pageref{LastPage}}
+}
+
+% Footer line
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Plain pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+
+    \fancyhead[L]{
+        \includegraphics[
+            width=4cm,
+            height=1.15cm,
+            keepaspectratio
+        ]{horizontal.png}
+    }
+
+    \fancyhead[R]{
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}
+    }
+
+    \fancyfoot[L]{
+        {\scriptsize
+        \teamname\enspace|\enspace\subject}
+    }
+
+    \fancyfoot[R]{
+        {\scriptsize
+        \thepage\enspace/\enspace\pageref{LastPage}}
+    }
+
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % ==========================================
+        % UNIVERSITY LOGO
+        % ==========================================
+
+        \vspace*{0.3cm}
+
+        \includegraphics[
+            width=6cm,
+            height=5cm,
+            keepaspectratio
+        ]{vertical.png}
+
+        \vspace{0.5cm}
+
+        {\large\bfseries
+        \university\par}
+
+        \vspace{0.2cm}
+
+        {\normalsize
+        \faculty\par}
+
+        % ==========================================
+        % PROJECT TITLE
+        % ==========================================
+
+        \vspace{1.7cm}
+
+        {\small\MakeUppercase{\worksubtitle}\par}
+
+        \vspace{0.5cm}
+
+        \begin{minipage}{0.95\textwidth}
+            \centering
+
+            {\fontsize{25}{32}\selectfont\bfseries
+            \worktitle\par}
+        \end{minipage}
+
+        % ==========================================
+        % TEAM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % ==========================================
+        % BOTTOM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        {\small
+        \location\enspace\textbullet\enspace\academicyear\par}
+
+    \end{titlepage}
+}
+
+
+% ==================================================
+% 7. TABLES
+% ==================================================
+
+% Usage:
+% \begin{naomitable}{Caption}{label}
+%     \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+%         \rowcolor{naomiTableHeader}
+%         \textcolor{white}{\bfseries Name} & ... \\
+%         ...
+%         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+%     \end{tabularx}
+% \end{naomitable}
+
+% Tables stay where they are written so that each rule stays in its section.
+\newenvironment{naomitable}[2]{%
+    \begin{table}[H]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{7pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+
+% ==================================================
+% 8. DOCUMENT
+% ==================================================
+
+\begin{document}
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+\tableofcontents
+\newpage
+\textbf{Project:} NAO Robot Exercise System
+
+\textbf{Scope:} Every session in which a team member connects to, moves, or handles the physical NAO robot.
+
+This handbook defines how the NAOMI team works with the physical NAO robot: who is responsible, which movement limits apply, how a movement is stopped, how the robot and the lab are shared, and how each physical test is recorded. It implements the robot-testing requirements of the \emph{Technical Methodology} and the \emph{Version Control Methodology}. Tests on Choregraphe's virtual robot are not covered, but every new movement is tried there first (Section~\ref{sec:limits}).
+
+\section{Roles and responsibilities}
+\label{sec:roles}
+
+\begin{naomitable}{Roles in a robot session}{tab:roles}
+\begin{tabularx}{\textwidth}{L{3.4cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Role} &
+\textcolor{white}{\bfseries Responsibility} \\
+Responsible team member (\robotresponsible) & Owns this handbook and the movement limits. Agrees every robot session in advance. Approves exceptions to the limits and changes to robot settings. Reviews pull requests that change robot motion or safety behaviour. Decides whether testing may continue after an incident. Resolves robot access and lab questions with the supervisor or the Product Owner. \\
+Operator & Runs the services and sends commands to the robot. Watches the robot and the temperature log, and stops the movement when a stop condition occurs. Writes the test record. \\
+Spotter & Stands next to the robot with hands free and ready to catch it. Has no other task during the movement. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+A session with the robot moving needs at least two people: an operator and a spotter. The responsible team member may act as either. When the responsible team member cannot attend, they may delegate a specific session to another team member; the delegation is noted in the Jira issue.
+
+\section{Rules for working with the robot}
+\label{sec:rules}
+
+\begin{enumerate}
+
+\item Never leave the robot unattended while it is switched on and its motors are stiff.
+
+\item Only the operator's services are connected to the physical robot during a session. Other team members keep \texttt{NAO\_IP} pointing at Choregraphe so that two people never send commands to the robot at the same time.
+
+\item Lift and carry the robot by its torso (around the hips and chest), never by the arms, hands, or head. Do not force a joint by hand while the motors are stiff.
+
+\item Before sending any movement, put the robot in a known posture (for example \texttt{Stand} or \texttt{Crouch}) and check that the clear zone (Section~\ref{sec:limits}) is empty.
+
+\item Keep cables, the charger, bags, and drinks out of the clear zone.
+
+\item Change robot settings, including the fall manager, Autonomous Life, network configuration, installed behaviours, and passwords, only with the agreement of the responsible team member. Record the change in the test record and restore the previous state at the end of the session unless the responsible team member decides otherwise.
+
+\item Automated CI never sends commands to the physical robot (see the \emph{Technical Methodology}).
+
+\end{enumerate}
+
+\section{Safe movement limits}
+\label{sec:limits}
+
+The limits below are conservative initial values. They apply until robot stability and thermal experiments provide measured limits. Any change to a limit is made through a pull request to this handbook and approved by the responsible team member.
+
+\begin{naomitable}{Initial safe movement limits}{tab:limits}
+\begin{tabularx}{\textwidth}{L{3.4cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Area} &
+\textcolor{white}{\bfseries Limit} \\
+Surface & Flat, non-slippery floor only. The robot never moves on a table or another raised surface. \\
+Clear zone & At least 0.5\,m around the robot free of people (except the spotter), objects, and cables. \\
+Battery & At least 30\,\% before starting a movement. Below 30\,\%, stop and charge the robot. \\
+New movements & Every new or changed exercise or choreography runs first on Choregraphe's virtual robot. Its first run on the physical robot is done with the spotter's hands close to the robot. \\
+Legs & Leg joints (hip, knee, and ankle) stay at the values of the \texttt{Stand} posture. The current \texttt{setPose} endpoint sends all 22 joint angles, including the legs, so check the leg values of every frame before a run. Exercises that move the legs require explicit agreement of the responsible team member and a spotter holding the robot. \\
+Speed & Do not shorten the time of a pose transition below the current 3\,s per pose. \\
+Session length & At most 30 minutes of continuous operation. After that, switch the robot off for at least 10 minutes to let the joints cool down before the next run. \\
+Temperature & Run the joint temperature log during every movement test. If any joint reports a temperature status greater than 0, stop the movement (Section~\ref{sec:stop}) and let the robot cool down. Do not start a session if a joint already reports a status greater than 0. \\
+Fall manager and Autonomous Life & Keep the state agreed with the responsible team member. Turn either of them on or off only with their agreement and record the state in the test record. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+\section{Stop procedure}
+\label{sec:stop}
+
+Stop the movement immediately when the robot loses balance or tilts, moves unexpectedly, reports a joint temperature status greater than 0, makes an unusual mechanical noise, smells of heat, when somebody enters the clear zone, or when the operator or spotter is unsure that the movement is safe. Either the operator or the spotter may call \enquote{Stop}; the other person never argues before acting.
+
+\begin{naomitable}{Stop levels}{tab:stop}
+\begin{tabularx}{\textwidth}{L{2.6cm} L{3.6cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Level} &
+\textcolor{white}{\bfseries When} &
+\textcolor{white}{\bfseries Action} \\
+L1 Stop commands & The robot is stable, but the test must end (temperature status, wrong behaviour, time limit). & Stop sending poses: stop the run in the user interface or stop the translator service, for example \texttt{docker compose -f docker-compose.dev.yml stop translatorapi}. The pose that is already being executed still finishes, which takes up to 3\,s. Then continue with L2. \\
+L2 Rest & After L1, or when the robot must stop holding its posture. & Use the \textbf{Rest} button in Choregraphe connected to the robot. The robot moves to a safe resting posture and switches its motors off. The spotter stays ready to support it. \\
+L3 Catch & The robot is falling, is about to fall, or L1 and L2 are too slow. & The spotter catches the robot by its torso and lowers it into a stable, safe position (sitting or lying on the floor). Do not hold it by the arms, and keep fingers away from joints. The operator then performs L1 and L2. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+The robot model and the NAOqi version are not yet confirmed, so the behaviour of the chest button has not been verified. At the first session with the robot, the responsible team member checks what pressing the chest button does on this robot and adds the result to this section. Until then, do not rely on the chest button as a stop method.
+
+The system has no software endpoint yet that interrupts a running exercise or sends the robot to rest. Until one exists, L1 only prevents the next pose, and L2 and L3 are the actual stop methods.
+
+After any stop at level L2 or L3, inspect the robot for damage, record the stop in the test record, and do not continue until the responsible team member agrees.
+
+\section{Running a physical test session}
+\label{sec:session}
+
+\subsection{Before the session}
+
+\begin{itemize}
+\item[$\square$] Agree the session in advance with the responsible team member: date, participants, and purpose.
+\item[$\square$] Prepare the test scenario: exercise or choreography, settings, expected result, and what to observe.
+\item[$\square$] Identify the software state: the repository and a tag or the full commit SHA. Use only reviewed code or a branch named in the Jira issue.
+\item[$\square$] Check the robot: visible damage, battery level, joint temperature status (for example with \texttt{GET /temperature}), and whether anything looks suspicious. Check the fall manager and Autonomous Life state.
+\item[$\square$] Prepare the floor and the clear zone. Assign the operator and the spotter.
+\item[$\square$] Start the joint temperature log (\texttt{POST /temperature/log/start}) with a label that names the scenario.
+\end{itemize}
+
+\subsection{During the session}
+
+Follow the limits in Section~\ref{sec:limits}. The operator watches the robot, the elapsed time, and the temperature status. Write down unexpected observations immediately; they are easy to forget after the session.
+
+\subsection{After the session}
+
+\begin{itemize}
+\item[$\square$] Stop the temperature log (\texttt{POST /temperature/log/stop}) and keep the CSV file and the summary.
+\item[$\square$] Put the robot into rest and switch it off.
+\item[$\square$] Restore any robot setting changed during the session, unless the responsible team member decided otherwise.
+\item[$\square$] Write the test record (Section~\ref{sec:records}) on the same day.
+\item[$\square$] Leave the robot and the lab as described in Section~\ref{sec:sharing}.
+\end{itemize}
+
+\section{Sharing the robot and the lab}
+\label{sec:sharing}
+
+The robot and the lab may also be used by people outside the team, and the team does not control their use. There is no shared booking calendar. Within the team, every session is first agreed with the responsible team member, who resolves conflicts with the supervisor or the Product Owner when necessary.
+
+\subsection{Taking over the robot}
+
+Because others may have used the robot, do not assume its state:
+
+\begin{itemize}
+\item Check the robot for visible damage, loose parts, and unusual noise.
+\item Check the battery level and the joint temperature status. If the robot is warm or the time since its last use is unknown, record it in the test record; a warm robot distorts temperature and stability results.
+\item Check that the network settings, the fall manager, Autonomous Life, and installed behaviours match the state expected by the team. Do not change or delete settings and behaviours that belong to other users; report differences to the responsible team member.
+\item If the robot is damaged or behaves strangely, do not run tests. Inform the responsible team member, who informs the supervisor.
+\end{itemize}
+
+\subsection{Leaving the robot and the lab}
+
+\begin{itemize}
+\item The robot is switched off and placed in a stable resting posture in its usual place.
+\item Robot settings changed during the session are restored.
+\item Do not take anything out of the lab.
+\item Unplug every electrical device you plugged in, including the robot charger.
+\item Switch off the air conditioning and the lights, and close the windows.
+\item Return the lab to the state in which you found it.
+\item Make sure the lab is locked when you leave.
+\item Report any damage or problem to the responsible team member on the same day, even if it did not stop the session.
+\end{itemize}
+
+\section{Incidents}
+\label{sec:incidents}
+
+An incident is a fall or near fall, an unexpected movement, a joint temperature status greater than 0, damage to the robot or lab equipment, an injury, or any situation in which the stop procedure was needed. A near miss also counts.
+
+For every incident:
+
+\begin{enumerate}
+\item Make the robot safe using the stop procedure (Section~\ref{sec:stop}).
+\item Inform the responsible team member on the same day. They decide whether testing continues and inform the supervisor when the robot is damaged or a person is hurt.
+\item Describe the incident in the test record: what happened, the joint or movement involved, and the measures taken.
+\item If the cause is in the software, create a Jira bug and link it from the test record. A change that fixes a safety-related cause is tested on the robot before it is used in a demonstration.
+\end{enumerate}
+
+After a serious incident, the team reviews this handbook and the \emph{Technical Methodology}.
+
+\section{Physical test records}
+\label{sec:records}
+
+Every physical test session is recorded, including aborted sessions and sessions with a failed or inconclusive result.
+
+\subsection{Where records are stored}
+
+\begin{itemize}
+\item The record is a comment in the Jira issue of the task or experiment that required the test, written using the template below.
+\item The temperature log files (\texttt{<log\_id>.csv} and \texttt{<log\_id>.summary.json}) are attached to the same Jira issue. They are not committed to a repository.
+\item When a pull request waits for a robot test, the pull request links the Jira comment with the record.
+\item Never write passwords, keys, or other secrets into a record.
+\end{itemize}
+
+\subsection{Record template}
+
+\begin{naomitable}{Fields of a physical test record}{tab:record}
+\begin{tabularx}{\textwidth}{L{3.4cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Field} &
+\textcolor{white}{\bfseries Content} \\
+Date and time & Date, start and end time of the session. \\
+People & Operator and spotter. \\
+Robot & Robot name or ID and NAOqi version. \\
+Robot state & Battery level; starting temperature check (any overheated joint or temperature status greater than 0, or whether something looks suspicious); time since the last use, or \enquote{unknown}; fall manager and Autonomous Life state. \\
+Software & Repository and tag or full commit SHA; the \texttt{.env} profile without secrets, when relevant. \\
+Scenario & Exercise or choreography and its settings (for example repetitions). \\
+Result & Pass, fail, or partial, with a short description of what was observed. \\
+Temperature log & The \texttt{log\_id} of the attached temperature log. \\
+Incidents and follow-up & Incidents, stops, and their level; created Jira issues; next steps. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+Copy the following text into the Jira comment and fill it in:
+
+\noindent\begin{minipage}{\textwidth}
+\small
+\begin{verbatim}
+Physical test record
+Date and time:
+Operator:
+Spotter:
+Robot (name or ID, NAOqi version):
+Robot state:
+  Battery:
+  Starting temperature check:
+  Time since last use:
+  Fall manager / Autonomous Life:
+Software (repository, tag or full SHA):
+.env profile (no secrets, if relevant):
+Scenario (exercise or choreography, settings):
+Result (pass / fail / partial):
+  Description:
+Temperature log ID:
+Incidents and follow-up:
+\end{verbatim}
+\end{minipage}
+
+\section{Maintaining this handbook}
+
+Changes are made through a pull request in the \texttt{naomi-documents} repository and approved by the responsible team member. Review the handbook when experiments establish measured limits, when the robot model or NAOqi version is confirmed, when a stop endpoint is added to the system, and after a serious incident.
+
+\end{document}
