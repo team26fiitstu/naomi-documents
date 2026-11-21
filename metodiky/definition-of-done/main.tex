@@ -537,12 +537,13 @@ For tasks involving source code, the following criteria apply:
 Every change to a repository must be submitted through a Pull Request
 (PR). Direct pushes to the integration branch are blocked.
 
-Each PR requires \textbf{two approvals from two distinct reviewers},
-including \textbf{at least one code owner of the repository}.
-The team lead, deputy team lead, and designated repository owner
-are code owners. Approval from any one of these code owners is
-sufficient to meet the code-owner approval requirement; approval
-from all code owners is not required.
+Each PR requires \textbf{two approvals from two distinct reviewers}.
+One approval from the team lead, or from the deputy team lead when the team lead is unavailable.
+And one approval from another team member with knowledge relevant to the change.
+
+Repository owners are recommended as second reviewers, but their
+approval does not replace the required approval from the team lead
+or deputy team lead.
 
 The PR author must not approve their own PR. These requirements
 apply equally to all team members, including code owners.
