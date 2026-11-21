@@ -408,7 +408,7 @@ New movements & Every new or changed exercise or choreography runs first on Chor
 Legs & Leg joints (hip, knee, and ankle) stay at the values of the \texttt{Stand} posture. The current \texttt{setPose} endpoint sends all 22 joint angles, including the legs, so check the leg values of every frame before a run. Exercises that move the legs require explicit agreement of the responsible team member and a spotter holding the robot. \\
 Speed & Do not shorten the time of a pose transition below the current 3\,s per pose. \\
 Session length & At most 30 minutes of continuous operation. After that, switch the robot off for at least 10 minutes to let the joints cool down before the next run. \\
-Temperature & Run the joint temperature log during every movement test. If any joint reports a temperature status greater than 0, stop the movement (Section~\ref{sec:stop}) and let the robot cool down. Do not start a session if a joint already reports a status greater than 0. \\
+Temperature & Run the joint temperature log during every movement test. At the start of the session, review a snapshot from \texttt{GET /temperature} and do not start if any joint reports a temperature status greater than 0 or looks overheated. If a status greater than 0 is noticed later, stop the movement (Section~\ref{sec:stop}) and let the robot cool down. Live temperature monitoring during a run is not implemented yet (Section~\ref{sec:missing}). \\
 Fall manager and Autonomous Life & Keep the state agreed with the responsible team member. Turn either of them on or off only with their agreement and record the state in the test record. \\
 \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
 \end{tabularx}
@@ -425,7 +425,7 @@ Stop the movement immediately when the robot loses balance or tilts, moves unexp
 \textcolor{white}{\bfseries Level} &
 \textcolor{white}{\bfseries When} &
 \textcolor{white}{\bfseries Action} \\
-L1 Stop commands & The robot is stable, but the test must end (temperature status, wrong behaviour, time limit). & Stop sending poses: stop the run in the user interface or stop the translator service, for example \texttt{docker compose -f docker-compose.dev.yml stop translatorapi}. The pose that is already being executed still finishes, which takes up to 3\,s. Then continue with L2. \\
+L1 Stop commands & The robot is stable, but the test must end (temperature status, wrong behaviour, time limit). & Stop the services so that no further pose is sent: in the root of the \texttt{naoMicroservices} repository run \texttt{docker compose -f docker-compose.dev.yml down}. When the services run without Docker, press Ctrl+C in their terminals. The pose that is already being executed still finishes, which takes up to 3\,s. Then continue with L2. \\
 L2 Rest & After L1, or when the robot must stop holding its posture. & Use the \textbf{Rest} button in Choregraphe connected to the robot. The robot moves to a safe resting posture and switches its motors off. The spotter stays ready to support it. \\
 L3 Catch & The robot is falling, is about to fall, or L1 and L2 are too slow. & The spotter catches the robot by its torso and lowers it into a stable, safe position (sitting or lying on the floor). Do not hold it by the arms, and keep fingers away from joints. The operator then performs L1 and L2. \\
 \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
@@ -434,9 +434,19 @@ L3 Catch & The robot is falling, is about to fall, or L1 and L2 are too slow. & 
 
 The robot model and the NAOqi version are not yet confirmed, so the behaviour of the chest button has not been verified. At the first session with the robot, the responsible team member checks what pressing the chest button does on this robot and adds the result to this section. Until then, do not rely on the chest button as a stop method.
 
-The system has no software endpoint yet that interrupts a running exercise or sends the robot to rest. Until one exists, L1 only prevents the next pose, and L2 and L3 are the actual stop methods.
-
 After any stop at level L2 or L3, inspect the robot for damage, record the stop in the test record, and do not continue until the responsible team member agrees.
+
+\subsection{Not implemented yet}
+\label{sec:missing}
+
+The current system does not support stopping and monitoring properly. Until the following parts exist, the procedures above are temporary workarounds:
+
+\begin{itemize}
+\item \textbf{Stop control.} The user interface has no stop button, and no endpoint interrupts a running exercise or sends the robot to rest. L1 therefore stops all services with \texttt{docker compose down}, which only prevents the next pose; L2 and L3 are the actual stop methods. A stop endpoint and a stop button in the user interface are needed.
+\item \textbf{Temperature monitoring.} The temperature log only records data and does not alert anyone during a run. For now, the operator reviews a temperature snapshot at the start of the session. A script that shows joint temperatures and status during a run, and a temperature view in the user interface, are needed.
+\end{itemize}
+
+This section is updated when these parts are implemented.
 
 \section{Running a physical test session}
 \label{sec:session}
@@ -454,7 +464,7 @@ After any stop at level L2 or L3, inspect the robot for damage, record the stop 
 
 \subsection{During the session}
 
-Follow the limits in Section~\ref{sec:limits}. The operator watches the robot, the elapsed time, and the temperature status. Write down unexpected observations immediately; they are easy to forget after the session.
+Follow the limits in Section~\ref{sec:limits}. The operator watches the robot and the elapsed time. Write down unexpected observations immediately; they are easy to forget after the session.
 
 \subsection{After the session}
 
