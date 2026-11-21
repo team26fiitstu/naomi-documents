@@ -425,7 +425,7 @@ Stop the movement immediately when the robot loses balance or tilts, moves unexp
 \textcolor{white}{\bfseries Level} &
 \textcolor{white}{\bfseries When} &
 \textcolor{white}{\bfseries Action} \\
-L1 Stop commands & The robot is stable, but the test must end (temperature status, wrong behaviour, time limit). & Stop the services so that no further pose is sent: in the root of the \texttt{naoMicroservices} repository run \texttt{docker compose -f docker-compose.dev.yml down}. When the services run without Docker, press Ctrl+C in their terminals. The pose that is already being executed still finishes, which takes up to 3\,s. Then continue with L2. \\
+L1 Stop commands & The robot is stable, but the test must end (temperature status, wrong behaviour, time limit). & Stop only the service that sends exercise poses: in the root of the \texttt{naoMicroservices} repository run \texttt{docker compose -f docker-compose.dev.yml stop translatorapi}. When the services run without Docker, press Ctrl+C in the terminal that runs the translator. Keep \texttt{naorobotapi} running so that the temperature log can be stopped. The pose that is already being executed still finishes, which takes up to 3\,s. Then continue with L2. \\
 L2 Rest & After L1, or when the robot must stop holding its posture. & Use the \textbf{Rest} button in Choregraphe connected to the robot. The robot moves to a safe resting posture and switches its motors off. The spotter stays ready to support it. \\
 L3 Catch & The robot is falling, is about to fall, or L1 and L2 are too slow. & The spotter catches the robot by its torso and lowers it into a stable, safe position (sitting or lying on the floor). Do not hold it by the arms, and keep fingers away from joints. The operator then performs L1 and L2. \\
 \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
@@ -436,13 +436,15 @@ The robot model and the NAOqi version are not yet confirmed, so the behaviour of
 
 After any stop at level L2 or L3, inspect the robot for damage, record the stop in the test record, and do not continue until the responsible team member agrees.
 
+After the robot is safe, stop the temperature log with \texttt{POST /temperature/log/stop} on \texttt{naoRobotAPI}, so that its summary is written, and attach the CSV file and the summary to the Jira issue. Do not stop \texttt{naorobotapi} or the whole stack (\texttt{docker compose down}) before the log is stopped: the running log is kept in memory, so after a restart only the CSV file up to that moment remains and no summary is written. If that happens anyway, attach the CSV file and note the missing summary in the test record.
+
 \subsection{Not implemented yet}
 \label{sec:missing}
 
 The current system does not support stopping and monitoring properly. Until the following parts exist, the procedures above are temporary workarounds:
 
 \begin{itemize}
-\item \textbf{Stop control.} The user interface has no stop button, and no endpoint interrupts a running exercise or sends the robot to rest. L1 therefore stops all services with \texttt{docker compose down}, which only prevents the next pose; L2 and L3 are the actual stop methods. A stop endpoint and a stop button in the user interface are needed.
+\item \textbf{Stop control.} The user interface has no stop button, and no endpoint interrupts a running exercise or sends the robot to rest. L1 therefore stops the translator service, which only prevents the next pose; L2 and L3 are the actual stop methods. A stop endpoint and a stop button in the user interface are needed.
 \item \textbf{Temperature monitoring.} The temperature log only records data and does not alert anyone during a run. For now, the operator reviews a temperature snapshot at the start of the session. A script that shows joint temperatures and status during a run, and a temperature view in the user interface, are needed.
 \end{itemize}
 
