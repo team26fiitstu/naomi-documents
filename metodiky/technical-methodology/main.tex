@@ -619,7 +619,15 @@ On each pull request, GitHub Actions compiles every categorized \LaTeX{} project
 
 After the reviewed change reaches the integration branch of \texttt{naomi-documents}, the publication workflow must prepare the generated PDFs and index on a separate branch in the website repository and open or update a PR.
 
-Generated publication changes follow the same approval requirements as other changes. The publication app must not bypass branch protection or push directly to the website's integration branch. For an app-authored PR, the team lead or deputy team lead performs the merge on behalf of the app after all required approvals and checks are complete.
+\textbf{Publication PR exception:}
+Generated publication PRs in \texttt{team26fiitstu.github.io}
+do not require review or approvals. After the site build check
+passes, the author of the original \texttt{naomi-documents} PR
+merges the corresponding publication PR.
+
+The current publication workflow still pushes directly to the
+website repository. Switching it to generate publication PRs
+requires a separate task.
 
 After the publication PR is merged, the website's workflow deploys the new version. Verify the PDF artifact during review and check the published links after deployment. A bad publication can be rolled back through a revert PR.
 
