@@ -607,7 +607,7 @@ Physical NAO test & Movement, balance, temperature, or hardware integration chan
 \end{tabularx}
 \end{naomitable}
 
-Automated CI must never issue movement commands to a physical NAO. Schedule hardware tests in advance because robot access is intermittent. The team member responsible for the robot defines safe movement limits and stop procedures; this methodology does not replace those procedures.
+Automated CI must never issue movement commands to a physical NAO. Schedule hardware tests in advance because robot access is intermittent. \textbf{Denis Danilov} is the team member responsible for robot testing. The responsible team member defines safe movement limits and stop procedures, agrees each robot session in advance, and reviews changes that can move the robot or alter safety-related behaviour. These limits, the stop procedure, the rules for sharing the robot, and the test record template are in the \emph{Robot Lab Safety and Test Record Handbook}; this methodology does not replace them. Physical test records are kept as comments in the related Jira issue, with the temperature log files attached to the same issue.
 
 \section{Publishing team documents}
 

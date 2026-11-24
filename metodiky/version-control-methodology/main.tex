@@ -519,7 +519,7 @@ Use \texttt{MAJOR.MINOR.PATCH} and prefix Git tags with \texttt{v}, for example 
 
 Create a release tag only from a reviewed commit on the integration branch. Use an annotated tag with a short message, for example \texttt{git tag -a v0.3.1 -m "NAO exercise demo"}, then push the tag. Do not retarget or reuse a published tag; create a new patch or minor version for corrections. A tag identifies the entire repository state, including service code and Compose configuration. If services live in separate repositories, record each repository's tag or commit SHA in the release notes.
 
-For every demo or physical NAO test, record the tag or full commit SHA, date, operator, robot state, configuration profile, test scenario, and result in the Jira issue or test record. Never record credentials there. If no tag exists yet, use the exact commit SHA. Keep release notes concise: included Jira issues, relevant interface/configuration changes, required migration, and known limitations.
+For every demo or physical NAO test, record the tag or full commit SHA, date, operator, robot state, configuration profile, test scenario, and result in the related Jira issue, using the test record template from the \emph{Robot Lab Safety and Test Record Handbook}. Never record credentials there. If no tag exists yet, use the exact commit SHA. Keep release notes concise: included Jira issues, relevant interface/configuration changes, required migration, and known limitations.
 
 \section{Hotfixes, rollback, and exceptions}
 
