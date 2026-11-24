@@ -468,7 +468,7 @@ activities and substitutes for the team lead when unavailable.
 Team members estimate work, implement and review changes, validate
 results, and keep their assigned Jira issues up to date.
 
-The Product Owner is \textbf{Ing. Jakub Perdek, PhD.}.
+The Product Owner is \textbf{Ing. Jakub Perdek, PhD.}
 The team lead is Ruslan Gainetdinov, and the deputy team lead
 is Alena Tikhoblazhenko.
 
@@ -508,7 +508,7 @@ The team agrees on the sprint goal and selects work according
 to priority, dependencies, and available capacity.
 
 Regular team coordination meetings take place
-\textbf{at Mondays or Tuesdays}. Members discuss progress,
+\textbf{on Mondays or Tuesdays}. Members discuss progress,
 blockers, and any necessary changes to the sprint backlog.
 
 A sprint review and retrospective take place at the end of each
@@ -516,18 +516,21 @@ sprint. The team reviews completed results, discusses unfinished
 work, and agrees on improvements for the next sprint.
 
 Meetings with the supervisor take place
-\textbf{at Fridays}.
+\textbf{on Fridays}.
 
 \subsection{Requirements Before Sprint Admission}
 
-Product requirements must be confirmed with the Product Owner
-before a related task enters a sprint. Each task must have
-a clear expected outcome and acceptance criteria.
+New functionality and changes to product requirements are discussed
+with the Product Owner before implementation tasks are created.
 
-If a requirement is unclear, the team first creates an analysis
-or design task to clarify it. Implementation work is admitted
-to a sprint only after the requirement has been clarified
-and confirmed with the Product Owner.
+If a requirement first needs investigation, the team creates
+an analysis or research task and presents the results to the
+Product Owner. Implementation tasks are created after
+the Product Owner approves the proposed requirements.
+
+Technical and internal tasks, such as CI improvements,
+methodology updates, bug fixes, and refactoring, do not require
+Product Owner confirmation.
 
 % ==================================================
 % 4. SCRUMBAN WORKFLOW
@@ -612,6 +615,15 @@ Issues that need support should be raised at the next team meeting or
 communicated earlier through the team's agreed communication channel.
 Critical blockers should not be left unresolved until the sprint ends.
 
+Reviewers must review a pull request within \textbf{two working days}
+after review is requested. The PR author requests review as soon
+as the change is ready.
+
+If the review is delayed, the author informs the team lead
+so that the review can be reassigned or the blocker resolved.
+A task awaiting required review is not considered Done
+at the end of the sprint.
+
 % ==================================================
 % 6. ISSUE RULES
 % ==================================================
@@ -648,11 +660,13 @@ pieces of work.
 
 \subsection{Changes During a Sprint}
 
-Scrumban allows the team to react to new information without losing
-visibility of its commitments. Urgent work may be added during a sprint
-after discussion with the team, particularly if it affects the sprint
-goal or another member's progress. The reason for a significant change
-should be documented in the related Jira issue.
+New tasks are first added to the product backlog. They may enter
+the running sprint only if they block the sprint goal.
+Otherwise, they remain in the backlog for a future sprint.
+
+Any addition to the running sprint must be discussed with the team.
+The reason for the addition and its impact on the planned work
+must be recorded in the related Jira issue.
 
 \subsection{Finishing Work}
 
@@ -691,8 +705,9 @@ Issue types do not determine fixed estimates.
     \end{tabularx}
 \end{naomitable}
 
-Tasks larger than the adopted scale should be split into smaller,
-independently verifiable tasks before sprint admission.
+Tasks estimated at \textbf{8 points} should be considered
+for splitting. Larger tasks must be split into smaller tasks
+before sprint admission.
 Estimates are agreed by the team during planning or backlog refinement.
 
 Sprint capacity accounts for university deadlines and the
