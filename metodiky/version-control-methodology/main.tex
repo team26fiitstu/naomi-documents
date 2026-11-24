@@ -453,8 +453,7 @@ This document defines how the team records, reviews, integrates, and identifies 
 
 \item The \texttt{master} branch is the integration branch of \texttt{naoMicroservices}. Apply the same workflow to any additional NAO repository, using its agreed integration branch.
 
-\item Do not commit or push directly to the integration branch. A change reaches it through a reviewed PR. Configure GitHub branch protection or a ruleset to require a PR, at least one approval, and the applicable checks where repository permissions allow.
-
+\item Every change must go through a Pull Request (PR). Direct pushes to the integration branch are blocked. GitHub branch protection or a ruleset must require two approvals, including at least one approval from a code owner of the repository, and all required checks. The urgent-fix exception is defined in Section~5.
 \item Create one short-lived branch per Jira task from the latest integration branch. Name it \texttt{\textless{}jira-key\textgreater{}-short-description}, for example \texttt{NAO-42-video-trimming}. Use the real Jira key; the example is illustrative.
 
 \item Keep branches and PRs focused on one deliverable. If a task needs independent components, split it into linked Jira subtasks and PRs. Avoid long-running shared development branches.
@@ -462,6 +461,27 @@ This document defines how the team records, reviews, integrates, and identifies 
 \item A developer may rebase their own branch before review. Do not rewrite a branch another person uses. Never force-push the integration branch or move a published release tag.
 
 \end{enumerate}
+
+\subsection{Repository code owners}
+
+The team lead, Ruslan Gainetdinov, and the deputy team lead,
+Alena Tikhoblazhenko, are the only code owners of all project
+repositories. Repository owners are recommended second reviewers;
+their approval does not replace the required lead/deputy approval.
+
+\begin{naomitable}{Repository owners}{tab:repository-owners}
+        \begin{tabularx}{\textwidth}{L{5cm} Y}
+            \rowcolor{naomiTableHeader}
+            \textcolor{white}{\bfseries Repository} &
+            \textcolor{white}{\bfseries Repository owner}  \\
+            team26fiitstu.github.io & Anton Dmitriev \\
+            naomi-documents & Aliaksei Zimnitski \\
+            naomi-latex-template & Alena Tikhoblazhenko \\
+            naoMicroservices & No repository owner from our team;
+            fork of the supervisor's \texttt{jperdek/naoMicroservices}. \\
+            \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+        \end{tabularx}
+\end{naomitable}
 
 \section{Changes and commits}
 
@@ -483,9 +503,27 @@ This document defines how the team records, reviews, integrates, and identifies 
 
 The author links the Jira issue and states the change, reason, test evidence, and limitations. For changes involving motion, safety limits, NAOqi, or camera access, state the hardware impact and the planned robot test. Mark tests as pending when access to NAO is unavailable. Open a draft PR when early feedback is useful; request review only when the change is ready.
 
-At least one teammate other than the author reviews the final diff. A robot behavior or safety change also needs review by a teammate responsible for NAO testing. Resolve blocking comments and rerun relevant checks after changes. The author does not approve their own PR. Follow the review and test gates in the \emph{Technical Methodology}.
+Except for the explicit urgent-fix and publication PR exceptions,
+each PR requires \textbf{two approvals from two distinct reviewers}:
+one from the team lead (or the deputy team lead when the lead is
+unavailable), and one from another team member with knowledge
+relevant to the change.
 
-Merge with \textbf{Squash and merge} after approval, passing checks, and documented verification. The squash commit should retain a descriptive subject and the Jira key. Delete the merged task branch. Update the Jira issue with the PR and result; mark it Done only after the methodology's merge gate is satisfied. If a robot test remains pending, keep that fact visible in Jira and do not enable the change for a live demonstration until the test passes.
+Only the team lead and deputy team lead are code owners.
+Repository owners are recommended as second reviewers, but their
+approval does not replace the required lead/deputy approval.
+
+The PR author must not approve their own PR. These requirements apply equally to all team members, including code owners.
+
+A robot behavior or safety change also needs review by a teammate responsible for NAO testing. This reviewer may be one of the two required approvers.
+
+Before merging, all required checks must pass, all requested changes must be addressed, and blocking review comments must be resolved. Rerun relevant checks after changes.
+
+Once these conditions and the approval requirements are met, \textbf{the PR author merges the PR} using \textbf{Squash and merge}. The urgent-fix exception is defined in Section~5.
+
+The squash commit should retain a descriptive subject and the Jira key. Delete the merged task branch. Update the Jira issue with the PR and result; mark it Done only after the applicable Definition of Done criteria are satisfied.
+
+If a robot test remains pending, keep that fact visible in Jira and do not enable the change for a live demonstration until the test passes.
 
 \section{Version numbers and release tags}
 
@@ -497,10 +535,21 @@ For every demo or physical NAO test, record the tag or full commit SHA, date, op
 
 \section{Hotfixes, rollback, and exceptions}
 
-For an urgent defect, create a task branch from the relevant integration or release commit, link a Jira issue, and use the same review and verification gate. When a live demo must return to a known-good state, redeploy the last verified tag or commit and record the action and reason. Do not solve a failed release by rewriting Git history or moving its tag.
+For an urgent defect, create a task branch from the relevant integration or release commit and link a Jira issue. Every urgent fix must still go through a PR.
 
-If GitHub checks are unavailable, record the equivalent local commands and results in the PR. Lack of physical NAO access is not a reason to skip offline tests; schedule the hardware test and keep it pending visibly. Any exception to this workflow must be documented in the PR and agreed by the team before merge.
+\textbf{Urgent-fix exception:}
+The PR author always merges the PR, including urgent fixes.
+For an urgent fix, such as restoring a broken integration branch
+or resolving an issue needed for a demo, only \textbf{one approval
+from the team lead or deputy team lead} is required.
+The approver must not be the PR author.
+The reason for using this exception must be stated in the PR.
+This exception does not permit direct pushes or self-approval
+and does not waive required checks.
 
+When a live demo must return to a known-good state, redeploy the last verified tag or commit and record the action and reason. Do not solve a failed release by rewriting Git history or moving its tag.
+
+If GitHub checks are unavailable, record the equivalent local commands and results in the PR. Lack of physical NAO access is not a reason to skip offline tests; schedule the hardware test and keep it pending visibly.
 \ifshowbibliography
     \nocite{*}
     \clearpage
