@@ -458,9 +458,19 @@ robot-control software, motion processing, testing, documentation, and
 other project activities. Jira serves as the central place for recording
 and following the status of these activities.
 
-Every member is expected to keep their assigned issues up to date.
-The team jointly reviews priorities, dependencies, and progress.
-Coordination responsibilities are assigned to a team leader.
+The Product Owner confirms product requirements and their priority
+before related work enters a sprint.
+
+The team lead coordinates sprint planning, monitors progress,
+and helps resolve blockers. The deputy team lead supports these
+activities and substitutes for the team lead when unavailable.
+
+Team members estimate work, implement and review changes, validate
+results, and keep their assigned Jira issues up to date.
+
+The Product Owner is \textbf{Ing. Jakub Perdek, PhD.}
+The team lead is Ruslan Gainetdinov, and the deputy team lead
+is Alena Tikhoblazhenko.
 
 % ==================================================
 % 3. BACKLOG STRUCTURE
@@ -489,6 +499,38 @@ priorities, and dependencies. The selected work is visible on the Jira
 board. Unfinished issues are discussed during the sprint review or next
 planning session and are not automatically treated as completed.
 
+\subsection{Sprint Length and Meeting Rhythm}
+
+Each sprint lasts \textbf{two weeks}.
+
+Sprint planning takes place at the beginning of each sprint.
+The team agrees on the sprint goal and selects work according
+to priority, dependencies, and available capacity.
+
+Regular team coordination meetings take place
+\textbf{on Mondays or Tuesdays}. Members discuss progress,
+blockers, and any necessary changes to the sprint backlog.
+
+A sprint review and retrospective take place at the end of each
+sprint. The team reviews completed results, discusses unfinished
+work, and agrees on improvements for the next sprint.
+
+Meetings with the supervisor take place
+\textbf{on Fridays}.
+
+\subsection{Requirements Before Sprint Admission}
+
+New functionality and changes to product requirements are discussed
+with the Product Owner before implementation tasks are created.
+
+If a requirement first needs investigation, the team creates
+an analysis or research task and presents the results to the
+Product Owner. Implementation tasks are created after
+the Product Owner approves the proposed requirements.
+
+Technical and internal tasks, such as CI improvements,
+methodology updates, bug fixes, and refactoring, do not require
+Product Owner confirmation.
 
 % ==================================================
 % 4. SCRUMBAN WORKFLOW
@@ -536,6 +578,16 @@ on completing tasks already in progress before
 starting new ones. This helps avoid unnecessary
 multitasking and improves the overall workflow.
 
+\subsection{Work-in-Progress Limit}
+
+The \textbf{In Progress} column has a team-wide WIP limit
+of \textbf{10 issues}. This limit applies to the whole team,
+not to each member individually.
+
+When the limit is reached, members help complete or unblock
+existing work before moving another issue to In Progress.
+Blocked issues remain counted while they are in this column.
+
 
 % ==================================================
 % 5. REGULAR REVIEW
@@ -563,6 +615,15 @@ Issues that need support should be raised at the next team meeting or
 communicated earlier through the team's agreed communication channel.
 Critical blockers should not be left unresolved until the sprint ends.
 
+Reviewers must review a pull request within \textbf{two working days}
+after review is requested. The PR author requests review as soon
+as the change is ready.
+
+If the review is delayed, the author informs the team lead
+so that the review can be reassigned or the blocker resolved.
+A task awaiting required review is not considered Done
+at the end of the sprint.
+
 % ==================================================
 % 6. ISSUE RULES
 % ==================================================
@@ -571,10 +632,26 @@ Critical blockers should not be left unresolved until the sprint ends.
 
 \subsection{Creating and Updating Issues}
 
-An issue should describe a specific activity or expected result. It
-should normally include a title, a short description, an assignee when
-assigned, and relevant acceptance criteria. Links to code, designs,
-experiments, or documentation may be attached where useful.
+Each issue must have a concise title, a description of the
+expected result, and relevant acceptance criteria.
+
+Before a task enters a sprint, the following Jira fields
+must be completed:
+
+\begin{itemize}
+    \item \textbf{Parent}: the parent issue in the backlog hierarchy.
+    \item \textbf{Assignee}: the team member responsible for the task.
+    \item \textbf{Sprint}: the sprint in which the task is planned.
+    \item \textbf{Story points}: the agreed estimate of relative effort.
+    \item \textbf{Priority}: the task's agreed priority level.
+\end{itemize}
+
+These requirements apply to sprint tasks.
+Epics group related work and \textbf{are not added to sprints}.
+Their child Stories or Tasks are selected for individual sprints.
+
+Links to relevant code, designs, experiments, or documentation
+are attached where useful.
 
 Each member updates the status of their issues and records important
 findings or blockers in Jira. If an issue is too broad or cannot be
@@ -583,19 +660,21 @@ pieces of work.
 
 \subsection{Changes During a Sprint}
 
-Scrumban allows the team to react to new information without losing
-visibility of its commitments. Urgent work may be added during a sprint
-after discussion with the team, particularly if it affects the sprint
-goal or another member's progress. The reason for a significant change
-should be documented in the related Jira issue.
+New tasks are first added to the product backlog. They may enter
+the running sprint only if they block the sprint goal.
+Otherwise, they remain in the backlog for a future sprint.
+
+Any addition to the running sprint must be discussed with the team.
+The reason for the addition and its impact on the planned work
+must be recorded in the related Jira issue.
 
 \subsection{Finishing Work}
 
 An issue is moved to Done only when its agreed acceptance criteria are
 satisfied. Depending on the type of work, this may involve a code review,
 a successful test, an updated document, or a demonstration of the result.
-The team should use its Definition of Done, once agreed, as the common
-reference for deciding whether an item is finished.
+The team uses its Definition of Done as the common reference
+for deciding whether an item is finished.
 
 % ==================================================
 % 7. PLANNING AND ESTIMATION
@@ -603,13 +682,16 @@ reference for deciding whether an item is finished.
 
 \section{Planning and Estimation}
 
-The team estimates work when an estimate is useful for sprint planning
-and prioritisation. Story points may be used to express relative effort,
-complexity, and uncertainty. An issue type does not determine a fixed
-number of story points: for example, different Tasks or Stories can
-require very different amounts of work.
+The team has adopted the story point scale
+\textbf{1, 2, 3, 5, 8}. Every task included in a sprint must
+be estimated before it enters that sprint, including analysis,
+design, testing, and documentation tasks.
 
-\begin{naomitable}{Illustrative relative effort scale for discussion}{tab:estimates}
+Story points express relative effort, complexity, and uncertainty;
+they do not represent a fixed number of working hours.
+Issue types do not determine fixed estimates.
+
+\begin{naomitable}{Adopted story point scale}{tab:estimates}
     \begin{tabularx}{\textwidth}{L{2.4cm} Y}
         \rowcolor{naomiTableHeader}
         \textcolor{white}{\bfseries Points} &
@@ -623,12 +705,38 @@ require very different amounts of work.
     \end{tabularx}
 \end{naomitable}
 
-This scale is a \textbf{proposal}, not an already approved NAOMI rule.
-The team can adopt or change it after discussing a few example issues.
-Capacity estimates should also account for university deadlines and the
-availability of individual members. At the end of a sprint, completed
-work, carried-over tasks, and blockers can be used to improve the next
-planning session.
+Tasks estimated at \textbf{8 points} should be considered
+for splitting. Larger tasks must be split into smaller tasks
+before sprint admission.
+Estimates are agreed by the team during planning or backlog refinement.
+
+Sprint capacity accounts for university deadlines and the
+availability of individual members. Completed work, carried-over
+tasks, and blockers are reviewed to improve subsequent planning.
+
+\subsection{Priority Levels}
+
+Priority determines the order in which work should be considered.
+It does not replace the story point estimate.
+
+\begin{naomitable}{Task priority levels}{tab:priorities}
+    \begin{tabularx}{\textwidth}{L{2.4cm} Y}
+        \rowcolor{naomiTableHeader}
+        \textcolor{white}{\bfseries Priority} &
+        \textcolor{white}{\bfseries Meaning} \\
+        Highest & Critical work that blocks essential functionality
+        or an imminent delivery and requires immediate attention. \\
+        High & Important work needed for the sprint goal
+        or to unblock other tasks. \\
+        Medium & Normal planned work that contributes
+        to project goals without immediate urgency. \\
+        Low & Useful improvements that can wait
+        while higher-priority work is completed. \\
+        Lowest & Optional refinements with minimal
+        impact on current project goals. \\
+        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+    \end{tabularx}
+\end{naomitable}
 
 % ==================================================
 % 8. CONTINUOUS IMPROVEMENT
