@@ -464,17 +464,21 @@ This document defines how the team records, reviews, integrates, and identifies 
 
 \subsection{Repository code owners}
 
-Ruslan Gainetdinov is the team lead and a code owner of all repositories listed below. 
-Each designated repository owner is also a code owner of their repository.
+The team lead, Ruslan Gainetdinov, and the deputy team lead,
+Alena Tikhoblazhenko, are the only code owners of all project
+repositories. Repository owners are recommended second reviewers;
+their approval does not replace the required lead/deputy approval.
 
 \begin{naomitable}{Repository owners}{tab:repository-owners}
-        \begin{tabularx}{\textwidth}{L{4cm} Y L{2.6cm}}
+        \begin{tabularx}{\textwidth}{L{5cm} Y}
             \rowcolor{naomiTableHeader}
             \textcolor{white}{\bfseries Repository} &
             \textcolor{white}{\bfseries Repository owner}  \\
             team26fiitstu.github.io & Anton Dmitriev \\
             naomi-documents & Aliaksei Zimnitski \\
             naomi-latex-template & Alena Tikhoblazhenko \\
+            naoMicroservices & No repository owner from our team;
+            fork of the supervisor's \texttt{jperdek/naoMicroservices}. \\
             \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
         \end{tabularx}
 \end{naomitable}
@@ -499,7 +503,15 @@ Each designated repository owner is also a code owner of their repository.
 
 The author links the Jira issue and states the change, reason, test evidence, and limitations. For changes involving motion, safety limits, NAOqi, or camera access, state the hardware impact and the planned robot test. Mark tests as pending when access to NAO is unavailable. Open a draft PR when early feedback is useful; request review only when the change is ready.
 
-Each PR requires \textbf{two approvals from two distinct reviewers}, including \textbf{at least one code owner of the repository}. The team lead, deputy team lead, and designated repository owner are code owners. Approval from any one of these code owners is sufficient to meet the code-owner approval requirement; approval from all code owners is not required.
+Except for the explicit urgent-fix and publication PR exceptions,
+each PR requires \textbf{two approvals from two distinct reviewers}:
+one from the team lead (or the deputy team lead when the lead is
+unavailable), and one from another team member with knowledge
+relevant to the change.
+
+Only the team lead and deputy team lead are code owners.
+Repository owners are recommended as second reviewers, but their
+approval does not replace the required lead/deputy approval.
 
 The PR author must not approve their own PR. These requirements apply equally to all team members, including code owners.
 
@@ -526,7 +538,14 @@ For every demo or physical NAO test, record the tag or full commit SHA, date, op
 For an urgent defect, create a task branch from the relevant integration or release commit and link a Jira issue. Every urgent fix must still go through a PR.
 
 \textbf{Urgent-fix exception:}
-For an urgent fix, such as restoring a broken integration branch or resolving an issue needed for a demo, the team lead or deputy team lead may merge the PR with \textbf{one approval from a reviewer other than the author}. The reason for using this exception must be stated in the PR. This exception does not permit direct pushes or self-approval and does not waive required checks.
+The PR author always merges the PR, including urgent fixes.
+For an urgent fix, such as restoring a broken integration branch
+or resolving an issue needed for a demo, only \textbf{one approval
+from the team lead or deputy team lead} is required.
+The approver must not be the PR author.
+The reason for using this exception must be stated in the PR.
+This exception does not permit direct pushes or self-approval
+and does not waive required checks.
 
 When a live demo must return to a known-good state, redeploy the last verified tag or commit and record the action and reason. Do not solve a failed release by rewriting Git history or moving its tag.
 

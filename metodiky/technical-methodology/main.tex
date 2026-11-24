@@ -545,7 +545,15 @@ The author shall:
 
 \subsection{Reviewer responsibilities}
 
-Each PR normally requires two approvals from two distinct reviewers other than the author, including at least one code owner of the repository. These requirements apply equally to all team members, including code owners.
+Each PR requires two approvals from two distinct reviewers other
+than the author: one from the team lead (or the deputy team lead
+when the lead is unavailable), and one from a team member with
+knowledge relevant to the change.
+
+Repository owners are recommended as second reviewers, but their
+approval does not replace the required lead/deputy approval.
+These requirements apply equally to all team members,
+including code owners.
 
 Reviewers must understand the change well enough to assess it. Pairing during implementation is welcome, but the final diff still receives independent review.
 
@@ -574,7 +582,15 @@ Review comments should identify the issue and a suggested direction. The reviewe
 
 Every change must go through a PR. Direct pushes to the integration branch are blocked.
 
-Each PR requires \textbf{two approvals from two distinct reviewers}, including \textbf{at least one code owner of the repository}. The team lead, deputy team lead, and designated repository owner are code owners. Approval from any one of these code owners is sufficient to meet the code-owner approval requirement; approval from all code owners is not required.
+Except for the explicit urgent-fix and publication PR exceptions,
+each PR requires \textbf{two approvals from two distinct reviewers}:
+one from the team lead (or the deputy team lead when the lead is
+unavailable), and one from another team member with knowledge
+relevant to the change.
+
+Only the team lead and deputy team lead are code owners.
+Repository owners are recommended as second reviewers, but their
+approval does not replace the required lead/deputy approval.
 
 The PR author must not approve their own PR. Holding multiple roles does not count as multiple approvals. These requirements apply equally to all team members, including code owners.
 
@@ -585,7 +601,14 @@ Before merging, all required checks must pass, all requested changes must be add
 Once these conditions and the approval requirements are met, \textbf{the PR author merges the PR}.
 
 \textbf{Urgent-fix exception:}
-For an urgent fix, such as restoring a broken integration branch or resolving an issue needed for a demo, the team lead or deputy team lead may merge the PR with \textbf{one approval from a reviewer other than the author}. The reason for using this exception must be stated in the PR. This exception does not permit direct pushes or self-approval and does not waive required checks.
+The PR author always merges the PR, including urgent fixes.
+For an urgent fix, such as restoring a broken integration branch
+or resolving an issue needed for a demo, only \textbf{one approval
+from the team lead or deputy team lead} is required.
+The approver must not be the PR author.
+The reason for using this exception must be stated in the PR.
+This exception does not permit direct pushes or self-approval
+and does not waive required checks.
 
 After merging, move the Jira issue to \textbf{Done} only when all applicable Definition of Done criteria are satisfied. If review finds a blocking problem, return the issue to \textbf{In Progress}, fix it, and request another review. Unfinished work must not be marked Done.
 
