@@ -1,0 +1,590 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================================================
+% 1. CONFIGURATION
+% ==================================================
+
+% Enable / disable title page
+\newif\ifshowtitlepage
+\showtitlepagetrue
+% \showtitlepagefalse
+
+% Document information
+\newcommand{\worktitle}{Running a Choreography}
+\newcommand{\worksubtitle}{NAO Robot Exercise System}
+\newcommand{\teamname}{NAOMI}
+\newcommand{\subject}{NAO Robot Exercise System}
+
+\newcommand{\university}{Slovak University of Technology in Bratislava}
+\newcommand{\faculty}{Faculty of Informatics and Information Technologies}
+
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\location}{Bratislava}
+\newcommand{\documentyear}{2026/2027}
+
+% Team leaders
+\newcommand{\leaderone}{Ing. Jakub Perdek, PhD.}
+\newcommand{\leadertwo}{ doc. Ing. Fedor Lehocki PhD.}
+
+% Team members
+\newcommand{\memberone}{Bc. Akhmadinurov Amal}
+\newcommand{\membertwo}{Bc. Danilov Denis}
+\newcommand{\memberthree}{Bc. Dmitriev Anton}
+\newcommand{\memberfour}{Bc. Gainetdinov Ruslan}
+\newcommand{\memberfive}{Bc. Kuzin Timofei}
+\newcommand{\membersix}{Bc. Tikhoblazhenko Alena}
+\newcommand{\memberseven}{Bc. Zimnitski Aliaksei}
+
+
+% ==================================================
+% 2. PACKAGES
+% ==================================================
+
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=2.7cm,
+    left=2.8cm,
+    right=2.8cm,
+    headheight=45pt,
+    headsep=20pt
+]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{assets/}}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{listings}
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=1pt,parsep=0pt,topsep=2pt}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,columns=fullflexible,keepspaces=true}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{lastpage}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{csquotes}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
+
+% ==================================================
+% 3. COLORS
+% ==================================================
+
+\definecolor{primary}{HTML}{000000}
+\definecolor{secondary}{HTML}{000000}
+\definecolor{muted}{HTML}{000000}
+\definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+% Ragged-right columns keep narrow table cells readable.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% ==================================================
+% 4. TYPOGRAPHY
+% ==================================================
+
+\setstretch{1.2}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
+% Section
+\titleformat{\section}
+    {\Large\bfseries\color{primary}}
+    {\thesection}
+    {0.8em}
+    {}
+
+% Subsection
+\titleformat{\subsection}
+    {\large\bfseries\color{primary}}
+    {\thesubsection}
+    {0.8em}
+    {}
+
+% Subsubsection
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{primary}}
+    {\thesubsubsection}
+    {0.8em}
+    {}
+
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{7pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{5pt}
+
+% Captions
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering
+}
+
+% ==================================================
+% 5. HEADER AND FOOTER
+% ==================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header logo
+\fancyhead[L]{
+    \includegraphics[
+        width=4cm,
+        height=1.15cm,
+        keepaspectratio
+    ]{horizontal.png}
+}
+
+% Header information
+\fancyhead[R]{
+    \begin{tabular}{r}
+        {\footnotesize\bfseries \worksubtitle}\\[3pt]
+        {\scriptsize Academic Year \academicyear}
+    \end{tabular}
+}
+
+% Header line
+\renewcommand{\headrulewidth}{0.7pt}
+
+% Footer left
+\fancyfoot[L]{
+    {\scriptsize
+    \teamname\enspace|\enspace\subject}
+}
+
+% Footer right
+\fancyfoot[R]{
+    {\scriptsize
+    \thepage\enspace/\enspace\pageref{LastPage}}
+}
+
+% Footer line
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Plain pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+
+    \fancyhead[L]{
+        \includegraphics[
+            width=4cm,
+            height=1.15cm,
+            keepaspectratio
+        ]{horizontal.png}
+    }
+
+    \fancyhead[R]{
+        \begin{tabular}{r}
+            {\footnotesize\bfseries \worksubtitle}\\[3pt]
+            {\scriptsize Academic Year \academicyear}
+        \end{tabular}
+    }
+
+    \fancyfoot[L]{
+        {\scriptsize
+        \teamname\enspace|\enspace\subject}
+    }
+
+    \fancyfoot[R]{
+        {\scriptsize
+        \thepage\enspace/\enspace\pageref{LastPage}}
+    }
+
+    \renewcommand{\headrulewidth}{0.7pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+
+
+% ==================================================
+% 6. TITLE PAGE
+% ==================================================
+
+\newcommand{\makemytitlepage}{
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \centering
+
+        % ==========================================
+        % UNIVERSITY LOGO
+        % ==========================================
+
+        \vspace*{0.3cm}
+
+        \includegraphics[
+            width=6cm,
+            height=5cm,
+            keepaspectratio
+        ]{vertical.png}
+
+        \vspace{0.5cm}
+
+        {\large\bfseries
+        \university\par}
+
+        \vspace{0.2cm}
+
+        {\normalsize
+        \faculty\par}
+
+        % ==========================================
+        % PROJECT TITLE
+        % ==========================================
+
+        \vspace{1.7cm}
+
+        {\small\MakeUppercase{\worksubtitle}\par}
+
+        \vspace{0.5cm}
+
+        \begin{minipage}{0.95\textwidth}
+            \centering
+
+            {\fontsize{25}{32}\selectfont\bfseries
+            \worktitle\par}
+        \end{minipage}
+
+        % ==========================================
+        % TEAM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        \begin{minipage}{0.9\textwidth}
+            \centering
+            \begin{minipage}[t]{0.46\linewidth}
+                \centering
+                {\normalsize\bfseries Team Leaders\par}
+                \vspace{0.25cm}
+                {\small
+                \leaderone\par
+                \leadertwo\par}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \centering
+                {\normalsize\bfseries Team Members\par}
+                \vspace{0.25cm}
+                {\small
+                \memberone\par
+                \membertwo\par
+                \memberthree\par
+                \memberfour\par
+                \memberfive\par
+                \membersix\par
+                \memberseven\par}
+            \end{minipage}
+        \end{minipage}
+
+        % ==========================================
+        % BOTTOM INFORMATION
+        % ==========================================
+
+        \vfill
+
+        {\small
+        \location\enspace\textbullet\enspace\academicyear\par}
+
+    \end{titlepage}
+}
+
+% ==================================================
+% 7. IMAGE PLACEHOLDER
+% ==================================================
+
+% Usage:
+% \imageplaceholder{Text}{Caption}
+
+\newcommand{\imageplaceholder}[2]{
+
+    \begin{figure}[H]
+        \centering
+
+        \begingroup
+        \setlength{\fboxsep}{0pt}
+
+        \fbox{
+            \begin{minipage}[c][5cm][c]{0.85\textwidth}
+
+                \centering
+
+                {\Large\bfseries IMAGE}
+
+                \vspace{0.3cm}
+
+                {\normalsize #1}
+
+            \end{minipage}
+        }
+
+        \endgroup
+
+        \caption{#2}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 8. REAL IMAGE COMMAND
+% ==================================================
+
+% Usage:
+% \documentimage{path}{caption}{label}
+
+\newcommand{\documentimage}[3]{
+
+    \begin{figure}[htbp]
+        \centering
+
+        \includegraphics[
+            width=0.85\textwidth,
+            keepaspectratio
+        ]{#1}
+
+        \caption{#2}
+        \label{#3}
+
+    \end{figure}
+}
+
+
+% ==================================================
+% 9. TABLES
+% ==================================================
+
+% Usage:
+% \begin{naomitable}{Caption}{label}
+%     \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+%         \rowcolor{naomiTableHeader}
+%         \textcolor{white}{\bfseries Name} & ... \\
+%         ...
+%         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+%     \end{tabularx}
+% \end{naomitable}
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[H]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{7pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
+
+% Usage:
+% \tableplaceholder{Caption}{label}
+
+\newcommand{\tableplaceholder}[2]{
+    \begin{naomitable}{#1}{#2}
+        \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+            \rowcolor{naomiTableHeader}
+            \textcolor{white}{\bfseries Name} &
+            \textcolor{white}{\bfseries Description} &
+            \textcolor{white}{\bfseries Status} \\
+            Item A & Sample description & Completed \\
+            Item B & Sample description & In Progress \\
+            Item C & Sample description & Planned \\
+            \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+        \end{tabularx}
+    \end{naomitable}
+}
+
+
+% ==================================================
+% 10. DOCUMENT
+% ==================================================
+
+\begin{document}
+\ifshowtitlepage
+    \makemytitlepage
+\fi
+
+\section{Purpose}
+
+This document describes the runtime API for a multi-state choreography. The
+choreography graph is stored by \texttt{exerciseConfigService}; each state
+references a saved exercise. \texttt{translator} loads that graph at start and
+controls playback on one robot. The graph editor and automatic assessment of a
+participant's movement are outside this runtime contract.
+
+A run has its own \texttt{run\_id}. A successful performance ends in
+\texttt{waiting}; only then can the client send a transition signal or move to
+another state without playback. The run remains queryable after it stops.
+
+\section{Run Lifecycle}
+
+\begin{naomitable}{Run statuses}{tab:statuses}
+\begin{tabularx}{\textwidth}{L{2.5cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Status} & \textcolor{white}{\bfseries Meaning} \\
+\texttt{performing} & The initial or target exercise is being played. \\
+\texttt{waiting} & Playback is complete; signal or goto can be accepted. \\
+\texttt{stopped} & Playback has ended or was stopped; signals are rejected. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+The start and signal endpoints return \texttt{202} after scheduling work in a
+background thread. The exercise may still be playing when the response arrives.
+The client polls the run endpoint for its status and result. Voice lines precede
+poses in each stored frame; the saved frame sequence and repetition count are
+used. The graph is a snapshot loaded at start, while exercise data is fetched
+when a state is performed.
+
+\section{HTTP Contract}
+
+\begin{naomitable}{Runtime endpoints on translator, port 7000}{tab:run-api}
+\begin{tabularx}{\textwidth}{L{1.6cm} L{5.1cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Method} & \textcolor{white}{\bfseries Path} & \textcolor{white}{\bfseries Effect} \\
+POST & \texttt{/choreography/<id>/run} & Start and schedule the initial state; no body. \\
+GET & \texttt{/run/current} & Get the active run; \texttt{404} if none. \\
+GET & \texttt{/run/<run\_id>} & Get state, status, transitions and playback outcome. \\
+POST & \texttt{/run/<run\_id>/signal} & Send \texttt{\{"transition\_id":"go"\}} and schedule the target exercise. \\
+POST & \texttt{/run/<run\_id>/goto} & Send \texttt{\{"state\_id":"<exercise\_id>"\}}; change state without robot commands. \\
+POST & \texttt{/run/<run\_id>/stop} & Stop between robot commands; reject later signals. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+The \texttt{<id>} in the start path is the stored choreography ID. The
+\texttt{<run\_id>} returned by start identifies this particular execution.
+The example transition ID \texttt{go} is an ordinary label chosen by the
+choreography author, not a reserved command. An exercise ID in a request must
+identify a state already present in the loaded graph.
+
+\subsection{Run response}
+
+All successful runtime endpoints return the same run representation. For
+example, after the initial exercise completes:
+
+\begin{lstlisting}
+{
+  "run_id": "<run_id>",
+  "choreography_id": "<choreography_id>",
+  "state_id": "<first_exercise_id>",
+  "status": "waiting",
+  "outgoing_transitions": [
+    {"id": "go", "from": "<first_exercise_id>",
+     "to": "<second_exercise_id>", "label": "Continue"}
+  ],
+  "playback": {"exercise_id": "<first_exercise_id>",
+               "repetitions": 1, "frames_per_rep": 1,
+               "total_poses_sent": 2, "results": ["..."]},
+  "error": null
+}
+\end{lstlisting}
+
+During \texttt{performing}, \texttt{playback} is the previous result or
+\texttt{null}. If playback fails, \texttt{error} explains the failure and
+\texttt{playback} contains the commands attempted so far, when available.
+\texttt{total\_poses\_sent} is inherited from the standalone exercise API;
+it counts result entries, including voice commands. The listed outgoing
+transitions are those whose \texttt{from} equals the current \texttt{state\_id}.
+
+\subsection{Errors}
+
+\begin{naomitable}{HTTP errors}{tab:errors}
+\begin{tabularx}{\textwidth}{L{1.6cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Status} & \textcolor{white}{\bfseries Meaning} \\
+\texttt{400} & Invalid choreography ID or missing JSON field. \\
+\texttt{404} & Unknown choreography, run, state or transition; no active run for \texttt{/run/current}. \\
+\texttt{409} & Another run is active; the run is not waiting; the transition starts elsewhere; or stop is repeated. \\
+\texttt{502} & The choreography service is unavailable or returns an invalid graph. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+An empty or unavailable exercise is discovered by the background worker:
+start or signal has already returned \texttt{202}, and the run endpoint then
+reports the failure in \texttt{error}. Failed initial playback changes the
+status to \texttt{stopped}. Failed signal playback returns to \texttt{waiting}
+with the source state still current. Commands already accepted by the robot
+cannot be undone, so retrying a signal can repeat them.
+
+\section{Stop and Concurrency}
+
+Only one choreography run is active per translator process. Another start
+returns \texttt{409}, even for another choreography ID. A stop request marks
+the run \texttt{stopped} immediately and prevents further commands between
+frames or repetitions. A robot call already in progress may finish; the robot
+remains reserved until the worker exits. The standalone exercise endpoint
+\texttt{POST /exercise/<id>/run} retains its existing response contract and
+shares the playback lock.
+
+Run data and locks are held in translator memory. A restart loses them;
+multiple translator processes do not coordinate their runs. Other robot
+control routes do not share the playback lock. The production NAO adapter
+and physical robot need separate testing before a live demonstration.
+
+\section{Routing and Scope}
+
+Vite, the container Nginx configuration and the Kubernetes web ConfigMap
+route \texttt{/run/} and \texttt{/choreography/<id>/run} to translator.
+Choreography CRUD remains in \texttt{exerciseConfigService}. The runtime
+selects only an explicitly supplied transition ID. Automatic selection,
+movement assessment, conditions and repetition counters belong to later work.
+
+\section{Client Walkthrough}
+
+Use an existing choreography ID when starting. Keep the returned
+\texttt{run\_id} for later calls. The following requests show the sequence;
+the placeholders must be replaced with actual IDs.
+
+\begin{lstlisting}
+POST /choreography/<choreography_id>/run
+GET  /run/<run_id>                  # poll until waiting
+POST /run/<run_id>/signal
+Content-Type: application/json
+
+{"transition_id":"go"}
+GET  /run/<run_id>                  # poll until waiting
+POST /run/<run_id>/goto
+Content-Type: application/json
+
+{"state_id":"<exercise_id>"}
+POST /run/<run_id>/stop
+\end{lstlisting}
+
+The client can use \texttt{GET /run/current} to discover the active run
+without remembering its ID. It must use the returned
+\texttt{outgoing\_transitions} to present valid choices. A transition whose
+\texttt{from} differs from the current state is rejected without a robot call.
+
+\section{Verification Boundary}
+
+Offline tests use Flask's test client, a fake exercise service and fake robot
+calls. They cover playback order, transitions, direct moves, stopping during a
+long command, concurrent starts and robot failure. A Choregraphe virtual NAO
+can support a manual walkthrough; it does not replace verification through the
+production adapter or a separately coordinated physical robot test.
+
+\end{document}
