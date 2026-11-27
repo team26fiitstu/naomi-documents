@@ -353,6 +353,8 @@
 
 This handbook defines how the NAOMI team works with the physical NAO robot: who is responsible, which movement limits apply, how a movement is stopped, how the robot and the lab are shared, and how each physical test is recorded. It implements the robot-testing requirements of the \emph{Technical Methodology} and the \emph{Version Control Methodology}. Tests on Choregraphe's virtual robot are not covered, but every new movement is tried there first (Section~\ref{sec:limits}).
 
+\textbf{Robot:} NAO6 (NAO V6) with NAOqi 2.8.7.7, controlled with Choregraphe 2.8.8. If the robot or its software is changed or updated, record the new version in the test record and review this handbook.
+
 \section{Roles and responsibilities}
 \label{sec:roles}
 
@@ -432,11 +434,48 @@ L3 Catch & The robot is falling, is about to fall, or L1 and L2 are too slow. & 
 \end{tabularx}
 \end{naomitable}
 
-The robot model and the NAOqi version are not yet confirmed, so the behaviour of the chest button has not been verified. At the first session with the robot, the responsible team member checks what pressing the chest button does on this robot and adds the result to this section. Until then, do not rely on the chest button as a stop method.
-
 After any stop at level L2 or L3, inspect the robot for damage, record the stop in the test record, and do not continue until the responsible team member agrees.
 
 After the robot is safe, stop the temperature log with \texttt{POST /temperature/log/stop} on \texttt{naoRobotAPI}, so that its summary is written, and attach the CSV file and the summary to the Jira issue. Do not stop \texttt{naorobotapi} or the whole stack (\texttt{docker compose down}) before the log is stopped: the running log is kept in memory, so after a restart only the CSV file up to that moment remains and no summary is written. If that happens anyway, attach the CSV file and note the missing summary in the test record.
+
+\subsection{Chest button}
+\label{sec:chestbutton}
+
+According to the manufacturer's \href{https://maxtronics.com/en/nao-robot-user-guide/}{NAO6 user guide}, the chest button of a running NAO6 behaves as follows:
+
+\begin{naomitable}{Documented chest button actions (robot switched on)}{tab:chestbutton}
+\begin{tabularx}{\textwidth}{L{3.6cm} Y}
+\rowcolor{naomiTableHeader}
+\textcolor{white}{\bfseries Press} &
+\textcolor{white}{\bfseries Documented action} \\
+Once & The robot says its name and IP address. \\
+Twice & Switches Autonomous Life on or off. When it is switched off, the robot goes to its resting posture and turns the stiffness of its motors off. When it is switched on, the robot turns the stiffness on, stands up, and resumes its activities. \\
+Hold for about 3\,s & Shuts the robot down. \\
+Hold for about 8\,s & Emergency switch-off. The motors turn off immediately and the robot may fall. \\
+\arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+\end{tabularx}
+\end{naomitable}
+
+\textbf{Use as a stop method.} The chest button is not part of the stop procedure:
+
+\begin{itemize}
+\item A double press only puts the robot into rest when Autonomous Life is on. During tests Autonomous Life is usually off, and a double press then switches it on, which stiffens the motors and makes the robot stand up and move.
+\item Holding the button turns the motors off; with the emergency switch-off the robot may fall. It is slower than L2 and gives no control over the posture.
+\end{itemize}
+
+Use L2 (Rest in Choregraphe) and L3 instead. Use the 8-second emergency switch-off only when Choregraphe cannot reach the robot and the robot keeps moving, and only while the spotter holds the robot as in L3.
+
+\textbf{Verification on the robot.} The behaviour above is taken from the manufacturer's documentation. At the next robot session, the responsible team member verifies it on this robot, with the robot in the clear zone and the spotter holding it:
+
+\begin{enumerate}
+\item Single press: check that the robot says its name and IP address.
+\item Double press with Autonomous Life off and the robot standing: observe whether it switches Autonomous Life on and what movement follows.
+\item Double press with Autonomous Life on and the robot standing: check that it goes to its resting posture and turns the motors off.
+\item Double press while an exercise is running from the system: observe whether the movement stops or continues.
+\item Hold for about 3\,s with the robot in the \texttt{Crouch} posture: check that it shuts down and how the posture changes.
+\end{enumerate}
+
+The 8-second emergency switch-off is not tested deliberately. The results are recorded as a physical test record in the Jira issue, and this section is updated with them.
 
 \subsection{Not implemented yet}
 \label{sec:missing}
@@ -584,6 +623,6 @@ Incidents and follow-up:
 
 \section{Maintaining this handbook}
 
-Changes are made through a pull request in the \texttt{naomi-documents} repository and approved by the responsible team member. Review the handbook when experiments establish measured limits, when the robot model or NAOqi version is confirmed, when a stop endpoint is added to the system, and after a serious incident.
+Changes are made through a pull request in the \texttt{naomi-documents} repository and approved by the responsible team member. Review the handbook when experiments establish measured limits, when the robot or its NAOqi version changes, when a stop endpoint is added to the system, and after a serious incident.
 
 \end{document}
